@@ -7,7 +7,6 @@ public static class Manager
     public static GameManager Game => GameManager.GetInctance();
     public static PlayerManager Player => PlayerManager.GetInctance();
     public static StageManager Stage => StageManager.GetInctance();
-    public static UIManager UI => UIManager.GetInctance();
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Initailize()
@@ -15,6 +14,5 @@ public static class Manager
         GameManager.CreateInstance();
         PlayerManager.CreateInstance();
         StageManager.CreateInstance();
-        UIManager.CreateInstance();
     }
 }
