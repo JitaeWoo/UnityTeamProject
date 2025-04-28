@@ -37,6 +37,12 @@ public class UIManager : Singleton<UIManager>
 
     private UIState currentState; // 현재 UI 표시
 
+    protected void Awake()
+    {
+        UIManager.CreateInstance();  // Singleton 인스턴스 생성
+        DontDestroyOnLoad(gameObject);  // 씬 전환 시 파괴되지 않도록 설정
+    }
+
     public void ShowTitleUI()
     {
         ChangeState(UIState.Title);
