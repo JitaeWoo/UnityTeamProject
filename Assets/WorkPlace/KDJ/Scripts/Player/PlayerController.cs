@@ -5,7 +5,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject _player;
     [SerializeField] private float _moveSpeed;
 
+    private Camera _mainCamera;
+
     private Vector3 _moveDirection;
+
+    private void Awake()
+    {
+        Init();
+    }
 
     void FixedUpdate()
     {
@@ -45,11 +52,20 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerAim()
     {
-        
+        // 플레이어 마우스 조준
+        Vector3 lookPos = Input.mousePosition;
+        lookPos.z = _mainCamera.transform.position.y - _player.transform.position.y;
+        lookPos = _mainCamera.ScreenToWorldPoint(lookPos);
+        _player.transform.forward = lookPos - transform.position;
     }
 
     private void PlayerAttack()
     {
         
+    }
+
+    void Init()
+    {
+        _mainCamera = Camera.main;
     }
 }
