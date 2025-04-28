@@ -13,6 +13,7 @@ public class GameManager : Singleton<GameManager>
     {
         OnStartGame?.Invoke();
         SceneChange("Stage1");
+        Manager.Player.InitStats();
     }
 
     public void GameOver()
@@ -23,5 +24,10 @@ public class GameManager : Singleton<GameManager>
     public void SceneChange(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+        if(sceneName != "Title")
+        {
+            // TODO : �ùٸ� ��ġ�� �÷��̾ �����ϵ��� ����
+            Manager.Player.CreatePlayer(Vector3.zero);
+        }
     }
 }
