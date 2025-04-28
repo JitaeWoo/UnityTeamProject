@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class MonsterAttack // : MonoBehaviour
 {
-    
+    void JumpAttack() { }
+    void DashAttack() { }
+    void ShootingAttack() { }
 }
