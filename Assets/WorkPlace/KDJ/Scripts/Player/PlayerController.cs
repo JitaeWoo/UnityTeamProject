@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerMovement()
     {
-        // 플레이어 이동 입력, WASD 이동 / 조이스틱 미대응. 추후 Horizontal, Vertical 변경 할 수도 있음
+        // 플레이어 이동 입력, WASD 이동 / 조이스틱 미대응. 추후 Horizontal, Vertical로 변경 할 수도 있음
         Vector3 axis = new Vector3(0, 0, 0);
 
         if (Input.GetKey(KeyCode.W))
@@ -90,6 +90,7 @@ public class PlayerController : MonoBehaviour
     {
         // 기본 초기화 과정
         _mainCamera = Camera.main;
+
         // 아래는 임시 테스트용
         PlayerStats.Speed = 5f;
         PlayerStats.FireRate = 0.2f;
