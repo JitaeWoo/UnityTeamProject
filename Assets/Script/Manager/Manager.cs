@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Manager 
+public static class Manager 
 {
-    public GameManager Game => GameManager.GetInctance();
-    public PlayerManager Player => PlayerManager.GetInctance();
-    public StageManager Stage => StageManager.GetInctance();
-    public UIManager UI => UIManager.GetInctance();
+    public static GameManager Game => GameManager.GetInctance();
+    public static PlayerManager Player => PlayerManager.GetInctance();
+    public static StageManager Stage => StageManager.GetInctance();
+    public static UIManager UI => UIManager.GetInctance();
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Initailize()
