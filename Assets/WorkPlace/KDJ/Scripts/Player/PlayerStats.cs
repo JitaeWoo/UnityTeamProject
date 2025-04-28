@@ -5,11 +5,15 @@ using UnityEngine;
 
 public struct PlayerStats
 {
-    public int MaxHp { get { return MaxHp; } set { MaxHp = value; OnMaxHpChanged?.Invoke(); } }
-    public int CurHp { get { return CurHp; } set { MaxHp = value; OnCurHpChanged?.Invoke(); } }
+    private int _maxHp;
+    public int MaxHp { get { return _maxHp; } set { _maxHp = value; OnMaxHpChanged?.Invoke(); } }
+    private int _curHp; 
+    public int CurHp { get { return _curHp; } set { _curHp = value; OnCurHpChanged?.Invoke(); } }
     public float Speed;
     public int Damage;
     public float ShotSize;
+    public float ShotSpeed;
+    public float FireRate;
     public int ProjectileNum;
     public event Action OnMaxHpChanged;
     public event Action OnCurHpChanged;
