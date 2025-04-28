@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
     //ÅºÈ¯
     private Stack<GameObject> _bulletPool;
     private WaitForSeconds _waitTime;
+    private Coroutine _fireCoroutine;
 
     private void Awake()
     {
@@ -75,12 +77,22 @@ public class PlayerController : MonoBehaviour
     private void PlayerAttack()
     {
         // ÇÃ·¹ÀÌ¾î ÅºÈ¯ ¹ß»ç
-        if(Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetMouseButtonDown(0))
         {
-            GameObject instance = _bulletPool.Pop();
-            instance.SetActive(true);
-            instance.transform.position = _muzzlePosition.position;
-
+            if (_fireCoroutine == null)
+            {
+                _fireCoroutine = StartCoroutine(Fire());
+            }
+            Debug.Log("Fire!!");
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (_fireCoroutine != null)
+            {
+                StopCoroutine(_fireCoroutine);
+                _fireCoroutine = null;
+            }
+            Debug.Log("Stop Fire!!");
         }
     }
 
@@ -90,6 +102,7 @@ public class PlayerController : MonoBehaviour
         _mainCamera = Camera.main;
         PlayerStats.Speed = 5f;
         PlayerStats.FireRate = 0.5f;
+        PlayerStats.ShotSpeed = 10f;
 
         // ÅºÈ¯ Ç® »ý¼º
         _waitTime = new WaitForSeconds(_player.GetComponent<PlayerController>().PlayerStats.FireRate);
@@ -101,6 +114,18 @@ public class PlayerController : MonoBehaviour
             bullet.GetComponent<Bullet>().returnPool = _bulletPool;
             bullet.SetActive(false);
             _bulletPool.Push(bullet);
+        }
+    }
+
+    IEnumerator Fire()
+    {
+        while(true)
+        {
+            GameObject instance = _bulletPool.Pop();
+            instance.SetActive(true);
+            instance.transform.position = _muzzlePosition.position;
+            instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * PlayerStats.ShotSpeed, ForceMode.Impulse);
+            yield return _waitTime;
         }
     }
 }
