@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
         PlayerStats.Speed = 5f;
         PlayerStats.FireRate = 0.2f;
         PlayerStats.ShotSpeed = 10f;
-        PlayerStats.ProjectileNum = 4;
+        PlayerStats.ProjectileNum = 3;
 
         // ÅºÈ¯ Ç® »ý¼º
         _waitTime = new WaitForSeconds(_player.GetComponent<PlayerController>().PlayerStats.FireRate);
@@ -128,13 +128,13 @@ public class PlayerController : MonoBehaviour
 
                 if (PlayerStats.ProjectileNum % 2 == 1)
                 {
-                    angle = -6f;
-                    a = 24f / PlayerStats.ProjectileNum - 1;
+                    a = (24f + PlayerStats.ProjectileNum) / PlayerStats.ProjectileNum - 1;
+                    angle = -(a * (PlayerStats.ProjectileNum - 1)) / 2;
                 }
                 else
                 {
-                    angle = -4f;
-                    a = 16f / PlayerStats.ProjectileNum - 1;
+                    a = (14f + PlayerStats.ProjectileNum) / PlayerStats.ProjectileNum - 1;
+                    angle = -(a * (PlayerStats.ProjectileNum - 1)) / 2;
                 }
 
                 GameObject instance = _bulletPool.Pop();
