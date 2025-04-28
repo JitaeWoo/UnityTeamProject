@@ -124,26 +124,26 @@ public class PlayerController : MonoBehaviour
             // 다중 발사
             for (int i = 0; i < PlayerStats.ProjectileNum; i++)
             {
-                float angle;
-                float a;
+                float startAngle;
+                float angleGrid;
 
                 if (PlayerStats.ProjectileNum % 2 == 1)
                 {
-                    a = (24f + PlayerStats.ProjectileNum) / PlayerStats.ProjectileNum - 1;
-                    angle = -(a * (PlayerStats.ProjectileNum - 1)) / 2;
+                    angleGrid = (24f + PlayerStats.ProjectileNum) / PlayerStats.ProjectileNum - 1;
+                    startAngle = -(angleGrid * (PlayerStats.ProjectileNum - 1)) / 2;
                 }
                 else
                 {
-                    a = (14f + PlayerStats.ProjectileNum) / PlayerStats.ProjectileNum - 1;
-                    angle = -(a * (PlayerStats.ProjectileNum - 1)) / 2;
+                    angleGrid = (14f + PlayerStats.ProjectileNum) / PlayerStats.ProjectileNum - 1;
+                    startAngle = -(angleGrid * (PlayerStats.ProjectileNum - 1)) / 2;
                 }
 
                 GameObject instance = _bulletPool.Pop();
                 instance.SetActive(true);
                 instance.transform.position = _muzzlePosition.position;
-                _muzzlePosition.transform.Rotate(0, angle + a * i, 0);
+                _muzzlePosition.transform.Rotate(0, startAngle + angleGrid * i, 0);
                 instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * PlayerStats.ShotSpeed, ForceMode.Impulse);
-                _muzzlePosition.transform.Rotate(0, -(angle + a * i), 0);
+                _muzzlePosition.transform.Rotate(0, -(startAngle + angleGrid * i), 0);
             }
         }
 
