@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,6 +19,8 @@ public class GameManager : Singleton<GameManager>
 
     public void GameOver()
     {
+        // TODO : GameOver UI »ý¼º
+        // TODO : Game ÁøÇà »óÈ² ¸ðµÎ Á¤Áö?
         OnGameOver?.Invoke();
     }
 
@@ -26,7 +29,7 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene(sceneName);
         if(sceneName != "Title")
         {
-            // TODO : ï¿½Ã¹Ù¸ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            // TODO : ¿Ã¹Ù¸¥ À§Ä¡¿¡ ÇÃ·¹ÀÌ¾î¸¦ »ý¼ºÇÏµµ·Ï ¼öÁ¤
             Manager.Player.CreatePlayer(Vector3.zero);
         }
     }
