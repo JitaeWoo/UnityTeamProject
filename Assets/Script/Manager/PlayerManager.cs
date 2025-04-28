@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerManager : Singleton<PlayerManager>
-{ 
+{
+    [SerializeField] GameObject _playerPrefab;
     private PlayerStats _stats;
     public PlayerStats Stats => _stats;
 
@@ -20,5 +21,10 @@ public class PlayerManager : Singleton<PlayerManager>
         _stats.Damage = 10;
         _stats.ShotSize = 1;
         _stats.ProjectileNum = 1;
+    }
+
+    public void CreatePlayer(Vector3 position)
+    {
+        Instantiate(_playerPrefab, position, Quaternion.identity);
     }
 }
