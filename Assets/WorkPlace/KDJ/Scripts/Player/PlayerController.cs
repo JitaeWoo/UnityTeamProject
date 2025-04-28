@@ -1,13 +1,21 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private GameObject _player;
-    [SerializeField] private float _moveSpeed;
+    [SerializeField] int _poolSize;
+    [SerializeField] private GameObject _bulletPrefab;
+    [SerializeField] private Transform _muzzlePosition;
 
+    // 플레이어 움직임 관련
     private Camera _mainCamera;
-
+    public PlayerStats PlayerStats;
     private Vector3 _moveDirection;
+
+    //탄환
+    private Stack<GameObject> _bulletPool;
+    private WaitForSeconds _waitTime;
 
     private void Awake()
     {
@@ -18,6 +26,11 @@ public class PlayerController : MonoBehaviour
     {
         PlayerAim();
         PlayerMovement();
+    }
+
+    private void Update()
+    {
+        PlayerAttack();
     }
 
     private void PlayerMovement()
@@ -47,7 +60,7 @@ public class PlayerController : MonoBehaviour
 
         _moveDirection = axis;
 
-        _player.GetComponent<Rigidbody>().MovePosition(_player.transform.position + _moveDirection * _moveSpeed * Time.fixedDeltaTime);
+        _player.GetComponent<Rigidbody>().MovePosition(_player.transform.position + _moveDirection * PlayerStats.Speed * Time.fixedDeltaTime);
     }
 
     private void PlayerAim()
@@ -61,11 +74,33 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerAttack()
     {
-        
+        // 플레이어 탄환 발사
+        if(Input.GetKey(KeyCode.Mouse0))
+        {
+            GameObject instance = _bulletPool.Pop();
+            instance.SetActive(true);
+            instance.transform.position = _muzzlePosition.position;
+
+        }
     }
 
     void Init()
     {
+        // 기본 초기화 과정
         _mainCamera = Camera.main;
+        PlayerStats.Speed = 5f;
+        PlayerStats.FireRate = 0.5f;
+
+        // 탄환 풀 생성
+        _waitTime = new WaitForSeconds(_player.GetComponent<PlayerController>().PlayerStats.FireRate);
+        _bulletPool = new Stack<GameObject>(_poolSize);
+
+        for (int i = 0; i < _poolSize; i++)
+        {
+            GameObject bullet = Instantiate(_bulletPrefab);
+            bullet.GetComponent<Bullet>().returnPool = _bulletPool;
+            bullet.SetActive(false);
+            _bulletPool.Push(bullet);
+        }
     }
 }

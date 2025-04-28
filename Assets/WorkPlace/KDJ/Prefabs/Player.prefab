@@ -75,8 +75,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1650781213301247755}
-  _cursor: {fileID: 0}
-  _moveSpeed: 5
 --- !u!1 &3802635192884187617
 GameObject:
   m_ObjectHideFlags: 0
