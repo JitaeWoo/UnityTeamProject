@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4363767404375491246}
   - component: {fileID: 6054205749969144913}
   - component: {fileID: 5906880041350128441}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 84
@@ -87,7 +87,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2351876656549106809}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MuzzlePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 8192177787859302160}
   - component: {fileID: 8408323625121450302}
   - component: {fileID: 6742927298624247410}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: 4423052554705701245}
   - component: {fileID: 5295036505938256564}
   - component: {fileID: 7658389250854332839}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Barrel
   m_TagString: Player
   m_Icon: {fileID: 0}

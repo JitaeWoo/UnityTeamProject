@@ -92,8 +92,9 @@ public class PlayerController : MonoBehaviour
         _mainCamera = Camera.main;
         // 아래는 임시 테스트용
         PlayerStats.Speed = 5f;
-        PlayerStats.FireRate = 0.5f;
+        PlayerStats.FireRate = 0.2f;
         PlayerStats.ShotSpeed = 10f;
+        PlayerStats.ProjectileNum = 4;
 
         // 탄환 풀 생성
         _waitTime = new WaitForSeconds(_player.GetComponent<PlayerController>().PlayerStats.FireRate);
@@ -107,13 +108,44 @@ public class PlayerController : MonoBehaviour
             _bulletPool.Push(bullet);
         }
     }
-
     IEnumerator Fire()
     {
-        GameObject instance = _bulletPool.Pop();
-        instance.SetActive(true);
-        instance.transform.position = _muzzlePosition.position;
-        instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * PlayerStats.ShotSpeed, ForceMode.Impulse);
+        if (PlayerStats.ProjectileNum == 1)
+        {
+            // 단일 발사
+            GameObject instance = _bulletPool.Pop();
+            instance.SetActive(true);
+            instance.transform.position = _muzzlePosition.position;
+            instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * PlayerStats.ShotSpeed, ForceMode.Impulse);
+        }
+        else if (PlayerStats.ProjectileNum > 1)
+        {
+            // 다중 발사
+            for (int i = 0; i < PlayerStats.ProjectileNum; i++)
+            {
+                float angle;
+                float a;
+
+                if (PlayerStats.ProjectileNum % 2 == 1)
+                {
+                    angle = -6f;
+                    a = 24f / PlayerStats.ProjectileNum - 1;
+                }
+                else
+                {
+                    angle = -4f;
+                    a = 16f / PlayerStats.ProjectileNum - 1;
+                }
+
+                GameObject instance = _bulletPool.Pop();
+                instance.SetActive(true);
+                instance.transform.position = _muzzlePosition.position;
+                _muzzlePosition.transform.Rotate(0, angle + a * i, 0);
+                instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * PlayerStats.ShotSpeed, ForceMode.Impulse);
+                _muzzlePosition.transform.Rotate(0, -(angle + a * i), 0);
+            }
+        }
+
         yield return _waitTime;
         _fireCoroutine = null;
     }
