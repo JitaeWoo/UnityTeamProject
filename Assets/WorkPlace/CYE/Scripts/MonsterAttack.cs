@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CYE : MonoBehaviour
+public class MonsterAttack // : MonoBehaviour
 {
-    // 개발 일지
+    
 }
