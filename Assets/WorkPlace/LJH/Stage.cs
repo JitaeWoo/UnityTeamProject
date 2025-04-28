@@ -5,55 +5,63 @@ using UnityEngine;
 
 public class Stage : MonoBehaviour
 {
-    ////OnStageStart 스테이지 시작
-
-    ////웨이브 시작
-
-    ////몬스터 개체수가 0일때 클리어
-    //while(monsterNum != 0)
-    //{
-    //    //IsWaveClear = true;
-    //    //웨이브
-    //    if (!finalWave)
-    //    {
-    //        naxtWave();
-    //    }
-    //    else
-    //    {
-    //        //OnStageClear 스테이지 클리어
-
-    //        //클리어 UI화면 호출
-    //        StageClaerUI();
-    //        //캐릭터 강화 선택
-
-    //        //만일 마지막 스테이지면
-    //        if (finalStage)
-    //        {
-    //            gameOver();
-    //        }
-    //        //마지막 스테이지가 아니라면
-    //        else
-    //        {
-    //            //클리어시 다음 스테이지로 이동
-    //            nextStage();
-    //        }
-    //    }
-    //}
-    //몬스터수 초기화
-    //[SerializeField] private int monsterCount = 10;
-    //지연시간 초기화    
-    //[SerializeField] private float spawnInterval = 0.3f;
     [SerializeField] private GameObject monsterPrefab;
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private Wave[] waves;
     [SerializeField] public int currentWaveIndex;
+    [SerializeField] public float spawnDistanceFromPlayer = 5f;
+    [SerializeField] private float spawnHeight = 0f;
+
+    //생성한 맵위에 몬스터 생성
+    public Collider mapBounds;
+
+    public Transform player;
+    private Camera mainCamera;
+
 
     private List<GameObject> currentMonsters = new List<GameObject>();
 
     private void Start()
     {
+        mainCamera = Camera.main;
         //웨이브 시작
         StartCoroutine(SpawnWave());
+    }
+
+    private void SpawnMonster()
+    {
+        Vector3 spwanposition = GetSpawnPosition();
+        //몬스터프리팹에서 스폰 포인트에 몬스터를 가져와서 생성함
+        GameObject monster = Instantiate(monsterPrefab, spwanposition, Quaternion.identity);
+
+        Vector3 moveDirection = (player.position - spwanposition).normalized;
+        
+    }
+
+    private Vector3 GetSpawnPosition()
+    {
+        Vector3 spawnPos = Vector3.zero;
+        bool validPosition = false;
+
+        while (!validPosition)
+        {
+            float side = Random.value < 0.5f ? -1f : 1f;
+
+            Vector3 viewportPos = new Vector3(side < 0 ? -0.1f : 1.1f, Random.Range(0.2f, 0.8f), mainCamera.nearClipPlane + 5);
+            spawnPos = mainCamera.ViewportToWorldPoint(viewportPos);
+            spawnPos.y = spawnHeight;
+
+            bool distanceOk = Vector3.Distance(spawnPos, player.position) >= spawnDistanceFromPlayer;
+
+            bool inSideMap = mapBounds.bounds.Contains(new Vector3(spawnPos.x, mapBounds.bounds.center.y, spawnPos.z));
+
+            if(distanceOk && inSideMap)
+            {
+                validPosition = true;
+            }
+        }
+        return spawnPos;
+
     }
 
     //코루틴으로 웨이브를 만듬
@@ -67,6 +75,7 @@ public class Stage : MonoBehaviour
         {
             //스폰 포인트길이 만큼의 수 중에서 랜덤의 위치를 만듦
             Transform spwanPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            
             //몬스터프리팹에서 스폰 포인트에 몬스터를 가져와서 생성함
             GameObject monster = Instantiate(monsterPrefab, spwanPoint.position, Quaternion.identity);
             //그 몬스터를 추가함
