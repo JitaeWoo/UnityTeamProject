@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class CameraLockTrigger : MonoBehaviour
 {
-    [SerializeField] private CameraMove Camera;
+    private CameraMove _camera;
+
+    private void Awake()
+    {
+        _camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
+    }
 
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player") && this.gameObject.name == "VerticalT")
         {
-            Camera.CameraAxisLock(gameObject);
+            _camera.CameraAxisLock(gameObject);
         }
         if (other.CompareTag("Player") && this.gameObject.name == "HorizonT")
         {
-            Camera.CameraAxisLock(gameObject);
+            _camera.CameraAxisLock(gameObject);
         }
     }
 
@@ -22,11 +27,11 @@ public class CameraLockTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player") && this.gameObject.name == "VerticalT")
         {
-            Camera.CameraAxisUnlock(gameObject);
+            _camera.CameraAxisUnlock(gameObject);
         }
         if (other.CompareTag("Player") && this.gameObject.name == "HorizonT")
         {
-            Camera.CameraAxisUnlock(gameObject);
+            _camera.CameraAxisUnlock(gameObject);
         }
     }
 

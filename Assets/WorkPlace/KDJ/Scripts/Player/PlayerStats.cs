@@ -11,6 +11,7 @@ public class PlayerStats
     public int CurHp { get { return _curHp; } set { _curHp = value; OnCurHpChanged?.Invoke(); } }
     public float Speed;
     public int Damage;
+    public int InvincibleTime;
     public float ShotSize;
     public float ShotSpeed;
     public float FireRate;

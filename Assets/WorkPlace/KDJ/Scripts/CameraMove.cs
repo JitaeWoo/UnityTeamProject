@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    [SerializeField] private GameObject _player;
-    [SerializeField] private GameObject _camera;
-
+    private GameObject _player;
+    private Camera _camera;
     private bool _isInVerticalTrigger = false;
     private bool _isInHorizontalTrigger = false;
 
@@ -15,6 +14,11 @@ public class CameraMove : MonoBehaviour
         MoveCamera();
     }
 
+    private void Awake()
+    {
+        _camera = Camera.main;
+        _player = GameObject.FindGameObjectWithTag("Player");
+    }
 
     void MoveCamera()
     {
@@ -54,5 +58,6 @@ public class CameraMove : MonoBehaviour
                 break;
         }
     }
+
 
 }
