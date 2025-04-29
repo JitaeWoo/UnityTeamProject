@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
-enum MonsterType { 
+public enum MonsterType { 
     Melee, Range, Elite
 }
 
@@ -11,19 +13,27 @@ public class MonsterController : MonoBehaviour, IDamagable
 {
     #region > Variables
 
-    #region >> Game object variables
+    #region >> Public variables
+    public int Hp;
+    public MonsterType Type;
+    #endregion
+
+    #region >> Serialize variables
     // 추적할 object
     [SerializeField] private GameObject _targetObject;
     // 투사체(발사체) object
     [SerializeField] private GameObject _projectileObject;
-    #endregion
-
-    #region >> Private variables
     // 이동 속도
     [SerializeField] private float _moveSpeed;
     // _targetObject에 대한 추적 범위
     [SerializeField] private float _detectRange;
+    [SerializeField] private float _attackRange;
+    #endregion
+
+    #region >> Private variables
+    // target object 탐지여부
     private bool _isDetected;
+    // target object layer
     private LayerMask _detectLayer;
     // 현 object의 rigidbody
     private Rigidbody _rigidbody;
@@ -36,10 +46,11 @@ public class MonsterController : MonoBehaviour, IDamagable
     private Vector3 _targetDirection;
     // 충돌시 움직임을 멈춰야하는 object layer
     private LayerMask _blockMovementLayer;
-    #endregion
+    private UnityEvent _attack;
+    private MonsterAttack _monsterAttack;
 
-    #region >> Public variables
-    public int MonsterHp;
+
+    private Coroutine _attackRoutine;
     #endregion
 
     #endregion
@@ -60,6 +71,7 @@ public class MonsterController : MonoBehaviour, IDamagable
         if (_isDetected && !_isCollide)
         {
             FollowTarget();
+            Attack();
         }
     }
 
@@ -67,11 +79,15 @@ public class MonsterController : MonoBehaviour, IDamagable
     {
         // target object 탐지범위 표시
         if(_isDetected){ Gizmos.color = Color.blue; } else { Gizmos.color = Color.green; }
-            Gizmos.DrawWireSphere(transform.position, _detectRange);
+        Gizmos.DrawWireSphere(transform.position, _detectRange);
 
         // 추가 충돌 영역 표시
         if (_isCollide) { Gizmos.color = Color.red; } else { Gizmos.color = Color.yellow; }
         Gizmos.DrawRay(transform.position, _targetDirection);
+
+        // 공격 영역 표시
+        //if (_isCollide) { Gizmos.color = Color.red; } else { Gizmos.color = Color.yellow; }
+        Gizmos.DrawWireSphere(transform.position, _attackRange);
     }
 
     //private void OnCollisionEnter(Collision collision)
@@ -101,19 +117,21 @@ public class MonsterController : MonoBehaviour, IDamagable
         _detectLayer = 1 << _targetObject.layer;
         _isCollide = false;
         _blockMovementLayer = LayerMask.GetMask("Player", "Wall");
+        _attack = new UnityEvent();
+        _monsterAttack = new MonsterAttack(_rigidbody);
     }
 
     public void TakeHit(int attackPoint) 
     {
-        if (attackPoint >= MonsterHp)
+        if (attackPoint >= Hp)
         {
-            MonsterHp = 0;
+            Hp = 0;
             // -> activate dying animation
             Die();
         }
         else 
         {
-            MonsterHp -= attackPoint;
+            Hp -= attackPoint;
             // -> take damage animation variable change
         }
     }
@@ -124,7 +142,6 @@ public class MonsterController : MonoBehaviour, IDamagable
     }
 
     private void DetectTarget() {
-        Debug.Log($"{_detectLayer}");
         if (Physics.OverlapSphere(transform.position, _detectRange, _detectLayer).Length > 0)
         {
             _isDetected = true;
@@ -154,6 +171,39 @@ public class MonsterController : MonoBehaviour, IDamagable
         else
         {
             _isCollide = false;
+        }
+    }
+
+    private void Attack()
+    {
+        _targetDirection = _targetObject.transform.position - transform.position;
+        //if (Physics.OverlapSphere(transform.position, _attackRange, _detectLayer).Length > 0)
+        if (Physics.Raycast(transform.position, _targetDirection, _attackRange, _detectLayer))
+        {
+
+            if (_attackRoutine is null)
+            {
+                switch (Type)
+            {
+                case MonsterType.Melee:
+                    _attackRoutine = StartCoroutine(_monsterAttack.Dash());
+                    break;
+                case MonsterType.Range:
+                    _attackRoutine = StartCoroutine(_monsterAttack.Shooting(_projectileObject));
+                    break;
+                case MonsterType.Elite:
+                    _attackRoutine = StartCoroutine(_monsterAttack.Jump());
+                    break;
+                }
+            }
+        }
+        else 
+        {
+            if (_attackRoutine is not null)
+            {
+                StopCoroutine(_attackRoutine);
+                _attackRoutine = null;
+            }
         }
     }
     #endregion

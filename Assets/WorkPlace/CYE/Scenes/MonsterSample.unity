@@ -564,11 +564,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28880e6851649b64aa4ad19fe6f54354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Hp: 0
+  Type: 0
   _targetObject: {fileID: 537864757}
   _projectileObject: {fileID: 198972156}
   _moveSpeed: 0.5
   _detectRange: 4.5
-  MonsterHp: 5
+  _attackRange: 2.5
 --- !u!54 &497517840
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -912,11 +914,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28880e6851649b64aa4ad19fe6f54354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Hp: 0
+  Type: 2
   _targetObject: {fileID: 537864757}
   _projectileObject: {fileID: 198972156}
   _moveSpeed: 0.5
   _detectRange: 4.5
-  MonsterHp: 5
+  _attackRange: 2.5
 --- !u!54 &564494173
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1757,11 +1761,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28880e6851649b64aa4ad19fe6f54354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Hp: 0
+  Type: 1
   _targetObject: {fileID: 537864757}
   _projectileObject: {fileID: 198972156}
   _moveSpeed: 0.5
   _detectRange: 4.5
-  MonsterHp: 5
+  _attackRange: 2.5
 --- !u!54 &2007985054
 Rigidbody:
   m_ObjectHideFlags: 0
