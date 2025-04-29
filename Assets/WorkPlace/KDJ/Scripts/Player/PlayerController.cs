@@ -164,6 +164,11 @@ public class PlayerController : MonoBehaviour, IDamagable
         _fireCoroutine = null;
     }
 
+    public Vector3 GetMoveDirection()
+    {
+        return _moveDirection;
+    }
+
     IEnumerator Invincibility()
     {
         IsDamagable = false;

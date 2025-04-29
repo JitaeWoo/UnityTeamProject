@@ -14,6 +14,15 @@ public class Bullet : MonoBehaviour
         StartCoroutine(ReturnBullet(3f));
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == 6)
+        {
+            StartCoroutine(ReturnBullet());
+        }
+        
+    }
+
     IEnumerator ReturnBullet(float delay = 0)
     {
         yield return new WaitForSeconds(delay);

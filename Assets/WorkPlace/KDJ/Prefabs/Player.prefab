@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4363767404375491246}
   - component: {fileID: 6054205749969144913}
   - component: {fileID: 5906880041350128441}
+  - component: {fileID: 7924556332567060847}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -75,10 +76,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1650781213301247755}
-  _poolSize: 20
+  _poolSize: 50
   _bulletPrefab: {fileID: 326611286736933000, guid: 2a58dbe19dfe44b4da28076dcc26c730, type: 3}
   _muzzlePosition: {fileID: 2351876656549106809}
-  bulletProjectileNum: 1
+  _bulletProjectileNum: 3
+  _invincibleTime: 0.2
+--- !u!114 &7924556332567060847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650781213301247755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4bfdbbd07ab2174a926e20f9f65c07c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _selectedSkill: 0
 --- !u!1 &3802635192884187617
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,7 +103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2351876656549106809}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MuzzlePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +244,7 @@ GameObject:
   - component: {fileID: 4423052554705701245}
   - component: {fileID: 5295036505938256564}
   - component: {fileID: 7658389250854332839}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}

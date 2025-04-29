@@ -19,7 +19,7 @@ public class PlayerSkill : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             _skill.Use();
         }
