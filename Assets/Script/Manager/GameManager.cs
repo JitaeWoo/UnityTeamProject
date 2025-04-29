@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -11,10 +13,24 @@ public class GameManager : Singleton<GameManager>
     public void StartGame()
     {
         OnStartGame?.Invoke();
+        SceneChange("Stage1");
+        Manager.Player.InitStats();
     }
 
     public void GameOver()
     {
+        // TODO : GameOver UI 생성
+        // TODO : Game 진행 상황 모두 정지?
         OnGameOver?.Invoke();
+    }
+
+    public void SceneChange(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+        if(sceneName != "Title")
+        {
+            // TODO : 올바른 위치에 플레이어를 생성하도록 수정
+            Manager.Player.CreatePlayer(Vector3.zero);
+        }
     }
 }
