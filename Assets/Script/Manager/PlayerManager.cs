@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerManager : Singleton<PlayerManager>
 {
     [SerializeField] GameObject _playerPrefab;
-    private PlayerStats _stats;
+    private PlayerStats _stats = new PlayerStats();
     public PlayerStats Stats => _stats;
 
     private void Awake()
