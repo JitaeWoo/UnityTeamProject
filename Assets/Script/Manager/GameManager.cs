@@ -13,8 +13,9 @@ public class GameManager : Singleton<GameManager>
     public void StartGame()
     {
         OnStartGame?.Invoke();
-        SceneChange("Stage1");
+        // TODO : Stage가 개발되면 해당 이름으로 바꿀 것
         Manager.Player.InitStats();
+        SceneChange("Stage1");
     }
 
     public void GameOver()
