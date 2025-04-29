@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         _moveDirection = axis;
 
-        _player.GetComponent<Rigidbody>().MovePosition(_player.transform.position + _moveDirection * PlayerStats.Speed * Time.fixedDeltaTime);
+        _player.GetComponent<Rigidbody>().MovePosition(_player.transform.position + _moveDirection * Manager.Player.Stats.Speed * Time.fixedDeltaTime);
     }
 
     private void PlayerAim()
@@ -98,10 +98,9 @@ public class PlayerController : MonoBehaviour, IDamagable
         _mainCamera = Camera.main;
 
         // 아래는 임시 테스트용
-        PlayerStats.Speed = 5f;
         PlayerStats.FireRate = 0.2f;
         PlayerStats.ShotSpeed = 10f;
-        PlayerStats.ProjectileNum = bulletProjectileNum;
+        int a = Manager.Player.Stats.ProjectileNum;
 
         // 탄환 풀 생성
         _waitTime = new WaitForSeconds(_player.GetComponent<PlayerController>().PlayerStats.FireRate);
@@ -117,7 +116,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     }
     IEnumerator Fire()
     {
-        if (PlayerStats.ProjectileNum == 1)
+        if (Manager.Player.Stats.ProjectileNum == 1)
         {
             // 단일 발사
             GameObject instance = _bulletPool.Pop();
@@ -125,30 +124,30 @@ public class PlayerController : MonoBehaviour, IDamagable
             instance.transform.position = _muzzlePosition.position;
             instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * PlayerStats.ShotSpeed, ForceMode.Impulse);
         }
-        else if (PlayerStats.ProjectileNum > 1)
+        else if (Manager.Player.Stats.ProjectileNum > 1)
         {
             // 다중 발사
-            for (int i = 0; i < PlayerStats.ProjectileNum; i++)
+            for (int i = 0; i < Manager.Player.Stats.ProjectileNum; i++)
             {
                 float startAngle;
                 float angleGrid;
 
-                if (PlayerStats.ProjectileNum % 2 == 1)
+                if (Manager.Player.Stats.ProjectileNum % 2 == 1)
                 {
-                    angleGrid = (24f + PlayerStats.ProjectileNum) / PlayerStats.ProjectileNum - 1;
-                    startAngle = -(angleGrid * (PlayerStats.ProjectileNum - 1)) / 2;
+                    angleGrid = (24f + Manager.Player.Stats.ProjectileNum) / Manager.Player.Stats.ProjectileNum - 1;
+                    startAngle = -(angleGrid * (Manager.Player.Stats.ProjectileNum - 1)) / 2;
                 }
                 else
                 {
-                    angleGrid = (14f + PlayerStats.ProjectileNum) / PlayerStats.ProjectileNum - 1;
-                    startAngle = -(angleGrid * (PlayerStats.ProjectileNum - 1)) / 2;
+                    angleGrid = (14f + Manager.Player.Stats.ProjectileNum) / Manager.Player.Stats.ProjectileNum - 1;
+                    startAngle = -(angleGrid * (Manager.Player.Stats.ProjectileNum - 1)) / 2;
                 }
 
                 GameObject instance = _bulletPool.Pop();
                 instance.SetActive(true);
                 instance.transform.position = _muzzlePosition.position;
                 _muzzlePosition.transform.Rotate(0, startAngle + angleGrid * i, 0);
-                instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * PlayerStats.ShotSpeed, ForceMode.Impulse);
+                instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * Manager.Player.Stats.ShotSpeed, ForceMode.Impulse);
                 _muzzlePosition.transform.Rotate(0, -(startAngle + angleGrid * i), 0);
             }
         }
