@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct PlayerStats
+public class PlayerStats
 {
     private int _maxHp;
     public int MaxHp { get { return _maxHp; } set { _maxHp = value; OnMaxHpChanged?.Invoke(); } }
