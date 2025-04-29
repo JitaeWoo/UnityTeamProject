@@ -13,12 +13,10 @@ public class MonsterController : MonoBehaviour, IDamagable
 {
     #region > Variables
 
-    #region >> Public variables
+    #region >> Serialized variables
     public int Hp;
     public MonsterType Type;
-    #endregion
-
-    #region >> Serialize variables
+    public int Damage;
     // 추적할 object
     [SerializeField] private GameObject _targetObject;
     // 투사체(발사체) object
@@ -28,6 +26,8 @@ public class MonsterController : MonoBehaviour, IDamagable
     // _targetObject에 대한 추적 범위
     [SerializeField] private float _detectRange;
     [SerializeField] private float _attackRange;
+    [SerializeField] private int _projectilePoolSize;
+    [SerializeField] private Transform _muzzlePoint;
     #endregion
 
     #region >> Private variables
@@ -46,11 +46,12 @@ public class MonsterController : MonoBehaviour, IDamagable
     private Vector3 _targetDirection;
     // 충돌시 움직임을 멈춰야하는 object layer
     private LayerMask _blockMovementLayer;
-    private UnityEvent _attack;
+    //private UnityEvent _attack;
     private MonsterAttack _monsterAttack;
 
-
     private Coroutine _attackRoutine;
+
+    private Stack<GameObject> _projectilePool;
     #endregion
 
     #endregion
@@ -70,6 +71,7 @@ public class MonsterController : MonoBehaviour, IDamagable
         DetectCollide();
         if (_isDetected && !_isCollide)
         {
+            LookTarget();
             FollowTarget();
             Attack();
         }
@@ -117,8 +119,18 @@ public class MonsterController : MonoBehaviour, IDamagable
         _detectLayer = 1 << _targetObject.layer;
         _isCollide = false;
         _blockMovementLayer = LayerMask.GetMask("Player", "Wall");
-        _attack = new UnityEvent();
-        _monsterAttack = new MonsterAttack(_rigidbody);
+        //_attack = new UnityEvent();
+
+        _projectilePool = new Stack<GameObject>(_projectilePoolSize);
+        for (int cnt = 0; cnt < _projectilePoolSize; cnt++) 
+        {
+            GameObject instant = Instantiate(_projectileObject);
+            instant.GetComponent<MonsterBulletScript>().ReturnPool = _projectilePool;
+            instant.GetComponent<MonsterBulletScript>().Lifespan = 3f;
+            instant.SetActive(false);
+            _projectilePool.Push(instant);
+        }
+        _monsterAttack = new MonsterAttack(_rigidbody, _muzzlePoint);
     }
 
     public void TakeHit(int attackPoint) 
@@ -152,12 +164,13 @@ public class MonsterController : MonoBehaviour, IDamagable
         }
     }
 
-    private void FollowTarget() 
+    private void LookTarget()
     {
-        // rotate
         Vector3 lookPosition = new Vector3(_targetObject.transform.position.x, transform.position.y, _targetObject.transform.position.z);
         transform.LookAt(lookPosition);
-        // move
+    }
+    private void FollowTarget()
+    {
         transform.position = Vector3.MoveTowards(transform.position, _targetObject.transform.position, _moveSpeed * Time.deltaTime);
     }
 
@@ -174,7 +187,7 @@ public class MonsterController : MonoBehaviour, IDamagable
         }
     }
 
-    private void Attack()
+    private void CheckAttackable()
     {
         _targetDirection = _targetObject.transform.position - transform.position;
         //if (Physics.OverlapSphere(transform.position, _attackRange, _detectLayer).Length > 0)
@@ -184,12 +197,43 @@ public class MonsterController : MonoBehaviour, IDamagable
             if (_attackRoutine is null)
             {
                 switch (Type)
+                {
+                    case MonsterType.Melee:
+                        _attackRoutine = StartCoroutine(_monsterAttack.Dash());
+                        break;
+                    case MonsterType.Range:
+                        _attackRoutine = StartCoroutine(_monsterAttack.Shooting(_projectilePool));
+                        break;
+                    case MonsterType.Elite:
+                        _attackRoutine = StartCoroutine(_monsterAttack.Jump());
+                        break;
+                }
+            }
+        }
+        else
+        {
+            if (_attackRoutine is not null)
+            {
+                StopCoroutine(_attackRoutine);
+                _attackRoutine = null;
+            }
+        }
+    }
+
+    private void Attack()
+    {
+        _targetDirection = _targetObject.transform.position - transform.position;
+        if (Physics.Raycast(transform.position, _targetDirection, _attackRange, _detectLayer))
+        {
+            if (_attackRoutine is null)
+            {
+                switch (Type)
             {
                 case MonsterType.Melee:
                     _attackRoutine = StartCoroutine(_monsterAttack.Dash());
                     break;
                 case MonsterType.Range:
-                    _attackRoutine = StartCoroutine(_monsterAttack.Shooting(_projectileObject));
+                    _attackRoutine = StartCoroutine(_monsterAttack.Shooting(_projectilePool));
                     break;
                 case MonsterType.Elite:
                     _attackRoutine = StartCoroutine(_monsterAttack.Jump());
