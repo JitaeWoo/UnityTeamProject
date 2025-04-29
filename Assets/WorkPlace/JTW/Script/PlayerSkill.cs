@@ -6,7 +6,7 @@ public class PlayerSkill : MonoBehaviour
 {
     public enum Skills
     {
-        Dash
+        Dash, ClearBullet
     }
 
     [SerializeField] private Skills _selectedSkill;
@@ -37,6 +37,9 @@ public class PlayerSkill : MonoBehaviour
         {
             case Skills.Dash:
                 _skill = gameObject.AddComponent<Dash>();
+                break;
+            case Skills.ClearBullet:
+                _skill = gameObject.AddComponent<ClearBullet>();
                 break;
         }
     }
