@@ -26,6 +26,7 @@ public class Stage : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
+        
         //웨이브 시작
         StartCoroutine(SpawnWave());
 
@@ -82,6 +83,7 @@ public class Stage : MonoBehaviour
         if (currentWaveIndex >= waves.Length)
         {
             Debug.LogWarning("모든 웨이브 완료됨: currentWaveIndex = " + currentWaveIndex);
+            Debug.LogWarning(waves.Length);
             yield break;
         }
         //웨이브 배열에서 현재 웨이브를 가져옴
