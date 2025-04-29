@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamagable
 {
     [SerializeField] private GameObject _player;
     [SerializeField] int _poolSize;
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private Transform _muzzlePosition;
+    [SerializeField] private int bulletProjectileNum;
 
     // 플레이어 관련
     private Camera _mainCamera;
@@ -86,6 +87,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void TakeHit(int damage)
+    {
+
+    }
+
     void Init()
     {
         // 기본 초기화 과정
@@ -95,7 +101,7 @@ public class PlayerController : MonoBehaviour
         PlayerStats.Speed = 5f;
         PlayerStats.FireRate = 0.2f;
         PlayerStats.ShotSpeed = 10f;
-        PlayerStats.ProjectileNum = 3;
+        PlayerStats.ProjectileNum = bulletProjectileNum;
 
         // 탄환 풀 생성
         _waitTime = new WaitForSeconds(_player.GetComponent<PlayerController>().PlayerStats.FireRate);
