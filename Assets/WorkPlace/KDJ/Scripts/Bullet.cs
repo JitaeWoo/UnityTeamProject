@@ -17,11 +17,13 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        // 벽에 충돌시 제거
         if (other.gameObject.layer == 6)
         {
             StartCoroutine(ReturnBullet());
         }
 
+        // 몬스터에 충돌 시 관통 기능
         if(other.gameObject.tag == "Monster")
         {
             if(PierceNum > 0)
@@ -37,6 +39,7 @@ public class Bullet : MonoBehaviour
 
     void HomingBullet()
     {
+        // 유도 미구현
         if(Manager.Player.Stats.IsBulletHoming)
         {
             

@@ -106,6 +106,11 @@ public class PlayerController : MonoBehaviour, IDamagable
         return _moveDirection;
     }
 
+    public Transform GetMuzzleTransform()
+    {
+        return _muzzlePosition;
+    }
+
     void Init()
     {
         // 기본 초기화 과정
