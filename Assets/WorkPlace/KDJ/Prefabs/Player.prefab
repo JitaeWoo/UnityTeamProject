@@ -79,8 +79,9 @@ MonoBehaviour:
   _poolSize: 50
   _bulletPrefab: {fileID: 326611286736933000, guid: 2a58dbe19dfe44b4da28076dcc26c730, type: 3}
   _muzzlePosition: {fileID: 2351876656549106809}
-  _bulletProjectileNum: 3
-  _invincibleTime: 0.2
+  _bulletProjectileNum: 1
+  _invincibleTime: 0.1
+  _pierceNum: 3
 --- !u!114 &7924556332567060847
 MonoBehaviour:
   m_ObjectHideFlags: 0

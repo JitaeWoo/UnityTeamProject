@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private Rigidbody _bulletRigid;
 
     public Stack<GameObject> returnPool;
+    public int PierceNum;
 
     void OnEnable()
     {
@@ -20,7 +21,26 @@ public class Bullet : MonoBehaviour
         {
             StartCoroutine(ReturnBullet());
         }
-        
+
+        if(other.gameObject.tag == "Monster")
+        {
+            if(PierceNum > 0)
+            {
+                PierceNum--;
+            }
+            else
+            {
+                StartCoroutine(ReturnBullet());
+            }
+        }
+    }
+
+    void HomingBullet()
+    {
+        if(Manager.Player.Stats.IsBulletHoming)
+        {
+            
+        }
     }
 
     IEnumerator ReturnBullet(float delay = 0)
