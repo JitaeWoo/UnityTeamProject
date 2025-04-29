@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamagable
 {
     [SerializeField] private GameObject _player;
     [SerializeField] int _poolSize;
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private Transform _muzzlePosition;
+    [SerializeField] private int bulletProjectileNum;
 
     // 플레이어 관련
     private Camera _mainCamera;
-    public PlayerStats PlayerStats;
     private Vector3 _moveDirection;
 
     // 탄환 풀
@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
         _moveDirection = axis;
 
-        _player.GetComponent<Rigidbody>().MovePosition(_player.transform.position + _moveDirection * PlayerStats.Speed * Time.fixedDeltaTime);
+        _player.GetComponent<Rigidbody>().MovePosition(_player.transform.position + _moveDirection * Manager.Player.Stats.Speed * Time.fixedDeltaTime);
     }
 
     private void PlayerAim()
@@ -86,19 +86,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void TakeHit(int damage)
+    {
+
+    }
+
     void Init()
     {
         // 기본 초기화 과정
         _mainCamera = Camera.main;
 
         // 아래는 임시 테스트용
-        PlayerStats.Speed = 5f;
-        PlayerStats.FireRate = 0.2f;
-        PlayerStats.ShotSpeed = 10f;
-        PlayerStats.ProjectileNum = 3;
+        Manager.Player.Stats.FireRate = 0.2f;
+        Manager.Player.Stats.ShotSpeed = 10f;
+        Manager.Player.Stats.ProjectileNum = bulletProjectileNum;
 
         // 탄환 풀 생성
-        _waitTime = new WaitForSeconds(_player.GetComponent<PlayerController>().PlayerStats.FireRate);
+        _waitTime = new WaitForSeconds(Manager.Player.Stats.FireRate);
         _bulletPool = new Stack<GameObject>(_poolSize);
 
         for (int i = 0; i < _poolSize; i++)
@@ -111,38 +115,38 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator Fire()
     {
-        if (PlayerStats.ProjectileNum == 1)
+        if (Manager.Player.Stats.ProjectileNum == 1)
         {
             // 단일 발사
             GameObject instance = _bulletPool.Pop();
             instance.SetActive(true);
             instance.transform.position = _muzzlePosition.position;
-            instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * PlayerStats.ShotSpeed, ForceMode.Impulse);
+            instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * Manager.Player.Stats.ShotSpeed, ForceMode.Impulse);
         }
-        else if (PlayerStats.ProjectileNum > 1)
+        else if (Manager.Player.Stats.ProjectileNum > 1)
         {
             // 다중 발사
-            for (int i = 0; i < PlayerStats.ProjectileNum; i++)
+            for (int i = 0; i < Manager.Player.Stats.ProjectileNum; i++)
             {
                 float startAngle;
                 float angleGrid;
 
-                if (PlayerStats.ProjectileNum % 2 == 1)
+                if (Manager.Player.Stats.ProjectileNum % 2 == 1)
                 {
-                    angleGrid = (24f + PlayerStats.ProjectileNum) / PlayerStats.ProjectileNum - 1;
-                    startAngle = -(angleGrid * (PlayerStats.ProjectileNum - 1)) / 2;
+                    angleGrid = (24f + Manager.Player.Stats.ProjectileNum) / Manager.Player.Stats.ProjectileNum - 1;
+                    startAngle = -(angleGrid * (Manager.Player.Stats.ProjectileNum - 1)) / 2;
                 }
                 else
                 {
-                    angleGrid = (14f + PlayerStats.ProjectileNum) / PlayerStats.ProjectileNum - 1;
-                    startAngle = -(angleGrid * (PlayerStats.ProjectileNum - 1)) / 2;
+                    angleGrid = (14f + Manager.Player.Stats.ProjectileNum) / Manager.Player.Stats.ProjectileNum - 1;
+                    startAngle = -(angleGrid * (Manager.Player.Stats.ProjectileNum - 1)) / 2;
                 }
 
                 GameObject instance = _bulletPool.Pop();
                 instance.SetActive(true);
                 instance.transform.position = _muzzlePosition.position;
                 _muzzlePosition.transform.Rotate(0, startAngle + angleGrid * i, 0);
-                instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * PlayerStats.ShotSpeed, ForceMode.Impulse);
+                instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * Manager.Player.Stats.ShotSpeed, ForceMode.Impulse);
                 _muzzlePosition.transform.Rotate(0, -(startAngle + angleGrid * i), 0);
             }
         }
