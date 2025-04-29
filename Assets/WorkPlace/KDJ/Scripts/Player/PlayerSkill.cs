@@ -6,7 +6,7 @@ public class PlayerSkill : MonoBehaviour
 {
     public enum Skills
     {
-        Dash, ClearBullet
+        Dash, GrenadeThrow
     }
 
     [SerializeField] private Skills _selectedSkill;
@@ -19,7 +19,7 @@ public class PlayerSkill : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             _skill.Use();
         }
@@ -38,8 +38,8 @@ public class PlayerSkill : MonoBehaviour
             case Skills.Dash:
                 _skill = gameObject.AddComponent<Dash>();
                 break;
-            case Skills.ClearBullet:
-                _skill = gameObject.AddComponent<ClearBullet>();
+            case Skills.GrenadeThrow:
+                _skill = gameObject.AddComponent<GrenadeThrow>();
                 break;
         }
     }

@@ -8,17 +8,23 @@ public class PlayerController : MonoBehaviour, IDamagable
     [SerializeField] int _poolSize;
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private Transform _muzzlePosition;
-    [SerializeField] private int bulletProjectileNum;
+
+    [Header("Test")]
+    [SerializeField] private int _bulletProjectileNum;
+    [SerializeField] private float _invincibleTime;
+    [SerializeField] private int _pierceNum;
 
     // 플레이어 관련
     private Camera _mainCamera;
     private Vector3 _moveDirection;
+    private bool IsDamagable = true;
+    private Coroutine _invincibleRoutine;
 
     // 탄환 풀
     private Stack<GameObject> _bulletPool;
     private WaitForSeconds _waitTime;
     private Coroutine _fireCoroutine;
-    private bool _isReadyFire => _fireCoroutine == null;
+    private bool IsReadyFire => _fireCoroutine == null;
 
     private void Awake()
     {
@@ -31,7 +37,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         PlayerMovement();
     }
 
-    private void Update()
+    void Update()
     {
         PlayerAttack();
     }
@@ -79,7 +85,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         // 플레이어 탄환 발사
         if (Input.GetMouseButton(0))
         {
-            if (_isReadyFire)
+            if (IsReadyFire)
             {
                 _fireCoroutine = StartCoroutine(Fire());
             }
@@ -88,7 +94,21 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void TakeHit(int damage)
     {
+        // 플레이어 데미지, 무적시간동안은 피해를 받지 않음
+        if (IsDamagable)
+            Manager.Player.Stats.CurHp -= damage;
+        if (_invincibleRoutine == null)
+            _invincibleRoutine = StartCoroutine(Invincibility());
+    }
 
+    public Vector3 GetMoveDirection()
+    {
+        return _moveDirection;
+    }
+
+    public Transform GetMuzzleTransform()
+    {
+        return _muzzlePosition;
     }
 
     void Init()
@@ -99,7 +119,9 @@ public class PlayerController : MonoBehaviour, IDamagable
         // 아래는 임시 테스트용
         Manager.Player.Stats.FireRate = 0.2f;
         Manager.Player.Stats.ShotSpeed = 10f;
-        Manager.Player.Stats.ProjectileNum = bulletProjectileNum;
+        Manager.Player.Stats.InvincibleTime = _invincibleTime;
+        Manager.Player.Stats.ProjectileNum = _bulletProjectileNum;
+        Manager.Player.Stats.PierceNum = _pierceNum;
 
         // 탄환 풀 생성
         _waitTime = new WaitForSeconds(Manager.Player.Stats.FireRate);
@@ -120,6 +142,7 @@ public class PlayerController : MonoBehaviour, IDamagable
             // 단일 발사
             GameObject instance = _bulletPool.Pop();
             instance.SetActive(true);
+            instance.GetComponent<Bullet>().PierceNum = Manager.Player.Stats.PierceNum;
             instance.transform.position = _muzzlePosition.position;
             instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * Manager.Player.Stats.ShotSpeed, ForceMode.Impulse);
         }
@@ -144,6 +167,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
                 GameObject instance = _bulletPool.Pop();
                 instance.SetActive(true);
+                instance.GetComponent<Bullet>().PierceNum = Manager.Player.Stats.PierceNum;
                 instance.transform.position = _muzzlePosition.position;
                 _muzzlePosition.transform.Rotate(0, startAngle + angleGrid * i, 0);
                 instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * Manager.Player.Stats.ShotSpeed, ForceMode.Impulse);
@@ -153,5 +177,14 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         yield return _waitTime;
         _fireCoroutine = null;
+    }
+
+    IEnumerator Invincibility()
+    {
+        // 무적 시간 설정
+        IsDamagable = false;
+        yield return new WaitForSeconds(Manager.Player.Stats.InvincibleTime);
+        IsDamagable = true;
+        _invincibleRoutine = null;
     }
 }

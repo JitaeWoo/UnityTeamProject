@@ -11,10 +11,13 @@ public class PlayerStats
     public int CurHp { get { return _curHp; } set { _curHp = value; OnCurHpChanged?.Invoke(); } }
     public float Speed;
     public int Damage;
+    public float InvincibleTime;
     public float ShotSize;
     public float ShotSpeed;
     public float FireRate;
     public int ProjectileNum;
+    public int PierceNum;
+    public bool IsBulletHoming;
     public event Action OnMaxHpChanged;
     public event Action OnCurHpChanged;
 }

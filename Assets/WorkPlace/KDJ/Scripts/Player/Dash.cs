@@ -8,13 +8,20 @@ public class Dash : Skill
 {
     [SerializeField] private float _dashCooldown = 1f;
 
+    private PlayerController _playerController;
+
     private void Awake()
     {
         CoolDown = _dashCooldown;
+        _playerController = GetComponent<PlayerController>();
     }
 
     protected override void ActivateSkill()
     {
-        GetComponent<Rigidbody>().AddForce(transform.forward * 10f, ForceMode.Impulse);
+        // AddForce Dash
+        // GetComponent<Rigidbody>().AddForce(transform.forward * 10f, ForceMode.Impulse);
+
+        // AddForce Dash at moveDirection
+        GetComponent<Rigidbody>().AddForce(_playerController.GetMoveDirection() * 10f, ForceMode.Impulse);
     }
 }
