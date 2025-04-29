@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     // 플레이어 관련
     private Camera _mainCamera;
-    public PlayerStats PlayerStats;
     private Vector3 _moveDirection;
 
     // 탄환 풀
@@ -98,12 +97,12 @@ public class PlayerController : MonoBehaviour, IDamagable
         _mainCamera = Camera.main;
 
         // 아래는 임시 테스트용
-        PlayerStats.FireRate = 0.2f;
-        PlayerStats.ShotSpeed = 10f;
-        int a = Manager.Player.Stats.ProjectileNum;
+        Manager.Player.Stats.FireRate = 0.2f;
+        Manager.Player.Stats.ShotSpeed = 10f;
+        Manager.Player.Stats.ProjectileNum = bulletProjectileNum;
 
         // 탄환 풀 생성
-        _waitTime = new WaitForSeconds(_player.GetComponent<PlayerController>().PlayerStats.FireRate);
+        _waitTime = new WaitForSeconds(Manager.Player.Stats.FireRate);
         _bulletPool = new Stack<GameObject>(_poolSize);
 
         for (int i = 0; i < _poolSize; i++)
@@ -122,7 +121,7 @@ public class PlayerController : MonoBehaviour, IDamagable
             GameObject instance = _bulletPool.Pop();
             instance.SetActive(true);
             instance.transform.position = _muzzlePosition.position;
-            instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * PlayerStats.ShotSpeed, ForceMode.Impulse);
+            instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * Manager.Player.Stats.ShotSpeed, ForceMode.Impulse);
         }
         else if (Manager.Player.Stats.ProjectileNum > 1)
         {
