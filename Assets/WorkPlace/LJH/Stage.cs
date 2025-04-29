@@ -113,15 +113,16 @@ public class Stage : MonoBehaviour
         {
             //웨이브 단계값을 하나 올림
             currentWaveIndex++;
-            //현재 웨이브가 웨이브의 길이보다 작다면
+            //현재 웨이브가 웨이브배열의 길이보다 작다면
             if (currentWaveIndex < waves.Length)
             {
                 //웨이브를 시작함
+                Debug.Log($"{currentWaveIndex} 웨이브를 시작합니다.");
                 StartCoroutine(SpawnWave());
             }
             else
             {
-                //모든 웨이브를 클리어 했다면 다음씬으로 넘어감
+                //웨이브 배열의 길이와 같다면(모든 웨이브를 클리어했다) 다음씬으로 넘어감
                 Debug.Log("모든 웨이브 클리어!");
                 LoadNextScene();
             }
@@ -139,6 +140,7 @@ public class Stage : MonoBehaviour
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
         {
             //다음 씬으로 넘어감
+            Debug.Log("다음 씬으로 넘어갑니다.");
             SceneManager.LoadScene(nextSceneIndex);
         }
         else
