@@ -184,12 +184,7 @@ public class Stage : MonoBehaviour
 
     }
 
-    //몬스터가 죽을때 이 함수를 호출해주세요~~
-    public void OnMonsterKilled(GameObject monster)
-    {
-        //리스트에서 몬스터를 제거함
-        currentMonsters.Remove(monster);        
-    }
+    
 
     private void LoadNextScene()
     {

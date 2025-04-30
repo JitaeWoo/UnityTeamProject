@@ -10,4 +10,6 @@ public class Wave
     [SerializeField] public float spawnInterval;
     //웨이브 시간
     [SerializeField] public float timeLimit;
+    //몬스터 그룹
+    [SerializeField] public MonsterGroup[] WaveMonsters;
 }
