@@ -18,7 +18,7 @@ public class MonsterController : MonoBehaviour, IDamagable
     public MonsterType Type;
     public int Damage;
     public UnityEvent OnDied;
-    [SerializeField] private GameObject _targetObject;
+    //[SerializeField] private GameObject _targetObject;
     //[SerializeField] private GameObject _projectileObject;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _detectRange;
@@ -31,7 +31,7 @@ public class MonsterController : MonoBehaviour, IDamagable
 
     #region >> Private variables
     // target object 
-    //private GameObject _targetObject => Manager.Player.Player;
+    private GameObject _targetObject => Manager.Player.Player;
     // target object Å½Áö¿©ºÎ
     private bool _isDetected;
     // target object layer
@@ -70,6 +70,10 @@ public class MonsterController : MonoBehaviour, IDamagable
     private void Start()
     {
         //_detectLayer = 1 << _targetObject.layer;
+    }
+    private void OnEnable()
+    {
+        _detectLayer = 1 << _targetObject.layer;
     }
 
     private void Update()
