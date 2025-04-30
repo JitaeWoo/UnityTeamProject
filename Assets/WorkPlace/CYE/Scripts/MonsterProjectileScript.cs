@@ -21,7 +21,7 @@ public class MonsterProjectileScript : MonoBehaviour
     private void OnCollisionEnter(Collision collision) 
     {
         if (collision.gameObject.CompareTag("Player")) {
-            collision.gameObject.GetComponent<IDamagable>().TakeHit(Damage);
+            collision.gameObject.GetComponent<IDamagable>()?.TakeHit(Damage);
             Deactivate();
         }
     }
