@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +8,23 @@ public class PlayerManager : Singleton<PlayerManager>
     [SerializeField] GameObject _playerPrefab;
     private PlayerStats _stats = new PlayerStats();
     public PlayerStats Stats => _stats;
+    public event Action OnDied;
 
     private void Awake()
     {
         InitStats();
+        _stats.OnCurHpChanged += () =>
+        {
+            if (_stats.CurHp <= 0)
+            {
+                Die();
+            }
+        };
+    }
+
+    private void Die()
+    {
+        OnDied?.Invoke();
     }
 
     public void InitStats()
