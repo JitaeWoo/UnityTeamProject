@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraMove : MonoBehaviour
@@ -22,15 +20,18 @@ public class CameraMove : MonoBehaviour
 
     void MoveCamera()
     {
-        Vector3 playerPos = _player.transform.position;
-        Vector3 cameraPos = _camera.transform.position;
+        if (Manager.Player.Stats.CurHp > 0)
+        {
+            Vector3 playerPos = _player.transform.position;
+            Vector3 cameraPos = _camera.transform.position;
 
-        if(!_isInVerticalTrigger)
-            cameraPos.z = playerPos.z;
-        if (!_isInHorizontalTrigger)
-            cameraPos.x = playerPos.x;
+            if (!_isInVerticalTrigger)
+                cameraPos.z = playerPos.z;
+            if (!_isInHorizontalTrigger)
+                cameraPos.x = playerPos.x;
 
-        _camera.transform.position = cameraPos;
+            _camera.transform.position = cameraPos;
+        }
     }
 
     public void CameraAxisLock(GameObject gameObject)

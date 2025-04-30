@@ -6,6 +6,7 @@ public class Grenade : MonoBehaviour
 {
     [SerializeField] private GameObject _grenade;
     [SerializeField] private GameObject _explosion;
+    [SerializeField] public int grenadeDamage;
 
     private void OnCollisionEnter(Collision collision)
     {
