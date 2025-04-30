@@ -5,6 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class MonsterGroup 
 {
-    [SerializeField] public GameObject _monsterPrefab;
-    [SerializeField] public int _num;
+    [SerializeField] public GameObject MonsterPrefab;
+    [SerializeField] public int Count;
 }
