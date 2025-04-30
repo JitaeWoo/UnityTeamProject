@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public struct MeleeAttackInfo
 {
     public float Term;
     public float Speed;
 }
 
+[System.Serializable]
 public struct RangeAttackInfo 
 {
     public float Term;
@@ -19,18 +21,27 @@ public struct RangeAttackInfo
 
 public class MonsterAttack // : MonoBehaviour
 {
+    #region > Variables
     private Rigidbody _rigidbody;
-    private Transform _muzzlePoint;
+    private MeleeAttackInfo _meleeAttackInfo;
+    private RangeAttackInfo _rangeAttackInfo;
+    #endregion
 
-    public MonsterAttack(Rigidbody rigid, Transform muzzlePoint) {
+
+
+    public MonsterAttack(Rigidbody rigid, MeleeAttackInfo meleeAttackInfo, RangeAttackInfo rangeAttackInfo) {
         _rigidbody = rigid;
-        _muzzlePoint = muzzlePoint;
+        _meleeAttackInfo = meleeAttackInfo;
+        _rangeAttackInfo = rangeAttackInfo;
     }
 
+
+
+    #region > Custom functions
     public IEnumerator Dash() {
         while (true) {
-            _rigidbody.AddForce(_rigidbody.transform.forward * 3f, ForceMode.Impulse);
-            yield return new WaitForSeconds(1f);
+            _rigidbody.AddForce(_rigidbody.transform.forward * _meleeAttackInfo.Speed, ForceMode.Impulse);
+            yield return new WaitForSeconds(_meleeAttackInfo.Term);
         }
     }
 
@@ -38,8 +49,8 @@ public class MonsterAttack // : MonoBehaviour
     {
         while (true)
         {
-            _rigidbody.AddForce(_rigidbody.transform.up * 3f, ForceMode.Impulse);
-            yield return new WaitForSeconds(1f);
+            _rigidbody.AddForce(_rigidbody.transform.up * _meleeAttackInfo.Speed, ForceMode.Impulse);
+            yield return new WaitForSeconds(_meleeAttackInfo.Term);
         }
     }
 
@@ -49,13 +60,13 @@ public class MonsterAttack // : MonoBehaviour
         {
             if (projectiles.TryPop(out GameObject projectile)) 
             {
-                Debug.Log("Fire");
-                projectile.SetActive(true);
-                projectile.transform.position = _muzzlePoint.position;
-                projectile.transform.forward = _muzzlePoint.forward;
-                projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * 3f, ForceMode.Impulse);
+                projectile.transform.position = _rangeAttackInfo.MuzzlePoint.position;
+                projectile.transform.forward = _rangeAttackInfo.MuzzlePoint.forward;
+                projectile.GetComponent<MonsterProjectileScript>().Activate();
+                projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * _rangeAttackInfo.ProjectileSpeed, ForceMode.Impulse);
             }
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(_rangeAttackInfo.Term);
         }
     }
+    #endregion
 }

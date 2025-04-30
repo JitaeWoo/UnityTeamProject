@@ -21,6 +21,10 @@ public class PlayerManager : Singleton<PlayerManager>
         _stats.Damage = 10;
         _stats.ShotSize = 1;
         _stats.ProjectileNum = 1;
+        _stats.InvincibleTime = 0.1f;
+        _stats.ShotSpeed = 10;
+        _stats.FireRate = 1;
+        _stats.PierceNum = 0;
     }
 
     public void CreatePlayer(Vector3 position)
