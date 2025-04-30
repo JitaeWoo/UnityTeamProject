@@ -94,7 +94,7 @@ public class MonsterController : MonoBehaviour, IDamagable
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         // target object 탐지범위 표시
         if(_isDetected){ Gizmos.color = Color.blue; } else { Gizmos.color = Color.green; }
