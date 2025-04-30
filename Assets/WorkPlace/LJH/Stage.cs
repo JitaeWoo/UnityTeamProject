@@ -7,12 +7,8 @@ using UnityEngine.UIElements;
 
 public class Stage : MonoBehaviour
 {
-    [SerializeField] private GameObject monsterPrefab;
-    [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private Wave[] waves;
     [SerializeField] public int currentWaveIndex;
-    [SerializeField] public float spawnDistanceFromPlayer = 5f;
-    [SerializeField] private float spawnHeight = 0f;
     [SerializeField] private int _monsterCount = 0;
     [SerializeField] private bool _isAllMonsterSpawned;
 
@@ -20,25 +16,12 @@ public class Stage : MonoBehaviour
     public Collider mapBounds;
     //플레이어 위치를 위한 선언
     public Transform player;
-    //카메라 위치를 위한 선언
-    private Camera mainCamera;
-
-    //몬스터 리스트 생성
-    private List<GameObject> currentMonsters = new List<GameObject>();
-
+    
     private void Start()
     {
-        mainCamera = Camera.main;
-        
         //웨이브 시작
         StartCoroutine(SpawnWave());
 
-        
-    }
-
-    private void Update()
-    {
-        
     }
 
     private Vector3 GetSpawnPosition()
@@ -48,10 +31,10 @@ public class Stage : MonoBehaviour
         //맵 크기
         Bounds bounds = mapBounds.bounds;
 
-        float minX = bounds.min.x;
-        float maxX = bounds.max.x;
-        float minZ = bounds.min.z;
-        float maxZ = bounds.max.z;
+        float minX = bounds.min.x+5;
+        float maxX = bounds.max.x-5;
+        float minZ = bounds.min.z+5;
+        float maxZ = bounds.max.z-5;
 
 
         //스폰 좌표 변수 초기화
@@ -184,13 +167,7 @@ public class Stage : MonoBehaviour
             Debug.Log($"{currentWaveIndex} 웨이브를 시작합니다.");
             StartCoroutine(SpawnWave());
         }
-        else
-        {
-            //웨이브 배열의 길이와 같다면(모든 웨이브를 클리어했다) 다음씬으로 넘어감
-            Debug.Log("모든 웨이브 클리어!");
-            LoadNextScene();
-        }
-
+        
     }
 
     private void CreateMonster(Vector3 position, GameObject prefab)
@@ -200,7 +177,7 @@ public class Stage : MonoBehaviour
         //몬스터 생성함
         GameObject monster = Instantiate(prefab, position, Quaternion.identity);
         //몬스터가 파괴되었을 때
-        monster.GetComponent<MonsterController>().OnDied += () =>
+        monster.GetComponent<MonsterController>().OnDied.AddListener(() =>
         {
             //몬스터 수를 하나 감소
             _monsterCount--;
@@ -210,29 +187,8 @@ public class Stage : MonoBehaviour
                 //다음 씬으로 넘어감
                 Manager.Game.SceneChange("NextScene");
             }
-        };
+        });  
 
     }
 
-    private void LoadNextScene()
-    {
-        //빌드인덱스에서 씬을 가져옴
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        //지금씬에서 하나 더한 것이 다음씬
-        int nextSceneIndex = currentSceneIndex + 1;
-
-        //만일 다음씬이 빌드세팅에 셋팅된 씬들의 값보다 작다면
-        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
-        {
-            //다음 씬으로 넘어감
-            Debug.Log("다음 씬으로 넘어갑니다.");
-            SceneManager.LoadScene(nextSceneIndex);
-        }
-        else
-        {
-            //그렇지 않다면 다음씬이 없으므로 게임을 종료함
-            Debug.Log("다음 씬이 존재하지 않습니다. 게임종료합니다.");
-        }
-
-    }
 }
