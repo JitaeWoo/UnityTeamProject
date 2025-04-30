@@ -463,8 +463,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 696529433}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6263108, y: 0.000008091331, z: 0.000020899579, w: 0.7795735}
-  m_LocalPosition: {x: 0.06598308, y: 7.7925525, z: -2.3282702}
+  m_LocalRotation: {x: 0.7024323, y: 0.0010636294, z: -0.0010515711, w: 0.7117491}
+  m_LocalPosition: {x: 94.9877, y: 50.889343, z: 86.80104}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -674,7 +674,7 @@ Transform:
   m_GameObject: {fileID: 832135161}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 95, y: 1, z: 95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -932,10 +932,16 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   waves:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  currentWaveIndex: 10
+  - monsterCount: 10
+    spawnInterval: 0.3
+    timeLimit: 10
+  - monsterCount: 10
+    spawnInterval: 0.3
+    timeLimit: 10
+  - monsterCount: 10
+    spawnInterval: 0.3
+    timeLimit: 10
+  currentWaveIndex: 0
   spawnDistanceFromPlayer: 3
   spawnHeight: 0
   mapBounds: {fileID: 1597874484}
@@ -949,7 +955,7 @@ Transform:
   m_GameObject: {fileID: 1537421500}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.00000047683716, y: 1, z: 9.999999}
+  m_LocalPosition: {x: 94.2, y: 1, z: 9.999999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
