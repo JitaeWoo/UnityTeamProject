@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamagable
@@ -92,13 +93,22 @@ public class PlayerController : MonoBehaviour, IDamagable
         }
     }
 
+    void Died()
+    {
+        // 사망시 파괴
+        Destroy(_player.gameObject);
+    }
+
     public void TakeHit(int damage)
     {
         // 플레이어 데미지, 무적시간동안은 피해를 받지 않음
-        if (IsDamagable)
+        if (Manager.Player.Stats.CurHp > 0)
+        {
+            if (IsDamagable)
             Manager.Player.Stats.CurHp -= damage;
-        if (_invincibleRoutine == null)
-            _invincibleRoutine = StartCoroutine(Invincibility());
+            if (_invincibleRoutine == null)
+                _invincibleRoutine = StartCoroutine(Invincibility());
+        }
     }
 
     public Vector3 GetMoveDirection()
@@ -111,10 +121,16 @@ public class PlayerController : MonoBehaviour, IDamagable
         return _muzzlePosition;
     }
 
+    private void OnDestroy()
+    {
+        Manager.Player.OnDied -= Died;
+    }
+
     void Init()
     {
         // 기본 초기화 과정
         _mainCamera = Camera.main;
+        Manager.Player.OnDied += Died;
 
         // 아래는 임시 테스트용
         Manager.Player.Stats.FireRate = 0.2f;
