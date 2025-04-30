@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 310993948258021259}
   - component: {fileID: 1039262652209894398}
   - component: {fileID: 4568243322475414025}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ MonoBehaviour:
   Hp: 50
   Type: 1
   Damage: 5
-  _targetObject: {fileID: 0}
+  _targetObject: {fileID: 1650781213301247755, guid: d59c2988fef58904ebddffd8ed4da77a, type: 3}
   _moveSpeed: 0.5
   _detectRange: 4.5
   _attackRange: 2.5
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 191107021459481836}
   - component: {fileID: 7677259031486417640}
   - component: {fileID: 8749651666712760720}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,7 +282,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7203644190941985991}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MuzzlePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -8,6 +8,8 @@ public class PlayerManager : Singleton<PlayerManager>
     [SerializeField] GameObject _playerPrefab;
     private PlayerStats _stats = new PlayerStats();
     public PlayerStats Stats => _stats;
+    private GameObject _player;
+    public GameObject Player => _player;
     public event Action OnDied;
 
     private void Awake()
@@ -43,6 +45,6 @@ public class PlayerManager : Singleton<PlayerManager>
 
     public void CreatePlayer(Vector3 position)
     {
-        Instantiate(_playerPrefab, position, Quaternion.identity);
+        _player = Instantiate(_playerPrefab, position, Quaternion.identity);
     }
 }
