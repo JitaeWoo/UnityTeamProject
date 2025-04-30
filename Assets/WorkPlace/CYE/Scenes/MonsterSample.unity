@@ -459,16 +459,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28880e6851649b64aa4ad19fe6f54354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 0
+  Hp: 50
   Type: 0
-  Damage: 0
+  Damage: 5
   _targetObject: {fileID: 537864757}
-  _projectileObject: {fileID: 0}
   _moveSpeed: 0.5
   _detectRange: 4.5
   _attackRange: 2.5
-  _projectilePoolSize: 0
-  _muzzlePoint: {fileID: 0}
+  _meleeAttackInfo:
+    Term: 1
+    Speed: 5
+  _rangeAttackInfo:
+    Term: 0
+    Projectile: {fileID: 0}
+    ProjectileTotalCount: 0
+    ProjectileSpeed: 0
+    MuzzlePoint: {fileID: 0}
 --- !u!54 &497517840
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -812,16 +818,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28880e6851649b64aa4ad19fe6f54354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 0
+  Hp: 100
   Type: 2
-  Damage: 0
+  Damage: 10
   _targetObject: {fileID: 537864757}
-  _projectileObject: {fileID: 0}
   _moveSpeed: 0.5
   _detectRange: 4.5
   _attackRange: 2.5
-  _projectilePoolSize: 0
-  _muzzlePoint: {fileID: 0}
+  _meleeAttackInfo:
+    Term: 1
+    Speed: 5
+  _rangeAttackInfo:
+    Term: 0
+    Projectile: {fileID: 0}
+    ProjectileTotalCount: 0
+    ProjectileSpeed: 0
+    MuzzlePoint: {fileID: 0}
 --- !u!54 &564494173
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1694,16 +1706,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28880e6851649b64aa4ad19fe6f54354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 0
+  Hp: 50
   Type: 1
-  Damage: 0
+  Damage: 5
   _targetObject: {fileID: 537864757}
-  _projectileObject: {fileID: 7492524681301629692, guid: a8462d73d3baac84d95a11f427acd850, type: 3}
   _moveSpeed: 0.5
   _detectRange: 4.5
   _attackRange: 2.5
-  _projectilePoolSize: 5
-  _muzzlePoint: {fileID: 674534467}
+  _meleeAttackInfo:
+    Term: 0
+    Speed: 0
+  _rangeAttackInfo:
+    Term: 1
+    Projectile: {fileID: 7492524681301629692, guid: a8462d73d3baac84d95a11f427acd850, type: 3}
+    ProjectileTotalCount: 5
+    ProjectileSpeed: 5
+    MuzzlePoint: {fileID: 674534467}
 --- !u!54 &2007985054
 Rigidbody:
   m_ObjectHideFlags: 0

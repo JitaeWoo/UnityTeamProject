@@ -17,17 +17,15 @@ public class MonsterController : MonoBehaviour, IDamagable
     public int Hp;
     public MonsterType Type;
     public int Damage;
-    // 추적할 object
     [SerializeField] private GameObject _targetObject;
-    // 투사체(발사체) object
-    [SerializeField] private GameObject _projectileObject;
-    // 이동 속도
+    //[SerializeField] private GameObject _projectileObject;
     [SerializeField] private float _moveSpeed;
-    // _targetObject에 대한 추적 범위
     [SerializeField] private float _detectRange;
     [SerializeField] private float _attackRange;
-    [SerializeField] private int _projectilePoolSize;
-    [SerializeField] private Transform _muzzlePoint;
+    //[SerializeField] private int _projectilePoolSize;
+    //[SerializeField] private Transform _muzzlePoint;
+    [SerializeField] private MeleeAttackInfo _meleeAttackInfo;
+    [SerializeField] private RangeAttackInfo _rangeAttackInfo;
     #endregion
 
     #region >> Private variables
@@ -42,15 +40,16 @@ public class MonsterController : MonoBehaviour, IDamagable
     // 충돌 여부
     private bool _isCollide;
     // 추가 충돌 범위
-    private float _collideRange = 1f;
+    private float _collideRange = 1f; // 해당 기능은 추후 제외될 가능성이 있으므로 직렬화하지 않음.
+    // target object 방향
     private Vector3 _targetDirection;
     // 충돌시 움직임을 멈춰야하는 object layer
     private LayerMask _blockMovementLayer;
-    //private UnityEvent _attack;
+    // monster attack 객체
     private MonsterAttack _monsterAttack;
-
+    // monster attack coroutine
     private Coroutine _attackRoutine;
-
+    // 투사체 object pool
     private Stack<GameObject> _projectilePool;
     #endregion
 
@@ -77,21 +76,6 @@ public class MonsterController : MonoBehaviour, IDamagable
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        // target object 탐지범위 표시
-        if(_isDetected){ Gizmos.color = Color.blue; } else { Gizmos.color = Color.green; }
-        Gizmos.DrawWireSphere(transform.position, _detectRange);
-
-        // 추가 충돌 영역 표시
-        if (_isCollide) { Gizmos.color = Color.red; } else { Gizmos.color = Color.yellow; }
-        Gizmos.DrawRay(transform.position, _targetDirection);
-
-        // 공격 영역 표시
-        //if (_isCollide) { Gizmos.color = Color.red; } else { Gizmos.color = Color.yellow; }
-        Gizmos.DrawWireSphere(transform.position, _attackRange);
-    }
-
     //private void OnCollisionEnter(Collision collision)
     //{
     //    if (collision.transform.CompareTag("Player"))
@@ -107,6 +91,21 @@ public class MonsterController : MonoBehaviour, IDamagable
     //        _isCollide = false;
     //    }
     //}
+
+    private void OnDrawGizmos()
+    {
+        // target object 탐지범위 표시
+        if(_isDetected){ Gizmos.color = Color.blue; } else { Gizmos.color = Color.green; }
+        Gizmos.DrawWireSphere(transform.position, _detectRange);
+
+        // 추가 충돌 영역 표시
+        if (_isCollide) { Gizmos.color = Color.red; } else { Gizmos.color = Color.yellow; }
+        Gizmos.DrawRay(transform.position, _targetDirection);
+
+        // 공격 영역 표시
+        //if (_isAttackable) { Gizmos.color = Color.red; } else { Gizmos.color = Color.yellow; }
+        Gizmos.DrawWireSphere(transform.position, _attackRange);
+    }
     #endregion
 
     // ===== //
@@ -119,18 +118,16 @@ public class MonsterController : MonoBehaviour, IDamagable
         _detectLayer = 1 << _targetObject.layer;
         _isCollide = false;
         _blockMovementLayer = LayerMask.GetMask("Player", "Wall");
-        //_attack = new UnityEvent();
-
-        _projectilePool = new Stack<GameObject>(_projectilePoolSize);
-        for (int cnt = 0; cnt < _projectilePoolSize; cnt++) 
+        _projectilePool = new Stack<GameObject>(_rangeAttackInfo.ProjectileTotalCount);
+        for (int cnt = 0; cnt < _rangeAttackInfo.ProjectileTotalCount; cnt++) 
         {
-            GameObject instant = Instantiate(_projectileObject);
-            instant.GetComponent<MonsterBulletScript>().ReturnPool = _projectilePool;
-            instant.GetComponent<MonsterBulletScript>().Lifespan = 3f;
+            GameObject instant = Instantiate(_rangeAttackInfo.Projectile);
+            instant.GetComponent<MonsterProjectileScript>().ReturnPool = _projectilePool;
+            instant.GetComponent<MonsterProjectileScript>().Lifespan = 3f;
             instant.SetActive(false);
             _projectilePool.Push(instant);
         }
-        _monsterAttack = new MonsterAttack(_rigidbody, _muzzlePoint);
+        _monsterAttack = new MonsterAttack(_rigidbody, _meleeAttackInfo, _rangeAttackInfo);
     }
 
     public void TakeHit(int attackPoint) 

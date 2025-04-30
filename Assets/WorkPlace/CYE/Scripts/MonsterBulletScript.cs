@@ -2,25 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterBulletScript : MonoBehaviour
+public class MonsterProjectileScript : MonoBehaviour
 {
+    #region > Variables
     public Stack<GameObject> ReturnPool;
     public float Lifespan;
-    private Coroutine _coroutine = null;
-    private void OnEnable()
+    public int Damage;
+    private Coroutine _coroutine;
+    #endregion
+
+
+
+    #region > Unity message functions
+    private void Awake()
     {
-        if (_coroutine is null) {
-            _coroutine = StartCoroutine(CheckLifespan());
-        }
+        _coroutine = null;
     }
     private void OnCollisionEnter(Collision collision) 
     {
         if (collision.gameObject.CompareTag("Player")) {
+            collision.gameObject.GetComponent<IDamagable>().TakeHit(Damage);
             Deactivate();
         }
     }
-    private void Deactivate() {
+    #endregion
+
+
+
+    #region > Custom functions
+    public void Activate()
+    {
+        gameObject.SetActive(true);
+        if (_coroutine is null)
+        {
+            _coroutine = StartCoroutine(CheckLifespan());
+        }
+    }
+    public void Deactivate() 
+    {
         gameObject.SetActive(false);
+        if (_coroutine is not null) 
+        {
+            StopCoroutine(_coroutine);
+            _coroutine = null;
+        }
         ReturnPool.Push(gameObject);
     }
     private IEnumerator CheckLifespan() 
@@ -29,6 +54,6 @@ public class MonsterBulletScript : MonoBehaviour
         if (gameObject.activeSelf) {
             Deactivate();
         }
-
     }
+    #endregion
 }
