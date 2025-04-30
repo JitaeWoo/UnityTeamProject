@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 4362865184125269222}
   - component: {fileID: 2550349808555309163}
   m_Layer: 5
-  m_Name: Control Manual Popup
+  m_Name: Manual Popup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
