@@ -29,6 +29,8 @@ public class MonsterController : MonoBehaviour, IDamagable
     #endregion
 
     #region >> Private variables
+    // target object 
+    //private GameObject _targetObject => Manager.Player.Player;
     // target object Å½Áö¿©ºÎ
     private bool _isDetected;
     // target object layer
@@ -147,7 +149,7 @@ public class MonsterController : MonoBehaviour, IDamagable
 
     private void Die() 
     {
-        Destroy(this, _dyingAnimationTime);
+        Destroy(gameObject, _dyingAnimationTime);
     }
 
     private void DetectTarget() {
@@ -168,7 +170,8 @@ public class MonsterController : MonoBehaviour, IDamagable
     }
     private void FollowTarget()
     {
-        transform.position = Vector3.MoveTowards(transform.position, _targetObject.transform.position, _moveSpeed * Time.deltaTime);
+        Vector3 targetPosition = new Vector3(_targetObject.transform.position.x, transform.position.y, _targetObject.transform.position.z);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, _moveSpeed * Time.deltaTime);
     }
 
     private void DetectCollide()
