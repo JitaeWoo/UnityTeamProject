@@ -26,6 +26,8 @@ public class Bullet : MonoBehaviour
         // 몬스터에 충돌 시 관통 기능
         if(other.gameObject.layer == 9)
         {
+            other.GetComponent<MonsterController>()?.TakeHit(Manager.Player.Stats.Damage);
+
             if(PierceNum > 0)
             {
                 PierceNum--;
