@@ -6,22 +6,28 @@ public class PlayerSkill : MonoBehaviour
 {
     public enum Skills
     {
-        Dash, GrenadeThrow
+        GrenadeThrow, BeamShot
     }
 
     [SerializeField] private Skills _selectedSkill;
     private Skill _skill;
+    private Skill _utilitySkill;
 
     private void Awake()
     {
         EquipSkill(_selectedSkill);
+        _utilitySkill = gameObject.AddComponent<Dash>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(1))
         {
             _skill.Use();
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _utilitySkill.Use();
         }
     }
 
@@ -35,11 +41,11 @@ public class PlayerSkill : MonoBehaviour
 
         switch (skill)
         {
-            case Skills.Dash:
-                _skill = gameObject.AddComponent<Dash>();
-                break;
             case Skills.GrenadeThrow:
                 _skill = gameObject.AddComponent<GrenadeThrow>();
+                break;
+            case Skills.BeamShot:
+                _skill = gameObject.AddComponent<BeamShot>();
                 break;
         }
     }
