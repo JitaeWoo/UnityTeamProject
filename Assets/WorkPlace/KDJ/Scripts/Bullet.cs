@@ -40,10 +40,6 @@ public class Bullet : MonoBehaviour
     void HomingBullet()
     {
         // 유도 미구현
-        if(Manager.Player.Stats.IsBulletHoming)
-        {
-            
-        }
     }
 
     IEnumerator ReturnBullet(float delay = 0)
