@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class Stage : MonoBehaviour
 {
@@ -140,20 +141,31 @@ public class Stage : MonoBehaviour
 
         //웨이브 시간
         float waveStartTime = Time.time;
-        
-        //웨이브는 0부터 몬스터 카운트까지
-        for (int i = 0; i < currentWave.monsterCount; i++)
-        {
 
-            //스폰 포지션을 가져옴
-            Vector3 spwanposition = GetSpawnPosition();
-            //몬스터프리팹에서 스폰 포인트에 몬스터를 가져와서 생성함
-            GameObject monster = Instantiate(monsterPrefab, spwanposition, Quaternion.identity);
-                        
-            //그 몬스터를 추가함
-            currentMonsters.Add(monster);
-            //생성 지연
-            yield return new WaitForSeconds(currentWave.spawnInterval);
+        ////웨이브는 0부터 몬스터 카운트까지
+        //for (int i = 0; i < currentWave.monsterCount; i++)
+        //{
+
+        //    //스폰 포지션을 가져옴
+        //    Vector3 spwanposition = GetSpawnPosition();
+        //    //몬스터프리팹에서 스폰 포인트에 몬스터를 가져와서 생성함
+        //    GameObject monster = Instantiate(monsterPrefab, spwanposition, Quaternion.identity);
+
+        //    //그 몬스터를 추가함
+        //    currentMonsters.Add(monster);
+        //    //생성 지연
+        //    yield return new WaitForSeconds(currentWave.spawnInterval);
+        //}
+        //웨이브 몬스터 그룹 전체
+        foreach (var group in currentWave.WaveMonsters)
+        {
+            //그룹의 수까지
+            for (int i = 0; i < group.Count; i++)
+            {
+                Vector3 spwanposition = GetSpawnPosition();
+                GameObject monster = Instantiate(group.MonsterPrefab, spwanposition, Quaternion.identity);
+                currentMonsters.Add(monster);
+            }
         }
         while(true)
         {
