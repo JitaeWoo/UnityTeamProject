@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PopupCloseButton : MonoBehaviour
+public class PopupDestroyer_Title : MonoBehaviour
 {
     // X 버튼 클릭 시 호출되는 함수
     public void ClosePopup()
