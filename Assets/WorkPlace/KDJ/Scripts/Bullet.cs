@@ -24,7 +24,7 @@ public class Bullet : MonoBehaviour
         }
 
         // 몬스터에 충돌 시 관통 기능
-        if(other.gameObject.tag == "Monster")
+        if(other.gameObject.layer == 9)
         {
             if(PierceNum > 0)
             {
