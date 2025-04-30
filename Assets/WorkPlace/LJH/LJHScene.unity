@@ -932,15 +932,33 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   waves:
-  - monsterCount: 10
-    spawnInterval: 0.3
+  - spawnInterval: 0.3
     timeLimit: 10
-  - monsterCount: 10
-    spawnInterval: 0.3
+    WaveMonsters:
+    - MonsterPrefab: {fileID: 3881693458670559845, guid: 882f0ce4daccbe54d8ccd1f22737c813, type: 3}
+      Count: 10
+    - MonsterPrefab: {fileID: 5744300422889491886, guid: 0d5579ce5b84d16408f9d9511238647e, type: 3}
+      Count: 3
+    - MonsterPrefab: {fileID: 531141777922013794, guid: 64bdfff2539d47141a6def4ef4f84270, type: 3}
+      Count: 4
+  - spawnInterval: 0.3
     timeLimit: 10
-  - monsterCount: 10
-    spawnInterval: 0.3
+    WaveMonsters:
+    - MonsterPrefab: {fileID: 5744300422889491886, guid: 0d5579ce5b84d16408f9d9511238647e, type: 3}
+      Count: 3
+    - MonsterPrefab: {fileID: 531141777922013794, guid: 64bdfff2539d47141a6def4ef4f84270, type: 3}
+      Count: 3
+    - MonsterPrefab: {fileID: 3881693458670559845, guid: 882f0ce4daccbe54d8ccd1f22737c813, type: 3}
+      Count: 4
+  - spawnInterval: 0.3
     timeLimit: 10
+    WaveMonsters:
+    - MonsterPrefab: {fileID: 531141777922013794, guid: 64bdfff2539d47141a6def4ef4f84270, type: 3}
+      Count: 3
+    - MonsterPrefab: {fileID: 3881693458670559845, guid: 882f0ce4daccbe54d8ccd1f22737c813, type: 3}
+      Count: 3
+    - MonsterPrefab: {fileID: 5744300422889491886, guid: 0d5579ce5b84d16408f9d9511238647e, type: 3}
+      Count: 4
   currentWaveIndex: 0
   spawnDistanceFromPlayer: 3
   spawnHeight: 0
