@@ -17,6 +17,7 @@ public class MonsterController : MonoBehaviour, IDamagable
     public int Hp;
     public MonsterType Type;
     public int Damage;
+    public UnityEvent OnDied;
     [SerializeField] private GameObject _targetObject;
     //[SerializeField] private GameObject _projectileObject;
     [SerializeField] private float _moveSpeed;
@@ -66,6 +67,11 @@ public class MonsterController : MonoBehaviour, IDamagable
         Init();
     }
 
+    private void Start()
+    {
+        //_detectLayer = 1 << _targetObject.layer;
+    }
+
     private void Update()
     {
         if(_targetObject != null && Manager.Player.Stats.CurHp > 0)
@@ -75,7 +81,6 @@ public class MonsterController : MonoBehaviour, IDamagable
             CheckAttackable();
             if (_isDetected && !_isCollide)
             {
-
                 LookTarget();
                 FollowTarget();
                 if (_isAttackable) {
@@ -108,13 +113,11 @@ public class MonsterController : MonoBehaviour, IDamagable
     {
         _rigidbody = gameObject.GetComponent<Rigidbody>();
         _dyingAnimationTime = 3f;
-        _detectLayer = 1 << _targetObject.layer;
         _isCollide = false;
         _blockMovementLayer = LayerMask.GetMask("Player", "Wall");
         _isAttackable = false;
         if (Type == MonsterType.Range) 
         {
-
             _projectilePool = new Stack<GameObject>(_rangeAttackInfo.ProjectileTotalCount);
             for (int cnt = 0; cnt < _rangeAttackInfo.ProjectileTotalCount; cnt++)
             {
@@ -145,6 +148,7 @@ public class MonsterController : MonoBehaviour, IDamagable
 
     private void Die() 
     {
+        OnDied?.Invoke();
         Destroy(gameObject, _dyingAnimationTime);
     }
 
