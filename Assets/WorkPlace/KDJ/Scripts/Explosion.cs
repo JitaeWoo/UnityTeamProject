@@ -17,7 +17,7 @@ public class Explosion : MonoBehaviour
         {
             if (monsters[i].gameObject.layer == 9)
             {
-                monsters[i].GetComponent<IDamagable>()?.TakeHit(10);
+                monsters[i].GetComponentInParent<IDamagable>()?.TakeHit(10);
             }
         }
     }

@@ -18,7 +18,7 @@ public class Beam : MonoBehaviour
         if (other.gameObject.layer == 9)
         {
             if (CanAttack)
-                other.GetComponent<IDamagable>()?.TakeHit(5);
+                other.GetComponentInParent<IDamagable>()?.TakeHit(5);
         }
     }
 
