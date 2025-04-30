@@ -13,6 +13,8 @@ public class Stage : MonoBehaviour
     [SerializeField] public int currentWaveIndex;
     [SerializeField] public float spawnDistanceFromPlayer = 5f;
     [SerializeField] private float spawnHeight = 0f;
+    [SerializeField] private int _monsterCount = 0;
+    [SerializeField] private bool _isAllMonsterSpawned;
 
     //생성한 맵위에 몬스터 생성
     public Collider mapBounds;
@@ -142,35 +144,30 @@ public class Stage : MonoBehaviour
         //웨이브 시간
         float waveStartTime = Time.time;
 
-        ////웨이브는 0부터 몬스터 카운트까지
-        //for (int i = 0; i < currentWave.monsterCount; i++)
-        //{
-
-        //    //스폰 포지션을 가져옴
-        //    Vector3 spwanposition = GetSpawnPosition();
-        //    //몬스터프리팹에서 스폰 포인트에 몬스터를 가져와서 생성함
-        //    GameObject monster = Instantiate(monsterPrefab, spwanposition, Quaternion.identity);
-
-        //    //그 몬스터를 추가함
-        //    currentMonsters.Add(monster);
-        //    //생성 지연
-        //    yield return new WaitForSeconds(currentWave.spawnInterval);
-        //}
         //웨이브 몬스터 그룹 전체
         foreach (var group in currentWave.WaveMonsters)
         {
             //그룹의 수까지
             for (int i = 0; i < group.Count; i++)
             {
+                //스폰 포지션을 가져옴
                 Vector3 spwanposition = GetSpawnPosition();
-                GameObject monster = Instantiate(group.MonsterPrefab, spwanposition, Quaternion.identity);
-                currentMonsters.Add(monster);
+                //생성되고 파괴된 몬스터 카운팅
+                CreateMonster(spwanposition, group.MonsterPrefab);
+                //생성 지연
+                yield return new WaitForSeconds(currentWave.spawnInterval);
             }
         }
+
+        if (currentWaveIndex == waves.Length - 1)
+        {
+            _isAllMonsterSpawned = true;
+        }
+
         while(true)
         {
             //주어진 웨이브 시간이 완료되거나 몬스터가 없다면
-            if (Time.time - waveStartTime >=currentWave.timeLimit || currentMonsters.Count == 0)
+            if (Time.time - waveStartTime >=currentWave.timeLimit || _monsterCount == 0)
             { 
                 //빠져나옴
                 break; 
@@ -196,7 +193,26 @@ public class Stage : MonoBehaviour
 
     }
 
-    
+    private void CreateMonster(Vector3 position, GameObject prefab)
+    {
+        //몬스터 수를 하나 증가
+        _monsterCount++;
+        //몬스터 생성함
+        GameObject monster = Instantiate(prefab, position, Quaternion.identity);
+        //몬스터가 파괴되었을 때
+        monster.GetComponent<MonsterController>().OnDied += () =>
+        {
+            //몬스터 수를 하나 감소
+            _monsterCount--;
+            //모든 몬스터가 파괴되었다면
+            if (_monsterCount == 0 && _isAllMonsterSpawned)
+            {
+                //다음 씬으로 넘어감
+                Manager.Game.SceneChange("NextScene");
+            }
+        };
+
+    }
 
     private void LoadNextScene()
     {
