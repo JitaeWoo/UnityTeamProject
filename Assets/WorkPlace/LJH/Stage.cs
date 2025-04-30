@@ -39,40 +39,89 @@ public class Stage : MonoBehaviour
     }
 
     private Vector3 GetSpawnPosition()
-    {
+    {   
+        //메인 카메라 위치
+        Vector3 cameraPos = Camera.main.transform.position;
+        //맵 크기
+        Bounds bounds = mapBounds.bounds;
 
-        Vector3 spawnPos = Vector3.zero;
-        //스폰 가능 지점을 false로 초기화함
-        bool validPosition = false;
+        float minX = bounds.min.x;
+        float maxX = bounds.max.x;
+        float minZ = bounds.min.z;
+        float maxZ = bounds.max.z;
 
-        //스폰 가능 지점이 아닐때까지
-        while (!validPosition)
+
+        //스폰 좌표 변수 초기화
+        float x;
+        float z;
+        //실패한 시도 회수(무한 루프 방지)
+        int loop = 0;
+
+        //맞는 좌표를 찾을 때까지 반복
+        while (true)
         {
-            //랜덤한 숫자를 뽑아서 0.5보다 작으면 -1 크거나 같으면 1을 side에 넣음
-            float side = Random.value < 0.5f ? -1f : 1f;
-            //x:side 값이 -1이면 -0.1로 화면 왼쪽 밖, 1이면 1.1로 화면의 오른쪽 밖에서 등장하도록 설정
-            //y:화면 아래쪽 20%부터 위쪽 80% 사이에 랜덤으로 나타나게함
-            //z:카메라가 볼 수 있는 거리 안쪽에 생성되도록 함
-            Vector3 viewportPos = new Vector3(side < 0 ? -0.1f : 1.1f, Random.Range(0.2f, 0.8f), mainCamera.nearClipPlane + 5);
-            //viewportPos를 월드 좌표로 변환
-            spawnPos = mainCamera.ViewportToWorldPoint(viewportPos);
-            //높이는 매직넘버가 아닌 변수로 설정
-            spawnPos.y = spawnHeight;
+            //true면 앞뒤 방향 기준으로 거리를 띄우고 false면 좌우 방향으로 거리를 띄움
+            bool isVertical = Random.value > 0.5f;
+            //방향이 플레이어 기준 위,오른쪽인지 아래,왼쪽인지 정함
+            bool isPositive = Random.value > 0.5f;
 
-            //플레이어와 거리가 충분히 거리가 있는지 확인
-            bool distanceOk = Vector3.Distance(spawnPos, player.position) >= spawnDistanceFromPlayer;
-            //맵 안에 스폰지점이 있는지 확인
-            bool inSideMap = mapBounds.bounds.Contains(new Vector3(spawnPos.x, mapBounds.bounds.center.y, spawnPos.z));
-
-            //두가지 조건이 확인되었다면
-            if(distanceOk && inSideMap)
+            //50번 시도했으면 포기
+            if (loop >= 50)
             {
-                //스폰 가능한 지점을 true로 바꿔줌
-                validPosition = true;
+                Debug.Log("Fail GetSpawnPosition");
+                return Vector3.zero;
+            }
+            //true면 앞뒤로 떨어뜨림
+            if (isVertical)
+            {
+                //플레이어 위아래로 20만큼 떨어뜨림
+                z = 20;
+                //좌우는 -30과 30을 랜덤으로 주어짐
+                x = Random.Range(-30f, 30f);
+                //x 좌표 입력
+                x += cameraPos.x;
+
+                //생성이 안되면 
+                if (!isPositive)
+                {
+                    //반대쪽
+                    z *= -1;
+                }
+                //위치 입력
+                z += cameraPos.z;
+            }
+            //false면 좌우로 떨어뜨림
+            else
+            {
+                //플레이어 위 아래로 랜덤
+                z = Random.Range(-20f, 20f);
+                //위치 입력
+                z += cameraPos.z;
+                //좌우로 30고정
+                x = 30;
+                //생성이 안되면
+                if (!isPositive)
+                {
+                    //반대쪽
+                    x *= -1;
+                }
+                //좌표 입력
+                x += cameraPos.x;
+            }
+
+            //맵 안에 있을때
+            if (x < minX || x > maxX || z < minZ || z > maxZ)
+            {
+                //시도 추가
+                loop++;
+                continue;
+            }
+            else
+            {
+                //좌표값 반환
+                return new Vector3(x, 0, z);
             }
         }
-        //그 위치를 반환함
-        return spawnPos;
 
     }
 
@@ -88,6 +137,9 @@ public class Stage : MonoBehaviour
         }
         //웨이브 배열에서 현재 웨이브를 가져옴
         Wave currentWave = waves[currentWaveIndex];
+
+        //웨이브 시간
+        float waveStartTime = Time.time;
         
         //웨이브는 0부터 몬스터 카운트까지
         for (int i = 0; i < currentWave.monsterCount; i++)
@@ -103,33 +155,36 @@ public class Stage : MonoBehaviour
             //생성 지연
             yield return new WaitForSeconds(currentWave.spawnInterval);
         }
+        while(true)
+        {
+            //주어진 웨이브 시간이 완료되거나 몬스터가 없다면
+            if (Time.time - waveStartTime >=currentWave.timeLimit || currentMonsters.Count == 0)
+            { 
+                //빠져나옴
+                break; 
+            }
+            //아무것도 안하고 null을 반환함
+            yield return null;
+        }
+        //웨이브 단계값을 하나 올림
+        currentWaveIndex++;
+        //현재 웨이브가 웨이브배열의 길이보다 작다면
+        if (currentWaveIndex < waves.Length)
+        {
+            //웨이브를 시작함
+            Debug.Log($"{currentWaveIndex} 웨이브를 시작합니다.");
+            StartCoroutine(SpawnWave());
+        }
+        else
+        {
+            //웨이브 배열의 길이와 같다면(모든 웨이브를 클리어했다) 다음씬으로 넘어감
+            Debug.Log("모든 웨이브 클리어!");
+            LoadNextScene();
+        }
+
     }
 
-    //몬스터가 죽을때 이 함수를 호출해주세요~~
-    public void OnMonsterKilled(GameObject monster)
-    {
-        //리스트에서 몬스터를 제거함
-        currentMonsters.Remove(monster);
-        //몬스터가 없다면
-        if (currentMonsters.Count == 0)
-        {
-            //웨이브 단계값을 하나 올림
-            currentWaveIndex++;
-            //현재 웨이브가 웨이브배열의 길이보다 작다면
-            if (currentWaveIndex < waves.Length)
-            {
-                //웨이브를 시작함
-                Debug.Log($"{currentWaveIndex} 웨이브를 시작합니다.");
-                StartCoroutine(SpawnWave());
-            }
-            else
-            {
-                //웨이브 배열의 길이와 같다면(모든 웨이브를 클리어했다) 다음씬으로 넘어감
-                Debug.Log("모든 웨이브 클리어!");
-                LoadNextScene();
-            }
-        }
-    }
+    
 
     private void LoadNextScene()
     {
