@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    private void GrenadeExplosion()
     {
-        
+        if(true)
+        {
+
+        }
     }
 }

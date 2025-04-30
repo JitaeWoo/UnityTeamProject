@@ -17,7 +17,8 @@ public class PlayerStats
     public float FireRate;
     public int ProjectileNum;
     public int PierceNum;
-    public bool IsBulletHoming;
+    // 탄환 유도. 구현 안할수도 있음
+    // public bool IsBulletHoming; 
     public event Action OnMaxHpChanged;
     public event Action OnCurHpChanged;
 }
