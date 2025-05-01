@@ -928,8 +928,8 @@ MonoBehaviour:
   m_text: "\uB9C8\uC6B0\uC2A4\uB97C \uC6C0\uC9C1\uC5EC \uD50C\uB808\uC774\uC5B4\uAC00
     \uBC14\uB77C\uBCF4\uB294 \uBC29\uD5A5\uC744 \uACB0\uC815\uD558\uC138\uC694."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6bf63af688a7e8341b7c6dcbc93ee323, type: 2}
-  m_sharedMaterial: {fileID: -7450643971057782299, guid: 6bf63af688a7e8341b7c6dcbc93ee323, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1b41d5ecd27829149a0dadb317fd85fb, type: 2}
+  m_sharedMaterial: {fileID: 4279651443843226398, guid: 1b41d5ecd27829149a0dadb317fd85fb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
