@@ -6,16 +6,15 @@ public class PlayerSkill : MonoBehaviour
 {
     public enum Skills
     {
-        GrenadeThrow, BeamShot, Heal, ClearBullet, Slash
+        GrenadeThrow, BeamShot, Heal, ClearBullet, Slash, size
     }
 
-    [SerializeField] private Skills _selectedSkill;
     private Skill _skill;
     private Skill _utilitySkill;
 
     private void Awake()
     {
-        EquipSkill(_selectedSkill);
+        EquipSkill(Manager.Player.Skill);
         _utilitySkill = gameObject.AddComponent<Dash>();
     }
 
