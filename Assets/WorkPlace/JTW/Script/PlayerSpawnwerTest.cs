@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class PlayerSpawnwerTest : MonoBehaviour
 {
-    void Start()
+    private void Update()
     {
-        Manager.Player.CreatePlayer(Vector3.zero);
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Manager.Game.SceneChange("Stage1");
+        }
     }
 }
