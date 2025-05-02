@@ -22,16 +22,10 @@ public class HPBarUI : MonoBehaviour
         // 이벤트 구독
         _playerStats.OnCurHpChanged += UpdateHPBar;
         _playerStats.OnMaxHpChanged += UpdateMaxHP;
-    }
+        _playerStats.OnCurHpChanged += UpdateHPText;
+        _playerStats.OnMaxHpChanged += UpdateHPText;
 
-    private void Update()
-    {
-        // 방향키로 체력 감소 (테스트용)
-        if (Input.GetKey(KeyCode.DownArrow)) // 아래 방향키
-        {
-            _playerStats.CurHp -= 1;
-            if (_playerStats.CurHp < 0) _playerStats.CurHp = 0; // 체력이 0 미만으로 내려가지 않게
-        }
+        UpdateHPText();
     }
 
     private void UpdateHPBar()
@@ -48,7 +42,7 @@ public class HPBarUI : MonoBehaviour
     private void UpdateHPText()
     {
         // 현재 체력/최대 체력 형식으로 텍스트 업데이트
-        _hpText.text = $"{_playerStats.CurHp}/{_playerStats.MaxHp}";
+         _hpText.text = $"{_playerStats.CurHp}  /  {_playerStats.MaxHp}";
     }
 
     private void OnDestroy()
