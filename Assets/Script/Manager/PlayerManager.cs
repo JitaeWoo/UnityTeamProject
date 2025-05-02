@@ -9,6 +9,7 @@ public class PlayerManager : Singleton<PlayerManager>
     [SerializeField] private PlayerStats _stats = new PlayerStats();
     public PlayerStats Stats => _stats;
     private GameObject _player;
+    public PlayerSkill.Skills Skill;
     public GameObject Player => _player;
     public event Action OnDied;
 
