@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BeamShot : Skill
 {
-    [SerializeField] private float _beamCooldown = 1f;
+    [SerializeField] private float _beamCooldown = 10f;
     [SerializeField] private GameObject _beamPrefab;
 
     private PlayerController _player;

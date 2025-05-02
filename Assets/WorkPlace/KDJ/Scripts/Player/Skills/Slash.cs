@@ -1,24 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Slash : Skill
 {
-    [SerializeField] private float _SlashCooldown = 1f;
+    [SerializeField] private float _SlashCooldown = 6f;
     private Collider[] _enemies = new Collider[40];
 
     private float _halfAngle = 90f;
     private LayerMask _layerMask;
+    private GameObject _slashEffect;
 
     private void Awake()
     {
         CoolDown = _SlashCooldown;
         _layerMask = 1 << LayerMask.NameToLayer("Enemy");
+        _slashEffect = Resources.Load<GameObject>("SlashEffect");
     }
 
     protected override void ActivateSkill()
     {
         int hitCount = Physics.OverlapSphereNonAlloc(transform.position, 5f, _enemies, _layerMask);
+
+        GameObject instance = Instantiate(_slashEffect);
+        instance.transform.position = new Vector3(transform.position.x, 1, transform.position.z);
+        instance.transform.rotation = transform.rotation;
+        instance.transform.Rotate(Vector3.up, 180f);
 
         for (int i = 0; i < hitCount; i++)
         {
@@ -30,14 +38,14 @@ public class Slash : Skill
 
             if (angle <= _halfAngle)
             {
-                _enemies[i].GetComponent<IDamagable>()?.TakeHit(50);
+                _enemies[i].GetComponent<IDamagable>()?.TakeHit(30);
             }
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, 5f);
-    }
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.green;
+    //     Gizmos.DrawWireSphere(transform.position, 5f);
+    // }
 }
