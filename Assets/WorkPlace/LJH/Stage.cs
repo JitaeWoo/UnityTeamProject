@@ -21,6 +21,7 @@ public class Stage : MonoBehaviour
     
     private void Start()
     {
+        //넥스트 스테이지씬이름을 인스펙터에서 받아서 메니저변수에 넣음
         Manager.Stage.NextScene = nextStageSceneName;
         //웨이브 시작
         StartCoroutine(SpawnWave());
