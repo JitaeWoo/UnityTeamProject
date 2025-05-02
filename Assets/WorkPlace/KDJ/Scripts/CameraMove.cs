@@ -14,8 +14,7 @@ public class CameraMove : MonoBehaviour
 
     private void Start()
     {
-        _camera = Camera.main;
-        _player = Manager.Player.Player;
+        Init();
     }
 
     void MoveCamera()
@@ -60,5 +59,14 @@ public class CameraMove : MonoBehaviour
         }
     }
 
+    void Init()
+    {
+        _camera = Camera.main;
+        _player = Manager.Player.Player;
+        _camera.transform.position = new Vector3(0, 60, 0);
+        _camera.transform.rotation = Quaternion.Euler(90, 0, 0);
+        _camera.fieldOfView = 26f;
+        _camera.farClipPlane = 70f;
+    }
 
 }

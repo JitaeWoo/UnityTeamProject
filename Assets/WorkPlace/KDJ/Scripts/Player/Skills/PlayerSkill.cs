@@ -6,7 +6,7 @@ public class PlayerSkill : MonoBehaviour
 {
     public enum Skills
     {
-        GrenadeThrow, BeamShot
+        GrenadeThrow, BeamShot, Heal, ClearBullet
     }
 
     [SerializeField] private Skills _selectedSkill;
@@ -46,6 +46,12 @@ public class PlayerSkill : MonoBehaviour
                 break;
             case Skills.BeamShot:
                 _skill = gameObject.AddComponent<BeamShot>();
+                break;
+            case Skills.Heal:
+                _skill = gameObject.AddComponent<Heal>();
+                break;
+            case Skills.ClearBullet:
+                _skill = gameObject.AddComponent<ClearBullet>();
                 break;
         }
     }
