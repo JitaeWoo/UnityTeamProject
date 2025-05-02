@@ -10,7 +10,8 @@ public class Beam : MonoBehaviour
 
     private void Start()
     {
-        _beamCoroutine = StartCoroutine(RemoveBeam());
+        if (_beamCoroutine == null)
+            _beamCoroutine = StartCoroutine(RemoveBeam());
     }
 
     void OnTriggerStay(Collider other)
