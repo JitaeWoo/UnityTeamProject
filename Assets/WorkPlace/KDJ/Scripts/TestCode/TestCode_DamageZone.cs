@@ -8,7 +8,7 @@ public class TestCode_DamageZone : MonoBehaviour
 
     private void Start()
     {
-        _player = GameObject.Find("Player");
+        _player = Manager.Player.Player;
     }
 
     private void OnDrawGizmos()

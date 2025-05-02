@@ -31,7 +31,7 @@ public class Beam : MonoBehaviour
     IEnumerator RemoveBeam()
     {
         BeamModify(0.05f, 0.05f, 0.025f);
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.3f);
         BeamModify(0.3f, 0.3f, 0.15f);
         yield return new WaitForSeconds(0.01f);
         BeamModify(0.5f, 0.5f, 0.25f);
