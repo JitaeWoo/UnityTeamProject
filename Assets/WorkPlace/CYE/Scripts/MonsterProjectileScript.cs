@@ -10,7 +10,7 @@ public class MonsterProjectileScript : MonoBehaviour
     #region >> Private variables
     private Stack<GameObject> _returnPool;
     private float _lifespan;
-    public int _damage;
+    private int _damage;
     private Coroutine _coroutine;
     #endregion
 
@@ -30,12 +30,23 @@ public class MonsterProjectileScript : MonoBehaviour
         _coroutine = null;
     }
 
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log($"{(collision.gameObject.name)}");
+            //collision.gameObject.GetComponent<IDamagable>()?.TakeHit(_damage);
+            //Deactivate();
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<IDamagable>()?.TakeHit(_damage);
-            Deactivate();
+            Debug.Log($"{(other.gameObject.name)}");
+            //other.gameObject.GetComponent<IDamagable>()?.TakeHit(_damage);
+            //Deactivate();
         }
     }
     #endregion
