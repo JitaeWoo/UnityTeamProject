@@ -54,7 +54,10 @@ public class MonsterController : MonoBehaviour, IDamagable
     private Coroutine _attackRoutine;
     // 투사체 object pool
     private Stack<GameObject> _projectilePool;
+    // 공격 가능 여부
     private bool _isAttackable;
+    // 사망 여부
+    private bool _isDied;
     #endregion
 
     #endregion
@@ -84,7 +87,7 @@ public class MonsterController : MonoBehaviour, IDamagable
             DetectTarget();
             DetectCollide();
             CheckAttackable();
-            if (_isDetected && !_isCollide)
+            if (_isDetected && !_isCollide && !_isDied)
             {
                 LookTarget();
                 FollowTarget();
@@ -117,6 +120,7 @@ public class MonsterController : MonoBehaviour, IDamagable
     private void Init()
     {
         _rigidbody = gameObject.GetComponent<Rigidbody>();
+        _isDied = false;
         _dyingAnimationTime = 3f;
         _isCollide = false;
         _blockMovementLayer = LayerMask.GetMask("Player", "Wall");
@@ -138,9 +142,10 @@ public class MonsterController : MonoBehaviour, IDamagable
 
     public void TakeHit(int attackPoint) 
     {
-        if (attackPoint >= Hp)
+        if (attackPoint >= Hp && !_isDied)
         {
             Hp = 0;
+            _isDied = true;
             // -> activate dying animation
             Die();
         }
@@ -151,7 +156,7 @@ public class MonsterController : MonoBehaviour, IDamagable
         }
     }
 
-    private void Die() 
+    private void Die()
     {
         OnDied?.Invoke();
         Destroy(gameObject, _dyingAnimationTime);
