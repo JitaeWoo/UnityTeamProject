@@ -28,12 +28,17 @@ public class GameManager : Singleton<GameManager>
 
     public void SceneChange(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
-        if(sceneName != "Title")
+        if (sceneName != "Title")
         {
-            // TODO : 올바른 위치에 플레이어를 생성하도록 수정
-            Manager.Player.CreatePlayer(Vector3.zero);
-            Camera.main.transform.AddComponent<CameraMove>();
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
+        SceneManager.LoadScene(sceneName);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Manager.Player.CreatePlayer(Vector3.zero);
+        Camera.main.transform.AddComponent<CameraMove>();
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,10 +19,18 @@ public class MonsterProjectileScript : MonoBehaviour
     {
         _coroutine = null;
     }
-    private void OnCollisionEnter(Collision collision) 
+    //private void OnCollisionEnter(Collision collision) 
+    //{
+    //    if (collision.gameObject.CompareTag("Player")) {
+    //        collision.gameObject.GetComponent<IDamagable>()?.TakeHit(Damage);
+    //        Deactivate();
+    //    }
+    //}
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Player")) {
-            collision.gameObject.GetComponent<IDamagable>()?.TakeHit(Damage);
+        if (other.gameObject.CompareTag("Player"))
+        {
+            other.gameObject.GetComponent<IDamagable>()?.TakeHit(Damage);
             Deactivate();
         }
     }
@@ -38,7 +47,7 @@ public class MonsterProjectileScript : MonoBehaviour
             _coroutine = StartCoroutine(CheckLifespan());
         }
     }
-    public void Deactivate() 
+    public void Deactivate()
     {
         gameObject.SetActive(false);
         if (_coroutine is not null) 
