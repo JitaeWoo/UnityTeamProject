@@ -17,23 +17,28 @@ public class TestStageManagerCYE : MonoBehaviour
 
     private void Start()
     {
+        Manager.Player.CreatePlayer(_playerSpawnPoint.position);
+
         SpawnSlot = new Stack<MonsterInitiation>(_monsterSpawnpoint.Length);
         for (int cnt = 0; cnt < _monsterSpawnpoint.Length; cnt++)
         {
-            MonsterInitiation monsterInitiation = new MonsterInitiation { Monster = Instantiate(_monsterPrefabList[cnt]), SpawnPoint = _monsterSpawnpoint[cnt] };
-            monsterInitiation.Monster.SetActive(false);
+            GameObject monster = Instantiate(_monsterPrefabList[cnt]);
+            monster.SetActive(false);
+            MonsterInitiation monsterInitiation = new MonsterInitiation { Monster = monster, SpawnPoint = _monsterSpawnpoint[cnt] };
             SpawnSlot.Push(monsterInitiation);
         }
     }
 
     void OnEnable()
     {
-        Manager.Player.CreatePlayer(_playerSpawnPoint.position);
-
-        foreach (MonsterInitiation monster in SpawnSlot) {
-            Debug.Log("log");
-            monster.Monster.SetActive(true);
-            monster.Monster.transform.position = monster.SpawnPoint.position;
+        // SpawnSlot.Count°¡ 0ÀÓ. ¿Ö???
+        for (int cnt = 0; cnt < SpawnSlot.Count; cnt++)
+        {
+            if (SpawnSlot.TryPop(out MonsterInitiation monster))
+            {
+                monster.Monster.SetActive(true);
+                monster.Monster.transform.position = monster.SpawnPoint.position;
+            }
         }
     }
 }

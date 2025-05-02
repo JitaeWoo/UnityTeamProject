@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4568243322475414025}
   m_Layer: 9
   m_Name: Range
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -151,8 +151,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hp: 50
   Type: 1
-  Damage: 5
-  _targetObject: {fileID: 1650781213301247755, guid: d59c2988fef58904ebddffd8ed4da77a, type: 3}
+  Damage: 10
+  OnDied:
+    m_PersistentCalls:
+      m_Calls: []
   _moveSpeed: 0.5
   _detectRange: 4.5
   _attackRange: 2.5
