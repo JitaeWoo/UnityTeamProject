@@ -11,6 +11,8 @@ public class Stage : MonoBehaviour
     [SerializeField] public int currentWaveIndex;
     [SerializeField] private int _monsterCount = 0;
     [SerializeField] private bool _isAllMonsterSpawned;
+    [SerializeField] private string nextStageSceneName;
+
 
     //생성한 맵위에 몬스터 생성
     public Collider mapBounds;
@@ -19,6 +21,7 @@ public class Stage : MonoBehaviour
     
     private void Start()
     {
+        Manager.Stage.NextScene = nextStageSceneName;
         //웨이브 시작
         StartCoroutine(SpawnWave());
 
