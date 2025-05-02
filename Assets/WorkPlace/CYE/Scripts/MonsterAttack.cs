@@ -29,11 +29,13 @@ public class MonsterAttack // : MonoBehaviour
 
 
 
+    #region > Constructor
     public MonsterAttack(Rigidbody rigid, MeleeAttackInfo meleeAttackInfo, RangeAttackInfo rangeAttackInfo) {
         _rigidbody = rigid;
         _meleeAttackInfo = meleeAttackInfo;
         _rangeAttackInfo = rangeAttackInfo;
     }
+    #endregion
 
 
 

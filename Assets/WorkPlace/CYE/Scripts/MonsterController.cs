@@ -18,13 +18,9 @@ public class MonsterController : MonoBehaviour, IDamagable
     public MonsterType Type;
     public int Damage;
     public UnityEvent OnDied;
-    //[SerializeField] private GameObject _targetObject;
-    //[SerializeField] private GameObject _projectileObject;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _detectRange;
     [SerializeField] private float _attackRange;
-    //[SerializeField] private int _projectilePoolSize;
-    //[SerializeField] private Transform _muzzlePoint;
     [SerializeField] private MeleeAttackInfo _meleeAttackInfo;
     [SerializeField] private RangeAttackInfo _rangeAttackInfo;
     #endregion
@@ -62,7 +58,7 @@ public class MonsterController : MonoBehaviour, IDamagable
 
     #endregion
 
-    // ===== //
+
 
     #region > Unity message functions
     private void Awake()
@@ -70,10 +66,6 @@ public class MonsterController : MonoBehaviour, IDamagable
         Init();
     }
 
-    private void Start()
-    {
-        //_detectLayer = 1 << _targetObject.layer;
-    }
     private void OnEnable()
     {
         _targetObject = Manager.Player.Player;
@@ -82,7 +74,7 @@ public class MonsterController : MonoBehaviour, IDamagable
 
     private void Update()
     {
-        if(_targetObject != null && Manager.Player.Stats.CurHp > 0)
+        if (_targetObject != null && Manager.Player.Stats.CurHp > 0)
         {
             DetectTarget();
             DetectCollide();
@@ -91,10 +83,30 @@ public class MonsterController : MonoBehaviour, IDamagable
             {
                 LookTarget();
                 FollowTarget();
-                if (_isAttackable) {
+                if (_isAttackable)
+                {
                     Attack();
                 }
             }
+        }
+        else 
+        {
+            _isDetected = false;
+            _isCollide = false;
+            _isAttackable = false;
+            if (_attackRoutine is not null)
+            {
+                StopCoroutine(_attackRoutine);
+                _attackRoutine = null;
+            }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && Type != MonsterType.Range)
+        {
+            collision.gameObject.GetComponent<IDamagable>()?.TakeHit(Damage);
         }
     }
 
@@ -114,14 +126,14 @@ public class MonsterController : MonoBehaviour, IDamagable
     }
     #endregion
 
-    // ===== //
+
 
     #region > Custom functions
     private void Init()
     {
         _rigidbody = gameObject.GetComponent<Rigidbody>();
         _isDied = false;
-        _dyingAnimationTime = 3f;
+        _dyingAnimationTime = 0f;
         _isCollide = false;
         _blockMovementLayer = LayerMask.GetMask("Player", "Wall");
         _isAttackable = false;
@@ -133,6 +145,7 @@ public class MonsterController : MonoBehaviour, IDamagable
                 GameObject instant = Instantiate(_rangeAttackInfo.Projectile);
                 instant.GetComponent<MonsterProjectileScript>().ReturnPool = _projectilePool;
                 instant.GetComponent<MonsterProjectileScript>().Lifespan = 3f;
+                instant.GetComponent<MonsterProjectileScript>().Damage = Damage;
                 instant.SetActive(false);
                 _projectilePool.Push(instant);
             }
@@ -201,7 +214,6 @@ public class MonsterController : MonoBehaviour, IDamagable
     {
         _targetDirection = new Vector3((_targetObject.transform.position.x - transform.position.x), transform.position.y, (_targetObject.transform.position.z - transform.position.z));
         if (Physics.OverlapSphere(transform.position, _attackRange, _detectLayer).Length > 0)
-        //if (Physics.Raycast(transform.position, _targetDirection, _attackRange, _detectLayer))
         {
             _isAttackable = true;
         }
@@ -218,33 +230,6 @@ public class MonsterController : MonoBehaviour, IDamagable
 
     private void Attack()
     {
-        //_targetDirection = new Vector3((_targetObject.transform.position.x - transform.position.x), transform.position.y, (_targetObject.transform.position.z - transform.position.z));
-        //if (Physics.Raycast(transform.position, _targetDirection, _attackRange, _detectLayer))
-        //{
-        //    if (_attackRoutine is null)
-        //    {
-        //        switch (Type)
-        //        {
-        //            case MonsterType.Melee:
-        //                _attackRoutine = StartCoroutine(_monsterAttack.Dash());
-        //                break;
-        //            case MonsterType.Range:
-        //                _attackRoutine = StartCoroutine(_monsterAttack.Shooting(_projectilePool));
-        //                break;
-        //            case MonsterType.Elite:
-        //                _attackRoutine = StartCoroutine(_monsterAttack.Jump());
-        //                break;
-        //        }
-        //    }
-        //}
-        //else 
-        //{
-        //    if (_attackRoutine is not null)
-        //    {
-        //        StopCoroutine(_attackRoutine);
-        //        _attackRoutine = null;
-        //    }
-        //}
         if (_attackRoutine is null)
         {
             switch (Type)

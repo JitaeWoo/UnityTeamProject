@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestCode_PlayerSpawn : MonoBehaviour
 {
-    private void Start()
+    private void Awake()
     {
         Manager.Player.CreatePlayer(this.transform.position);
     }

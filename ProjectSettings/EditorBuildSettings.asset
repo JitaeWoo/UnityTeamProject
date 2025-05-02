@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/WorkPlace/CYE/Scenes/MonsterSample.unity
     guid: b2921df40648ccc4f9bc5ea04cb9db96
+  - enabled: 1
+    path: Assets/WorkPlace/YJH/Scenes/UI_Scene.unity
+    guid: 8a200dee03b57964995ceda181d9adea
   m_configObjects: {}
