@@ -105,7 +105,7 @@ public class Stage : MonoBehaviour
             else
             {
                 //좌표값 반환
-                return new Vector3(x, 0, z);
+                return new Vector3(x, 1, z);
             }
         }
 
