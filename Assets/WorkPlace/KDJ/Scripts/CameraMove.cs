@@ -12,10 +12,10 @@ public class CameraMove : MonoBehaviour
         MoveCamera();
     }
 
-    private void Awake()
+    private void Start()
     {
         _camera = Camera.main;
-        _player = GameObject.FindGameObjectWithTag("Player");
+        _player = Manager.Player.Player;
     }
 
     void MoveCamera()

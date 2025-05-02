@@ -81,7 +81,7 @@ MonoBehaviour:
   _muzzlePosition: {fileID: 2351876656549106809}
   _bulletProjectileNum: 1
   _invincibleTime: 0.1
-  _pierceNum: 3
+  _pierceNum: 0
 --- !u!114 &7924556332567060847
 MonoBehaviour:
   m_ObjectHideFlags: 0
