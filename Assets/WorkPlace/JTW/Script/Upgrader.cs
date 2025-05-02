@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Upgrader : MonoBehaviour
 {
-    
     [SerializeField] private GameObject _upgradeButtonPrefab;
     private float _buttonX = -500;
 

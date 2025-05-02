@@ -30,5 +30,7 @@ public class UpgradeButton : MonoBehaviour
             Debug.Log((StatUpgrader.Stats)num);
             _statUpgrader.UpgradeStat((StatUpgrader.Stats)num);
         }
+
+        Manager.Game.SceneChange(Manager.Stage.NextScene);
     }
 }
