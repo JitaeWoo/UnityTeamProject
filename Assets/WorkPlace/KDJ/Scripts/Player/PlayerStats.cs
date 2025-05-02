@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats
+[Serializable] public class PlayerStats
 {
-    private int _maxHp;
+    [SerializeField] private int _maxHp;
     public int MaxHp { get { return _maxHp; } set { _maxHp = value; OnMaxHpChanged?.Invoke(); } }
-    private int _curHp; 
+    [SerializeField] private int _curHp; 
     public int CurHp { get { return _curHp; } set { _curHp = value; OnCurHpChanged?.Invoke(); } }
     public float Speed;
     public int Damage;
