@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
+
     private void Start()
     {
         GrenadeExplosion();
@@ -17,7 +18,7 @@ public class Explosion : MonoBehaviour
         {
             if (monsters[i].gameObject.layer == 9)
             {
-                monsters[i].GetComponentInParent<IDamagable>()?.TakeHit(50);
+                monsters[i].GetComponent<IDamagable>()?.TakeHit(50);
             }
         }
     }

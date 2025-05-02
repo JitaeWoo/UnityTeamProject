@@ -12,6 +12,7 @@ public class PlayerStats
     public float Speed;
     public int Damage;
     public float InvincibleTime;
+    // ShotSize 현재 사용 안함
     public float ShotSize;
     public float ShotSpeed;
     public float FireRate;

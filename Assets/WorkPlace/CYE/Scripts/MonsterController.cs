@@ -58,7 +58,7 @@ public class MonsterController : MonoBehaviour, IDamagable
 
     #endregion
 
-    // ===== //
+
 
     #region > Unity message functions
     private void Awake()
@@ -66,10 +66,6 @@ public class MonsterController : MonoBehaviour, IDamagable
         Init();
     }
 
-    private void Start()
-    {
-        //_detectLayer = 1 << _targetObject.layer;
-    }
     private void OnEnable()
     {
         _targetObject = Manager.Player.Player;
@@ -130,7 +126,7 @@ public class MonsterController : MonoBehaviour, IDamagable
     }
     #endregion
 
-    // ===== //
+
 
     #region > Custom functions
     private void Init()
