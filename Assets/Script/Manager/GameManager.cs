@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -32,6 +33,7 @@ public class GameManager : Singleton<GameManager>
         {
             // TODO : 올바른 위치에 플레이어를 생성하도록 수정
             Manager.Player.CreatePlayer(Vector3.zero);
+            Camera.main.transform.AddComponent<CameraMove>();
         }
     }
 }
