@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public struct MonsterInitiation {
@@ -12,23 +13,27 @@ public class TestStageManagerCYE : MonoBehaviour
     [SerializeField] private GameObject[] _monsterPrefabList;
     [SerializeField] private Transform[] _monsterSpawnpoint;
     [SerializeField] private Transform _playerSpawnPoint;
-    private Stack<MonsterInitiation> SpawnSlot;
+    private Stack<MonsterInitiation> SpawnSlot = new Stack<MonsterInitiation>();
 
+    private void Start()
+    {
+        SpawnSlot = new Stack<MonsterInitiation>(_monsterSpawnpoint.Length);
+        for (int cnt = 0; cnt < _monsterSpawnpoint.Length; cnt++)
+        {
+            MonsterInitiation monsterInitiation = new MonsterInitiation { Monster = Instantiate(_monsterPrefabList[cnt]), SpawnPoint = _monsterSpawnpoint[cnt] };
+            monsterInitiation.Monster.SetActive(false);
+            SpawnSlot.Push(monsterInitiation);
+        }
+    }
 
-    // Start is called before the first frame update
     void OnEnable()
     {
         Manager.Player.CreatePlayer(_playerSpawnPoint.position);
 
-        SpawnSlot = new Stack<MonsterInitiation>(_monsterSpawnpoint.Length);
-        for (int cnt = 0; cnt < _monsterSpawnpoint.Length; cnt++) {
-            MonsterInitiation monsterInitiation = new MonsterInitiation { Monster = _monsterPrefabList[cnt], SpawnPoint = _monsterSpawnpoint[cnt] };
+        foreach (MonsterInitiation monster in SpawnSlot) {
+            Debug.Log("log");
+            monster.Monster.SetActive(true);
+            monster.Monster.transform.position = monster.SpawnPoint.position;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

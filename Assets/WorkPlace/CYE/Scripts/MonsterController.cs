@@ -31,7 +31,7 @@ public class MonsterController : MonoBehaviour, IDamagable
 
     #region >> Private variables
     // target object 
-    private GameObject _targetObject => Manager.Player.Player;
+    private GameObject _targetObject;
     // target object Å½Áö¿©ºÎ
     private bool _isDetected;
     // target object layer
@@ -73,6 +73,7 @@ public class MonsterController : MonoBehaviour, IDamagable
     }
     private void OnEnable()
     {
+        _targetObject = Manager.Player.Player;
         _detectLayer = 1 << _targetObject.layer;
     }
 
