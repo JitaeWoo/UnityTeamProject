@@ -6,10 +6,20 @@ using UnityEngine;
 public class MonsterProjectileScript : MonoBehaviour
 {
     #region > Variables
-    public Stack<GameObject> ReturnPool;
-    public float Lifespan;
-    public int Damage;
+
+    #region >> Private variables
+    private Stack<GameObject> _returnPool;
+    private float _lifespan;
+    public int _damage;
     private Coroutine _coroutine;
+    #endregion
+
+    #region >> Properties
+    public Stack<GameObject> ReturnPool { get { return _returnPool; } set { _returnPool = value; } }
+    public float Lifespan { get { return _lifespan; } set { _lifespan = value; } }
+    public int Damage { get { return _damage; } set { _damage = value; } }
+    #endregion
+
     #endregion
 
 
@@ -19,18 +29,12 @@ public class MonsterProjectileScript : MonoBehaviour
     {
         _coroutine = null;
     }
-    //private void OnCollisionEnter(Collision collision) 
-    //{
-    //    if (collision.gameObject.CompareTag("Player")) {
-    //        collision.gameObject.GetComponent<IDamagable>()?.TakeHit(Damage);
-    //        Deactivate();
-    //    }
-    //}
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<IDamagable>()?.TakeHit(Damage);
+            other.gameObject.GetComponent<IDamagable>()?.TakeHit(_damage);
             Deactivate();
         }
     }
@@ -47,19 +51,21 @@ public class MonsterProjectileScript : MonoBehaviour
             _coroutine = StartCoroutine(CheckLifespan());
         }
     }
+
     public void Deactivate()
     {
+        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         gameObject.SetActive(false);
         if (_coroutine is not null) 
         {
             StopCoroutine(_coroutine);
             _coroutine = null;
         }
-        ReturnPool.Push(gameObject);
+        _returnPool.Push(gameObject);
     }
     private IEnumerator CheckLifespan() 
     {
-        yield return new WaitForSeconds(Lifespan);
+        yield return new WaitForSeconds(_lifespan);
         if (gameObject.activeSelf) {
             Deactivate();
         }
