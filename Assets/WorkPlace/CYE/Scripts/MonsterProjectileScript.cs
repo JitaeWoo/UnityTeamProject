@@ -30,22 +30,11 @@ public class MonsterProjectileScript : MonoBehaviour
         _coroutine = null;
     }
 
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Player"))
-    //    {
-    //        Debug.Log($"{(collision.gameObject.name)}");
-    //        //collision.gameObject.GetComponent<IDamagable>()?.TakeHit(_damage);
-    //        //Deactivate();
-    //    }
-    //}
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            //Debug.Log($"{(other.gameObject.name)}");
-            other.gameObject.GetComponent<IDamagable>()?.TakeHit(_damage);
+            other.gameObject.GetComponentInParent<IDamagable>()?.TakeHit(_damage);
             Deactivate();
         }
     }
