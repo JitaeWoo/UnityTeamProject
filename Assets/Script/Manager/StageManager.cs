@@ -11,6 +11,7 @@ public class StageManager : Singleton<StageManager>
     public event Action OnWaveStart;
     public bool IsWaveClear;
     public string NextScene;
+    public Stage Stage;
 
     public void StageStart()
     {
