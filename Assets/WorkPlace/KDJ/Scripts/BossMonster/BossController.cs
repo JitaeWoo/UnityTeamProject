@@ -14,6 +14,7 @@ public class BossController : MonoBehaviour, IDamagable
     [SerializeField] private GameObject _boss;
     [SerializeField] private GameObject _attackPattern;
     [SerializeField] private GameObject _attackPatternTranslucent;
+    [SerializeField] private Rigidbody _bossRigid;
     [SerializeField] private int _hp;
     [SerializeField] private int _damage;
 
@@ -31,21 +32,12 @@ public class BossController : MonoBehaviour, IDamagable
 
     private void Update()
     {
-        if (_bossRoutine == null)
+        if (_bossRoutine == null && Manager.Player.Player != null)
         {
             PatternSelect((AttackPattern)UnityEngine.Random.Range(1, 2));
             _bossRoutine = StartCoroutine(PatternRoutine());
         }
     }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        if(collision.gameObject.layer == 3)
-        {
-            collision.gameObject.GetComponent<IDamagable>()?.TakeHit(_damage);
-        }
-    }
-
 
     void BulletShot()
     {
@@ -98,16 +90,26 @@ public class BossController : MonoBehaviour, IDamagable
 
     IEnumerator BossDash()
     {
+        // 보스가 플레이어를 바라봄
+        Vector3 lookPos = new Vector3(Manager.Player.Player.transform.position.x, 0, Manager.Player.Player.transform.position.z);
+        _boss.transform.LookAt(lookPos);
+
         // 대쉬 방향 화살표 생성
         GameObject patternInstance1 = Instantiate(_attackPattern);
         GameObject patternInstance2 = Instantiate(_attackPatternTranslucent);
 
+        // 아래 반복문의 반복수와 맞춰 1~2초 사이로 만들어야함
         _Sleep = new WaitForSeconds(0.02f);
         float count = 0.02f;
 
+        // 대쉬 준비 시간 시각적 표시
         patternInstance2.transform.position = new Vector3(_boss.transform.position.x, 0.1f, _boss.transform.position.z);
+        patternInstance2.transform.rotation = _boss.transform.rotation;
+        patternInstance2.transform.Rotate(Vector3.right, 90f);
         patternInstance2.transform.Translate(_boss.transform.up * 6f);
         patternInstance1.transform.position = new Vector3(_boss.transform.position.x, 0.1f, _boss.transform.position.z);
+        patternInstance1.transform.rotation = _boss.transform.rotation;
+        patternInstance1.transform.Rotate(Vector3.right, 90f);
         patternInstance1.transform.Translate(_boss.transform.up * 6f);
         patternInstance1.transform.localScale = new Vector3(1, 0, 1);
         for (int i = 0; i < 50; i++)
@@ -117,12 +119,25 @@ public class BossController : MonoBehaviour, IDamagable
             count += 0.02f;
         }
 
+        // 화살표 삭제
         Destroy(patternInstance1);
         Destroy(patternInstance2);
 
+        // 보스 대쉬
+        // _Sleep = new WaitForSeconds(0.01f);
+        // for (int i = 0; i < 50; i++)
+        // {
+        //     _boss.transform.Translate(_boss.transform.forward * 0.3f);
+        //     yield return _Sleep;
+        // }
+
+        // 플레이어가 보스를 미는걸 막기위해 보스의 중량을 매우 크게 늘림. 그래서 미는 힘도 같은 비율로 증가
+        _bossRigid.AddForce(_boss.transform.forward * 1000000f, ForceMode.Impulse);
+
+        yield return new WaitForSeconds(1.1f);
+
         _Sleep = new WaitForSeconds(0.5f);
 
-        
         for (int i = 0; i < 3; i++)
         {
             // 대쉬 후 사방에 탄 발사

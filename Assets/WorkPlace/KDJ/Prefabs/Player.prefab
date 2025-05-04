@@ -79,7 +79,7 @@ MonoBehaviour:
   _poolSize: 50
   _bulletPrefab: {fileID: 326611286736933000, guid: 2a58dbe19dfe44b4da28076dcc26c730, type: 3}
   _muzzlePosition: {fileID: 2351876656549106809}
-  _bulletProjectileNum: 1
+  _bulletProjectileNum: 2
   _invincibleTime: 0.5
   _pierceNum: 0
 --- !u!114 &7924556332567060847
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4bfdbbd07ab2174a926e20f9f65c07c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skill: 4
+  skill: 0
 --- !u!1 &3802635192884187617
 GameObject:
   m_ObjectHideFlags: 0
