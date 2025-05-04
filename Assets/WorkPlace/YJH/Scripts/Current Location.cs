@@ -7,6 +7,6 @@ public class CurrentLocation : MonoBehaviour
     public Stage stageScript;
     public void Start()
     {
-        Debug.Log(stageScript.currentWaveIndex);
+
     }
 }
