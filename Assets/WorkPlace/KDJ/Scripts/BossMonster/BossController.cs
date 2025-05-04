@@ -7,7 +7,7 @@ public class BossController : MonoBehaviour, IDamagable
 {
     enum AttackPattern
     {
-        BulletShot, DashAttack
+        BulletShot = 1, DashAttack
     }
 
     [SerializeField] private GameObject _bulletPrefab;
@@ -20,10 +20,10 @@ public class BossController : MonoBehaviour, IDamagable
 
     private Stack<GameObject> _bulletPool;
     private Coroutine _bossRoutine;
-    private GameObject _player;
     private Action _bossPattern;
     private WaitForSeconds _Sleep;
-    private bool _isDashEnd = false;
+    private int _patternNum = 1;
+    private int _halfHp;
 
     private void Awake()
     {
@@ -34,14 +34,25 @@ public class BossController : MonoBehaviour, IDamagable
     {
         if (_bossRoutine == null && Manager.Player.Player != null)
         {
-            PatternSelect((AttackPattern)UnityEngine.Random.Range(1, 2));
+            if (_hp > _halfHp)
+                PatternSelect((AttackPattern)_patternNum);
+            else
+            {
+                PatternSelect((AttackPattern)1);
+                PatternSelect((AttackPattern)2);
+            }
             _bossRoutine = StartCoroutine(PatternRoutine());
         }
     }
 
     void BulletShot()
     {
+        Coroutine shot = StartCoroutine(BossShot());
 
+        shot = null;
+
+
+        _patternNum = 2;
     }
 
     void DashAttack()
@@ -49,17 +60,17 @@ public class BossController : MonoBehaviour, IDamagable
         Coroutine dash = StartCoroutine(BossDash());
 
         dash = null;
+        _patternNum = 1;
     }
 
     void Init()
     {
-        _player = Manager.Player.Player;
+        _bulletPool = new Stack<GameObject>(300);
+        _halfHp = _hp / 2;
 
-        _bulletPool = new Stack<GameObject>(200);
-
-        for (int i = 0; i < 200; i++)
+        for (int i = 0; i < 300; i++)
         {
-            GameObject bullet = Instantiate(_bulletPrefab);
+            GameObject bullet = Instantiate(_bulletPrefab, this.transform.position, this.transform.rotation);
             bullet.GetComponent<BossBullet>().returnPool = _bulletPool;
             bullet.SetActive(false);
             _bulletPool.Push(bullet);
@@ -86,6 +97,35 @@ public class BossController : MonoBehaviour, IDamagable
         _bossPattern -= BulletShot;
         _bossPattern -= DashAttack;
         _bossRoutine = null;
+    }
+
+    IEnumerator BossShot()
+    {
+        WaitForSeconds sleep = new WaitForSeconds(0.25f);
+        // 보스가 플레이어를 바라봄
+        for (int i = 0; i < 10; i++)
+        {
+            Vector3 lookPos = new Vector3(Manager.Player.Player.transform.position.x, 0, Manager.Player.Player.transform.position.z);
+            _boss.transform.LookAt(lookPos);
+
+            for (int j = 0; j < 7; j++)
+            {
+                float startAngle;
+                float angleGrid;
+
+                startAngle = -30f;
+                angleGrid = 10f;
+
+                GameObject instance = _bulletPool.Pop();
+                instance.SetActive(true);
+                instance.transform.position = _boss.transform.position;
+                instance.transform.rotation = _boss.transform.rotation;
+                instance.transform.Rotate(0, startAngle + angleGrid * j, 0);
+                instance.GetComponent<Rigidbody>().AddForce(instance.transform.forward * 15f, ForceMode.Impulse);
+                instance.transform.Rotate(0, -(startAngle + angleGrid * j), 0);
+            }
+            yield return sleep;
+        }
     }
 
     IEnumerator BossDash()
@@ -163,6 +203,8 @@ public class BossController : MonoBehaviour, IDamagable
 
             yield return _Sleep;
         }
+
+
     }
 
     public void TakeHit(int attackPoint)
