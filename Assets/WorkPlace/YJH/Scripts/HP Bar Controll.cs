@@ -28,6 +28,16 @@ public class HPBarUI : MonoBehaviour
         UpdateHPText();
     }
 
+    private void Update()
+    {
+        // 방향키로 체력 감소 (예: 아래 방향키로 체력 감소)
+        if (Input.GetKey(KeyCode.DownArrow)) // 아래 방향키
+        {
+            _playerStats.CurHp -= 1;
+            if (_playerStats.CurHp < 0) _playerStats.CurHp = 0; // 체력이 0 미만으로 내려가지 않게
+        }
+    }
+
     private void UpdateHPBar()
     {
         _hpSlider.value = _playerStats.CurHp;
