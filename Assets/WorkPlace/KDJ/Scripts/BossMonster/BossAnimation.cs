@@ -22,7 +22,6 @@ public class BossAnimation : MonoBehaviour
     }
     public void DyingAnimation()
     {
-        _isDied = true;
-        _animator.SetBool("IsDied", _isDied);
+        _animator.SetTrigger("Die");
     }
 }
