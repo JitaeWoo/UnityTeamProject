@@ -63,7 +63,7 @@ public class BossController : MonoBehaviour, IDamagable
 
     void BulletShot()
     {
-        if (_curHp > 0)
+        if (_curHp > 0 && Manager.Player.Stats.CurHp > 0)
         {
             Coroutine shot = StartCoroutine(BossShot());
             shot = null;
@@ -73,7 +73,7 @@ public class BossController : MonoBehaviour, IDamagable
 
     void DashAttack()
     {
-        if (_curHp > 0)
+        if (_curHp > 0 && Manager.Player.Stats.CurHp > 0)
         {
             Coroutine dash = StartCoroutine(BossDash());
             dash = null;
@@ -84,7 +84,7 @@ public class BossController : MonoBehaviour, IDamagable
     void Init()
     {
         _bulletPool = new Stack<GameObject>(300);
-        _maxHp = 5000;
+        _maxHp = 500;
         _curHp = _maxHp;
         _halfHp = _maxHp / 2;
         _bossAnimation = GetComponentInChildren<BossAnimation>();
@@ -224,6 +224,7 @@ public class BossController : MonoBehaviour, IDamagable
             {
                 testcount++;
                 GameObject instance = _bulletPool.Pop();
+                instance.transform.SetParent(null);
                 // 일정 랜덤 각도(예시 5~10)씩 틀어지며 탄 생성
                 randomNum = UnityEngine.Random.Range(5, 10);
                 // randomNum = 10;
@@ -244,11 +245,14 @@ public class BossController : MonoBehaviour, IDamagable
 
     public void TakeHit(int attackPoint)
     {
-        _curHp -= attackPoint;
+        if (CurHp <= 0)
+            return;
 
-        if (_curHp < 0)
+        CurHp -= attackPoint;
+
+        if (CurHp <= 0)
         {
-            _curHp = 0;
+            CurHp = 0;
             _bossAnimation.DyingAnimation();
             Destroy(gameObject, 3f);
             OnDied.Invoke();
