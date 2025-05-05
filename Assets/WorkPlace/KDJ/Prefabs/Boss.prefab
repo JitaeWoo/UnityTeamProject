@@ -53,7 +53,7 @@ MonoBehaviour:
   _attackPattern: {fileID: 5276367916209888663, guid: a7295e5aa960faa4a9ae730db97c35c8, type: 3}
   _attackPatternTranslucent: {fileID: 6441473420456799398, guid: 9b3d93b43074c8245bd96193e8baaac5, type: 3}
   _bossRigid: {fileID: 4652180336532334037}
-  _hp: 1000
+  _hp: 5000
   _damage: 20
 --- !u!114 &871570677126685518
 MonoBehaviour:

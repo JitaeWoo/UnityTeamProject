@@ -15,7 +15,7 @@ public class BossController : MonoBehaviour, IDamagable
     [SerializeField] private GameObject _attackPattern;
     [SerializeField] private GameObject _attackPatternTranslucent;
     [SerializeField] private Rigidbody _bossRigid;
-    [SerializeField] private int _hp;
+    [SerializeField] public int _hp;
     [SerializeField] private int _damage;
 
     private Stack<GameObject> _bulletPool;
@@ -48,25 +48,32 @@ public class BossController : MonoBehaviour, IDamagable
         }
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        if(collision.gameObject.layer == 3)
+        {
+            collision.gameObject.GetComponent<IDamagable>()?.TakeHit(_damage);
+        }
+    }
+
     void BulletShot()
     {
         if (_hp > 0)
         {
             Coroutine shot = StartCoroutine(BossShot());
-
             shot = null;
-
-
             _patternNum = 2;
         }
     }
 
     void DashAttack()
     {
-        Coroutine dash = StartCoroutine(BossDash());
-
-        dash = null;
-        _patternNum = 1;
+        if (_hp > 0)
+        {
+            Coroutine dash = StartCoroutine(BossDash());
+            dash = null;
+            _patternNum = 1;
+        }
     }
 
     void Init()
