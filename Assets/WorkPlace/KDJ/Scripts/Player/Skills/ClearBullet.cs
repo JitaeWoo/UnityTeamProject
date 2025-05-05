@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ClearBullet : Skill
 {
-    [SerializeField] private float _skillCooldown = 1f;
+    [SerializeField] private float _skillCooldown = 5f;
     private Collider[] bullets = new Collider[200];
 
     // 플레이어의 정면을 기준으로 각도를 계산하기 때문에, 원하는 스킬 범위의 절반 각도가 필요합니다.
@@ -29,12 +29,17 @@ public class ClearBullet : Skill
 
             float angle = Vector3.Angle(transform.forward, directionToBullet);
 
-            Debug.Log(angle);
-
             if(angle <= _halfAngle)
             {
                 // TODO : 추후에 EnemyBullet 만드시는 분과 협의하여 삭제 로직 재작성
-                Destroy(bullets[i].gameObject);
+                if (bullets[i].GetComponent<MonsterProjectileScript>() != null)
+                {
+                    bullets[i].GetComponent<MonsterProjectileScript>().Deactivate();
+                }
+                else if (bullets[i].GetComponent<BossBullet>() != null)
+                {
+                    bullets[i].GetComponent<BossBullet>().RemoveBullet();
+                }
             }
         }
     }

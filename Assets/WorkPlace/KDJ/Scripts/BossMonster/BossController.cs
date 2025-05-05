@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BossController : MonoBehaviour, IDamagable
@@ -55,7 +54,7 @@ public class BossController : MonoBehaviour, IDamagable
 
     private void OnCollisionStay(Collision collision)
     {
-        if(collision.gameObject.layer == 3)
+        if (collision.gameObject.layer == 3)
         {
             collision.gameObject.GetComponent<IDamagable>()?.TakeHit(_damage);
         }
@@ -239,8 +238,6 @@ public class BossController : MonoBehaviour, IDamagable
 
             yield return _Sleep;
         }
-
-
     }
 
     public void TakeHit(int attackPoint)
