@@ -15,6 +15,8 @@ public class PlayerSkill : MonoBehaviour
     private Coroutine _skillDelay;
     private int _skillNum;
 
+    public Skills EquippedSkillType { get; private set; } // 외부에서 enum 값 읽을 수 있음
+
     private void Awake()
     {
         // EquipSkill(Manager.Player.Skill);
@@ -47,6 +49,8 @@ public class PlayerSkill : MonoBehaviour
             Destroy(_skill);
             _skill = null;
         }
+
+        EquippedSkillType = skill; // 현재 어떤 스킬이 장착되었는지 저장
 
         switch (skill)
         {
