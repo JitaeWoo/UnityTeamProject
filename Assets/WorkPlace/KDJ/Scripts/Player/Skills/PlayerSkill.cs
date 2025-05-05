@@ -9,12 +9,14 @@ public class PlayerSkill : MonoBehaviour
         GrenadeThrow, BeamShot, Heal, ClearBullet, Slash, size
     }
 
+    [SerializeField] Skills skill;
     private Skill _skill;
     private Skill _utilitySkill;
 
     private void Awake()
     {
-        EquipSkill(Manager.Player.Skill);
+        // EquipSkill(Manager.Player.Skill);
+        EquipSkill(skill); // 테스트용. 끝나면 위로 교체
         _utilitySkill = gameObject.AddComponent<Dash>();
     }
 

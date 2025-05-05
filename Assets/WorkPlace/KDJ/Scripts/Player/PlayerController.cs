@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         for (int i = 0; i < _poolSize; i++)
         {
-            GameObject bullet = Instantiate(_bulletPrefab);
+            GameObject bullet = Instantiate(_bulletPrefab, this.transform.position, this.transform.rotation);
             bullet.GetComponent<Bullet>().returnPool = _bulletPool;
             bullet.SetActive(false);
             _bulletPool.Push(bullet);
