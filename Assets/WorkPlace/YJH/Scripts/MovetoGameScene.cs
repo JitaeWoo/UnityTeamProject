@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MovetoGameScene : MonoBehaviour
 {
+    public void Start()
+    {
+        GetComponent<Button>().interactable = false;
+    }
     public void GoToGameScene()
     {
-        SceneManager.LoadScene("UI_Scene");  // æ¿ ¿Ãµø
+        Manager.Game.StartGame();
     }
 }
