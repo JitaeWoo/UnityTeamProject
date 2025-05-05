@@ -19,10 +19,12 @@ public class BossBullet : MonoBehaviour
         StartCoroutine(ReturnBullet(3f));
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (_boss.GetComponent<BossController>().CurHp <= 0)
-            RemoveBullet();
+        {
+            StartCoroutine(ReturnBullet());
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -48,10 +50,10 @@ public class BossBullet : MonoBehaviour
     IEnumerator ReturnBullet(float delay = 0)
     {
         yield return new WaitForSeconds(delay);
+        gameObject.SetActive(false);
         _bulletRigid.velocity = Vector3.zero;
         if(_boss.gameObject.name == "Boss" && _boss.GetComponent<BossController>().CurHp > 0)
             transform.SetParent(_boss.transform);
-        gameObject.SetActive(false);
         returnPool.Push(gameObject);
     }
 }

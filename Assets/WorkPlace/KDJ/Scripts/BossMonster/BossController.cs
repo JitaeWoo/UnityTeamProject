@@ -130,38 +130,43 @@ public class BossController : MonoBehaviour, IDamagable
         _bossAnimation.AttackAnimation();
         yield return sleep;
 
-
         sleep = new WaitForSeconds(0.25f);
-        for (int i = 0; i < 10; i++)
+
+        if (CurHp > 0)
         {
-            // 탄 발사시에도 계속 바라봄
-            lookPos = new Vector3(Manager.Player.Player.transform.position.x, 0, Manager.Player.Player.transform.position.z);
-            _boss.transform.LookAt(lookPos);
-
-            for (int j = 0; j < 7; j++)
+            for (int i = 0; i < 10; i++)
             {
-                // 플레이어 방향으로 부채꼴 탄막 발사
-                float startAngle;
-                float angleGrid;
+                // 탄 발사시에도 계속 바라봄
+                lookPos = new Vector3(Manager.Player.Player.transform.position.x, 0, Manager.Player.Player.transform.position.z);
+                _boss.transform.LookAt(lookPos);
 
-                startAngle = -30f;
-                angleGrid = 10f;
 
-                GameObject instance = _bulletPool.Pop();
-                instance.transform.SetParent(null);
-                instance.SetActive(true);
-                instance.transform.position = new Vector3(_boss.transform.position.x, 0.4f, _boss.transform.position.z);
-                instance.transform.rotation = _boss.transform.rotation;
-                instance.transform.Rotate(0, startAngle + angleGrid * j, 0);
-                instance.GetComponent<Rigidbody>().AddForce(instance.transform.forward * 15f, ForceMode.Impulse);
-                instance.transform.Rotate(0, -(startAngle + angleGrid * j), 0);
+                for (int j = 0; j < 7; j++)
+                {
+                    // 플레이어 방향으로 부채꼴 탄막 발사
+                    float startAngle;
+                    float angleGrid;
+
+                    startAngle = -30f;
+                    angleGrid = 10f;
+
+                    GameObject instance = _bulletPool.Pop();
+                    instance.transform.SetParent(null);
+                    instance.SetActive(true);
+                    instance.transform.position = new Vector3(_boss.transform.position.x, 0.4f, _boss.transform.position.z);
+                    instance.transform.rotation = _boss.transform.rotation;
+                    instance.transform.Rotate(0, startAngle + angleGrid * j, 0);
+                    instance.GetComponent<Rigidbody>().AddForce(instance.transform.forward * 15f, ForceMode.Impulse);
+                    instance.transform.Rotate(0, -(startAngle + angleGrid * j), 0);
+                }
+                yield return sleep;
             }
-            yield return sleep;
         }
     }
 
     IEnumerator BossDash()
     {
+
         // 보스가 플레이어를 바라봄
         Vector3 lookPos = new Vector3(Manager.Player.Player.transform.position.x, 0, Manager.Player.Player.transform.position.z);
         _boss.transform.LookAt(lookPos);
@@ -184,6 +189,8 @@ public class BossController : MonoBehaviour, IDamagable
         patternInstance1.transform.Rotate(Vector3.right, 90f);
         patternInstance1.transform.Translate(_boss.transform.up * 6f);
         patternInstance1.transform.localScale = new Vector3(1, 0, 1);
+
+
         for (int i = 0; i < 50; i++)
         {
             yield return _Sleep;
@@ -212,31 +219,34 @@ public class BossController : MonoBehaviour, IDamagable
         _Sleep = new WaitForSeconds(0.65f);
 
 
-        for (int i = 0; i < 3; i++)
+        if (CurHp > 0)
         {
-            // 대쉬 후 사방에 탄 발사
-            int randomNum = 0;
-            int maxAngle = 0;
-            int testcount = 0;
-            // 누적 각도가 360이 넘으면 생성중지
-            while (maxAngle < 360)
+            for (int i = 0; i < 3; i++)
             {
-                testcount++;
-                GameObject instance = _bulletPool.Pop();
-                instance.transform.SetParent(null);
-                // 일정 랜덤 각도(예시 5~10)씩 틀어지며 탄 생성
-                randomNum = UnityEngine.Random.Range(5, 10);
-                // randomNum = 10;
-                maxAngle += randomNum;
-                instance.SetActive(true);
-                instance.transform.position = new Vector3(_boss.transform.position.x, 0.4f, _boss.transform.position.z);
-                instance.transform.rotation = _boss.transform.rotation;
-                instance.transform.Rotate(Vector3.up, maxAngle);
-                // 생성된 탄환 발사
-                instance.GetComponent<Rigidbody>().AddForce(instance.transform.forward * 15f, ForceMode.Impulse);
-            }
+                // 대쉬 후 사방에 탄 발사
+                int randomNum = 0;
+                int maxAngle = 0;
+                int testcount = 0;
+                // 누적 각도가 360이 넘으면 생성중지
+                while (maxAngle < 360)
+                {
+                    testcount++;
+                    GameObject instance = _bulletPool.Pop();
+                    instance.transform.SetParent(null);
+                    // 일정 랜덤 각도(예시 5~10)씩 틀어지며 탄 생성
+                    randomNum = UnityEngine.Random.Range(5, 10);
+                    // randomNum = 10;
+                    maxAngle += randomNum;
+                    instance.SetActive(true);
+                    instance.transform.position = new Vector3(_boss.transform.position.x, 0.4f, _boss.transform.position.z);
+                    instance.transform.rotation = _boss.transform.rotation;
+                    instance.transform.Rotate(Vector3.up, maxAngle);
+                    // 생성된 탄환 발사
+                    instance.GetComponent<Rigidbody>().AddForce(instance.transform.forward * 15f, ForceMode.Impulse);
+                }
 
-            yield return _Sleep;
+                yield return _Sleep;
+            }
         }
     }
 
