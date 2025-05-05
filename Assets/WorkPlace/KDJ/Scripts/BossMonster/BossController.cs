@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BossController : MonoBehaviour, IDamagable
@@ -26,9 +27,10 @@ public class BossController : MonoBehaviour, IDamagable
     private int _maxHp;
     public int MaxHp { get { return _maxHp; } set { _maxHp = value; } }
     private int _curHp;
-    public int CurHp { get { return _curHp; } set { _curHp = value; } }
+    public int CurHp { get { return _curHp; } set { _curHp = value; OnCurHpChanged?.Invoke(); } }
     private int _halfHp;
 
+    public event Action OnCurHpChanged;
     public event Action OnDied;
 
     private void Awake()
@@ -89,7 +91,8 @@ public class BossController : MonoBehaviour, IDamagable
 
         for (int i = 0; i < 300; i++)
         {
-            GameObject bullet = Instantiate(_bulletPrefab, this.transform.position, this.transform.rotation);
+            GameObject bullet = Instantiate(_bulletPrefab);
+            bullet.transform.parent = this.transform;
             bullet.GetComponent<BossBullet>().returnPool = _bulletPool;
             bullet.SetActive(false);
             _bulletPool.Push(bullet);
@@ -146,6 +149,7 @@ public class BossController : MonoBehaviour, IDamagable
                 angleGrid = 10f;
 
                 GameObject instance = _bulletPool.Pop();
+                instance.transform.SetParent(null);
                 instance.SetActive(true);
                 instance.transform.position = new Vector3(_boss.transform.position.x, 0.4f, _boss.transform.position.z);
                 instance.transform.rotation = _boss.transform.rotation;
