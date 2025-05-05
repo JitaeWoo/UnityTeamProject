@@ -4,5 +4,41 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 0
+    path: Assets/WorkPlace/LJH/LJHScene.unity
+    guid: bc8ea98618350554682969040dff2bc5
+  - enabled: 1
+    path: Assets/WorkPlace/LJH/Scenes/Stage 1.unity
+    guid: 15274de2ccf2f3c478077f03753a76d2
+  - enabled: 1
+    path: Assets/WorkPlace/LJH/Scenes/Stage 2.unity
+    guid: 0e9cd1e38452dac4d866fa465cc4bd72
+  - enabled: 1
+    path: Assets/WorkPlace/LJH/Scenes/Stage 3.unity
+    guid: 78fd4a1ebe0dd7e45a58554eb9b940a7
+  - enabled: 1
+    path: Assets/WorkPlace/LJH/Scenes/Stage 4.unity
+    guid: 18f54663aa2c49f4a860703852414d5a
+  - enabled: 1
+    path: Assets/WorkPlace/LJH/Scenes/Stage 5.unity
+    guid: 71d436bdb8fb64e47994dd3dd1cf4be7
+  - enabled: 1
+    path: Assets/WorkPlace/CYE/Scenes/MonsterSample.unity
+    guid: b2921df40648ccc4f9bc5ea04cb9db96
+  - enabled: 1
+    path: Assets/Scenes/UI_Scene.unity
+    guid: 8a200dee03b57964995ceda181d9adea
+  - enabled: 1
+    path: Assets/Scenes/Set Player Profile_Scene.unity
+    guid: d80aafc5112aac942bc402dda40509a7
+  - enabled: 1
+    path: Assets/Scenes/TitleScene.unity
+    guid: bb64e49e35ea87447a9b1de37ab74e89
+  - enabled: 1
+    path: Assets/Scenes/Stage1.unity
+    guid: bf3a7910a655b434fa5129ba87cafe19
+  - enabled: 1
+    path: Assets/Scenes/Stage2.unity
+    guid: 8ce26242cac0c764ca8d63fc0f640103
   m_configObjects: {}
