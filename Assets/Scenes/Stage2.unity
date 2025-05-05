@@ -681,17 +681,12 @@ MonoBehaviour:
   - spawnInterval: 0.3
     timeLimit: 10
     WaveMonsters:
-    - MonsterPrefab: {fileID: 2969178627175260329, guid: 75c8728695796a44b818a11cb55a0d21, type: 3}
-      Count: 1
-  - spawnInterval: 0.3
-    timeLimit: 10
-    WaveMonsters:
-    - MonsterPrefab: {fileID: 8548797465332314017, guid: 28b2e763431afe14f89c02dd2eaa6b0a, type: 3}
+    - MonsterPrefab: {fileID: 4682428087979016667, guid: d1a453f0edcd08c4baa3becd1af86863, type: 3}
       Count: 1
   currentWaveIndex: 0
   _monsterCount: 0
   _isAllMonsterSpawned: 0
-  nextStageSceneName: Stage2
+  nextStageSceneName: Stage3
   Upgrader: {fileID: 225743920567633461, guid: cc2510d749d843a43bcfe2448a6df6da, type: 3}
   _bossHp: {fileID: 3286332581207839321, guid: bb0e5c73205b84a48a3fc4fa43af1bcf, type: 3}
   mapBounds: {fileID: 1009069935}
