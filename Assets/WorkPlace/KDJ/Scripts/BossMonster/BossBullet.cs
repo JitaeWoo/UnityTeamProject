@@ -29,6 +29,11 @@ public class BossBullet : MonoBehaviour
         }
     }
 
+    public void RemoveBullet()
+    {
+        StartCoroutine(ReturnBullet());
+    }
+
     IEnumerator ReturnBullet(float delay = 0)
     {
         yield return new WaitForSeconds(delay);

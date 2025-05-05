@@ -2,30 +2,47 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
 public enum MonsterType { 
-    Melee, Range, Elite
+    Melee, Range, Flying, Elite
 }
 
 public class MonsterController : MonoBehaviour, IDamagable
 {
     #region > Variables
 
+    #region >> Properties
+    public MonsterType Type { get { return _type; } private set { _type = value; } }
+    public int CurHp { get { return _curHp; } private set { _curHp = value; } }
+    public int MaxHp { get { return _maxHp; } private set { _maxHp = value; } }
+    public int Damage { get { return _damage; } private set { _damage = value; } }
+    public bool IsMiniBoss { get { return _isMiniBoss; } private set { _isMiniBoss = value; } }
+    #endregion
+
+    #region >> Public variables
+    [NonSerialized] public UnityEvent OnDied;
+    [NonSerialized] public UnityEvent OnChangeCurHp;
+    #endregion
+
     #region >> Serialized variables
-    public int Hp;
-    public MonsterType Type;
-    public int Damage;
-    public UnityEvent OnDied;
+    [SerializeField] private MonsterType _type;
+    [SerializeField] private int _maxHp;
+    [SerializeField] private int _damage;
+    [SerializeField] private bool _isMiniBoss;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _detectRange;
     [SerializeField] private float _attackRange;
+    [SerializeField] private AttackType[] _attackTypes;
     [SerializeField] private MeleeAttackInfo _meleeAttackInfo;
     [SerializeField] private RangeAttackInfo _rangeAttackInfo;
     #endregion
 
     #region >> Private variables
+    // 현재 hp
+    private int _curHp;
     // target object 
     private GameObject _targetObject;
     // target object 탐지여부
@@ -131,6 +148,7 @@ public class MonsterController : MonoBehaviour, IDamagable
     #region > Custom functions
     private void Init()
     {
+        _curHp = _maxHp;
         _rigidbody = gameObject.GetComponent<Rigidbody>();
         _isDied = false;
         _dyingAnimationTime = 0f;
@@ -155,16 +173,17 @@ public class MonsterController : MonoBehaviour, IDamagable
 
     public void TakeHit(int attackPoint) 
     {
-        if (attackPoint >= Hp && !_isDied)
+        OnChangeCurHp?.Invoke();
+        if (attackPoint >= CurHp && !_isDied)
         {
-            Hp = 0;
+            CurHp = 0;
             _isDied = true;
             // -> activate dying animation
             Die();
         }
         else 
         {
-            Hp -= attackPoint;
+            CurHp -= attackPoint;
             // -> take damage animation variable change
         }
     }
