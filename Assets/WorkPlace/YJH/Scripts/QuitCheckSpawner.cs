@@ -6,7 +6,7 @@ public class QuitCheckSpawner : MonoBehaviour
 {
     public GameObject QuitPopup;
     public GameObject Blocker;
-    private string targetCanvasName = "Canvas";
+    private string targetCanvasName = "UI_Canvas";
     public void SpawnQuitCheck()
     {
         GameObject canvasObj = GameObject.Find(targetCanvasName);
