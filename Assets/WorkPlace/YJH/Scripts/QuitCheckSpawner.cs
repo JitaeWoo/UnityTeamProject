@@ -6,10 +6,11 @@ public class QuitCheckSpawner : MonoBehaviour
 {
     public GameObject QuitPopup;
     public GameObject Blocker;
-    public Transform parentTransform;
+    private string targetCanvasName = "UI_Canvas";
     public void SpawnQuitCheck()
     {
-        GameObject spawnedBlocker = Instantiate(Blocker, parentTransform); // 喉肺目 积己
-        Instantiate(QuitPopup, parentTransform);
+        GameObject canvasObj = GameObject.Find(targetCanvasName);
+        GameObject spawnedBlocker = Instantiate(Blocker, canvasObj.transform); // 喉肺目 积己
+        Instantiate(QuitPopup, canvasObj.transform);
     }
 }

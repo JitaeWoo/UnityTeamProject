@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/WorkPlace/YJH/Scenes/Set Player Profile_Scene.unity
     guid: d80aafc5112aac942bc402dda40509a7
+  - enabled: 1
+    path: Assets/WorkPlace/YJH/Scenes/TitleScene.unity
+    guid: bb64e49e35ea87447a9b1de37ab74e89
   m_configObjects: {}
