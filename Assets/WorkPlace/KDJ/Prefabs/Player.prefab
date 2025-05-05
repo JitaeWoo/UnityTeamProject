@@ -77,12 +77,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1650781213301247755}
-  _poolSize: 50
+  _poolSize: 100
   _bulletPrefab: {fileID: 326611286736933000, guid: 2a58dbe19dfe44b4da28076dcc26c730, type: 3}
   _muzzlePosition: {fileID: 2351876656549106809}
   _bulletProjectileNum: 2
-  _invincibleTime: 0.1
+  _invincibleTime: 0.02
   _pierceNum: 0
+  _shotSpeed: 20
+  _fireRate: 0.1
 --- !u!114 &7924556332567060847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,6 +157,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1953271650171834, guid: dbf7a0c9d76b77a40af3104feac0641d, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 4063552230360950, guid: dbf7a0c9d76b77a40af3104feac0641d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -194,6 +200,18 @@ PrefabInstance:
     - target: {fileID: 4063552230360950, guid: dbf7a0c9d76b77a40af3104feac0641d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 136275810615880682, guid: dbf7a0c9d76b77a40af3104feac0641d, type: 3}
+      propertyPath: m_Height
+      value: 1.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 136275810615880682, guid: dbf7a0c9d76b77a40af3104feac0641d, type: 3}
+      propertyPath: m_Radius
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 136275810615880682, guid: dbf7a0c9d76b77a40af3104feac0641d, type: 3}
+      propertyPath: m_Center.y
+      value: 0.95
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
