@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class PopupSpawner_Title : MonoBehaviour
 {
-    public GameObject prefabToSpawn; // 积己且 橇府普
+    public GameObject manualPrefab; // 积己且 橇府普
+    public GameObject descriptionPrefab;
     public Transform parentTransform; // 积己瞪 何葛
 
-    public void SpawnPrefab()
+    public void SpawnManualPopup()
     {
-        Instantiate(prefabToSpawn, parentTransform);
+        Instantiate(manualPrefab, parentTransform);
+    }
+
+    public void SpawnDescriptionPopup()
+    {
+        Instantiate(descriptionPrefab, parentTransform);
     }
 }
