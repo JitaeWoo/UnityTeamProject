@@ -118,7 +118,7 @@ public class BossController : MonoBehaviour, IDamagable
 
                 GameObject instance = _bulletPool.Pop();
                 instance.SetActive(true);
-                instance.transform.position = _boss.transform.position;
+                instance.transform.position = new Vector3(_boss.transform.position.x, 0.4f, _boss.transform.position.z);
                 instance.transform.rotation = _boss.transform.rotation;
                 instance.transform.Rotate(0, startAngle + angleGrid * j, 0);
                 instance.GetComponent<Rigidbody>().AddForce(instance.transform.forward * 15f, ForceMode.Impulse);
@@ -194,7 +194,7 @@ public class BossController : MonoBehaviour, IDamagable
                 // randomNum = 10;
                 maxAngle += randomNum;
                 instance.SetActive(true);
-                instance.transform.position = _boss.transform.position;
+                instance.transform.position = new Vector3(_boss.transform.position.x, 0.4f, _boss.transform.position.z);
                 instance.transform.rotation = _boss.transform.rotation;
                 instance.transform.Rotate(Vector3.up, maxAngle);
                 // 생성된 탄환 발사
