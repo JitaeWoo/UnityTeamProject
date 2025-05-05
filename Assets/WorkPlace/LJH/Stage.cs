@@ -12,6 +12,7 @@ public class Stage : MonoBehaviour
     [SerializeField] private int _monsterCount = 0;
     [SerializeField] private bool _isAllMonsterSpawned;
     [SerializeField] private string nextStageSceneName;
+    [SerializeField] private GameObject Upgrader;
 
 
     //생성한 맵위에 몬스터 생성
@@ -181,18 +182,39 @@ public class Stage : MonoBehaviour
         //몬스터 생성함
         GameObject monster = Instantiate(prefab, position, Quaternion.identity);
         //몬스터가 파괴되었을 때
-        monster.GetComponent<MonsterController>().OnDied.AddListener(() =>
-        {
-            //몬스터 수를 하나 감소
-            _monsterCount--;
-            //모든 몬스터가 파괴되었다면
-            if (_monsterCount == 0 && _isAllMonsterSpawned)
-            {
-                //다음 씬으로 넘어감
-                Manager.Game.SceneChange("NextScene");
-            }
-        });  
 
+        MonsterController monsterController = monster.GetComponent<MonsterController>();
+
+        if (monsterController != null)
+        {
+            monsterController.OnDied.AddListener(() =>
+            {
+                //몬스터 수를 하나 감소
+                _monsterCount--;
+                //모든 몬스터가 파괴되었다면
+                if (_monsterCount == 0 && _isAllMonsterSpawned)
+                {
+                    Instantiate(Upgrader, FindObjectOfType<Canvas>().transform);
+                }
+            });
+        }
+
+        BossController bossController = monster.GetComponent<BossController>();
+
+        if (bossController != null)
+        {
+            bossController.OnDied += () =>
+            {
+                //몬스터 수를 하나 감소
+                _monsterCount--;
+                //모든 몬스터가 파괴되었다면
+                if (_monsterCount == 0 && _isAllMonsterSpawned)
+                {
+                    //다음 씬으로 넘어감
+                    Manager.Game.SceneChange("NextScene");
+                }
+            };
+        }
     }
 
 }

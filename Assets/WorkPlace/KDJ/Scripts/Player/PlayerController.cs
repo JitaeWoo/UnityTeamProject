@@ -14,12 +14,16 @@ public class PlayerController : MonoBehaviour, IDamagable
     [SerializeField] private int _bulletProjectileNum;
     [SerializeField] private float _invincibleTime;
     [SerializeField] private int _pierceNum;
+    [SerializeField] private float _shotSpeed;
+    [SerializeField] private float _fireRate;
 
     // 플레이어 관련
     private Camera _mainCamera;
     private Vector3 _moveDirection;
     private bool IsDamagable = true;
     private Coroutine _invincibleRoutine;
+    private PlayerAnimation _playerAnimation;
+    private bool _isDied;
 
     // 탄환 풀
     private Stack<GameObject> _bulletPool;
@@ -45,50 +49,64 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void PlayerMovement()
     {
-        // 플레이어 이동 입력, WASD 이동 / 조이스틱 미대응. 추후 Horizontal, Vertical로 변경 할 수도 있음
-        Vector3 axis = new Vector3(0, 0, 0);
-
-        if (Input.GetKey(KeyCode.W))
+        if (!_isDied)
         {
-            axis.z += 1;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            axis.z -= 1;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            axis.x -= 1;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            axis.x += 1;
-        }
+            // 플레이어 이동 입력, WASD 이동 / 조이스틱 미대응. 추후 Horizontal, Vertical로 변경 할 수도 있음
+            Vector3 axis = new Vector3(0, 0, 0);
 
-        axis.Normalize();
+            if (Input.GetKey(KeyCode.W))
+            {
+                axis.z += 1;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                axis.z -= 1;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                axis.x -= 1;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                axis.x += 1;
+            }
 
-        _moveDirection = axis;
+            axis.Normalize();
 
-        _player.GetComponent<Rigidbody>().MovePosition(_player.transform.position + _moveDirection * Manager.Player.Stats.Speed * Time.fixedDeltaTime);
+            _moveDirection = axis;
+
+            _player.GetComponent<Rigidbody>().MovePosition(_player.transform.position + _moveDirection * Manager.Player.Stats.Speed * Time.fixedDeltaTime);
+        }
     }
 
     private void PlayerAim()
     {
-        // 플레이어 마우스 조준
+        if (!_isDied)
+        {
+            // 플레이어 마우스 조준
         Vector3 lookPos = Input.mousePosition;
         lookPos.z = _mainCamera.transform.position.y - _player.transform.position.y;
         lookPos = _mainCamera.ScreenToWorldPoint(lookPos);
-        _player.transform.forward = lookPos - transform.position;
+            _player.transform.forward = lookPos - transform.position;
+        }
     }
 
     private void PlayerAttack()
     {
-        // 플레이어 탄환 발사
-        if (Input.GetMouseButton(0))
+        if (!_isDied)
         {
-            if (IsReadyFire)
+            // 플레이어 탄환 발사
+            if (Input.GetMouseButton(0))
             {
-                _fireCoroutine = StartCoroutine(Fire());
+                if (IsReadyFire)
+                {
+                    _playerAnimation.AttackAnimation();
+                    _fireCoroutine = StartCoroutine(Fire());
+                }
+            }
+            else
+            {
+                _playerAnimation.StopAttack();
             }
         }
     }
@@ -96,7 +114,10 @@ public class PlayerController : MonoBehaviour, IDamagable
     void Died()
     {
         // 사망시 파괴
-        Destroy(_player.gameObject);
+        _playerAnimation.StopAttack();
+        _isDied = true;
+        _playerAnimation.DyingAnimation();
+        Destroy(_player.gameObject, 1.5f);
     }
 
     public void TakeHit(int damage)
@@ -131,10 +152,12 @@ public class PlayerController : MonoBehaviour, IDamagable
         // 기본 초기화 과정
         _mainCamera = Camera.main;
         Manager.Player.OnDied += Died;
+        _playerAnimation = GetComponent<PlayerAnimation>();
+        _isDied = false;
 
         // 아래는 임시 테스트용
-        Manager.Player.Stats.FireRate = 0.2f;
-        Manager.Player.Stats.ShotSpeed = 10f;
+        Manager.Player.Stats.FireRate = _fireRate;
+        Manager.Player.Stats.ShotSpeed = _shotSpeed;
         Manager.Player.Stats.InvincibleTime = _invincibleTime;
         Manager.Player.Stats.ProjectileNum = _bulletProjectileNum;
         Manager.Player.Stats.PierceNum = _pierceNum;
@@ -146,6 +169,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         for (int i = 0; i < _poolSize; i++)
         {
             GameObject bullet = Instantiate(_bulletPrefab);
+            bullet.transform.parent = this.transform;
             bullet.GetComponent<Bullet>().returnPool = _bulletPool;
             bullet.SetActive(false);
             _bulletPool.Push(bullet);
@@ -157,6 +181,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         {
             // 단일 발사
             GameObject instance = _bulletPool.Pop();
+            instance.transform.SetParent(null);
             instance.SetActive(true);
             instance.GetComponent<Bullet>().PierceNum = Manager.Player.Stats.PierceNum;
             instance.transform.position = _muzzlePosition.position;
@@ -182,6 +207,7 @@ public class PlayerController : MonoBehaviour, IDamagable
                 }
 
                 GameObject instance = _bulletPool.Pop();
+                instance.transform.SetParent(null);
                 instance.SetActive(true);
                 instance.GetComponent<Bullet>().PierceNum = Manager.Player.Stats.PierceNum;
                 instance.transform.position = _muzzlePosition.position;
