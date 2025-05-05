@@ -19,6 +19,11 @@ public struct RangeAttackInfo
     public Transform MuzzlePoint;
 }
 
+public enum AttackType 
+{ 
+    Dash, Jump, Shoot
+}
+
 public class MonsterAttack // : MonoBehaviour
 {
     #region > Variables
