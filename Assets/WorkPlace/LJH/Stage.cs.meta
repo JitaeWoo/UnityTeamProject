@@ -3,7 +3,11 @@ guid: e06ed0cc3d6216144a8549b90215f095
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Upgrader: {fileID: 225743920567633461, guid: cc2510d749d843a43bcfe2448a6df6da, type: 3}
+  - _bossHp: {fileID: 3286332581207839321, guid: bb0e5c73205b84a48a3fc4fa43af1bcf, type: 3}
+  - mapBounds: {instanceID: 0}
+  - player: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

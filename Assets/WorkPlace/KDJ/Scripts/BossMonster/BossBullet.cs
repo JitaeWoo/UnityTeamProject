@@ -2,16 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+
+public class BossBullet : MonoBehaviour
 {
     [SerializeField] private Rigidbody _bulletRigid;
 
+    private GameObject _boss;
     public Stack<GameObject> returnPool;
-    public int PierceNum;
 
+    private void Awake()
+    {
+        _boss = GameObject.FindGameObjectWithTag("Enemy");
+    }
     void OnEnable()
     {
         StartCoroutine(ReturnBullet(3f));
+    }
+
+    private void FixedUpdate()
+    {
+        if (_boss.GetComponent<BossController>().CurHp <= 0)
+            RemoveBullet();
     }
 
     void OnTriggerEnter(Collider other)
@@ -22,29 +33,26 @@ public class Bullet : MonoBehaviour
             StartCoroutine(ReturnBullet());
         }
 
-        // 몬스터에 충돌 시 관통 기능
-        if (other.gameObject.layer == 9)
+        if (other.gameObject.layer == 3)
         {
-            other.GetComponentInParent<IDamagable>()?.TakeHit(Manager.Player.Stats.Damage);
-
-            if (PierceNum > 0)
-            {
-                PierceNum--;
-            }
-            else
-            {
-                StartCoroutine(ReturnBullet());
-            }
+            other.GetComponentInParent<IDamagable>()?.TakeHit(10);
+            StartCoroutine(ReturnBullet());
         }
+    }
+
+    public void RemoveBullet()
+    {
+        StartCoroutine(ReturnBullet());
     }
 
     IEnumerator ReturnBullet(float delay = 0)
     {
         yield return new WaitForSeconds(delay);
         _bulletRigid.velocity = Vector3.zero;
-        if (Manager.Player.Stats.CurHp > 0)
-            transform.SetParent(Manager.Player.Player.gameObject.transform);
+        if(_boss.gameObject.name == "Boss" && _boss.GetComponent<BossController>().CurHp > 0)
+            transform.SetParent(_boss.transform);
         gameObject.SetActive(false);
         returnPool.Push(gameObject);
     }
 }
+

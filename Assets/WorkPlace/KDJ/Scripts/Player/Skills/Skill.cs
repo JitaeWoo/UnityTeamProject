@@ -7,7 +7,7 @@ public abstract class Skill : MonoBehaviour
     protected float CoolDown;
     protected Coroutine CooldownCoroutine;
     protected WaitForSeconds CooldownDelay;
-    private bool _isReady => CooldownCoroutine == null;
+    public bool _isReady => CooldownCoroutine == null;
 
     public void Use()
     {
