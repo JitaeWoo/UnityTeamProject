@@ -1128,8 +1128,6 @@ MonoBehaviour:
   - {fileID: 1258717177522674, guid: 711323956ca9df1439355941aa3bb19d, type: 3}
   - {fileID: 1041415450565796, guid: 53f41dafca340c44ca7c4a54968c4976, type: 3}
   - {fileID: 1041415450565796, guid: 53f41dafca340c44ca7c4a54968c4976, type: 3}
-  - {fileID: 1133817326662294, guid: bb07231ee65ecf94ab336668db98400f, type: 3}
-  - {fileID: 1133817326662294, guid: bb07231ee65ecf94ab336668db98400f, type: 3}
   wallPrefab: {fileID: 1550454138371544, guid: 2794e957db1ec5a4a9b603ed0ea35ce4, type: 3}
   lavaPrefab: {fileID: 1745447707790088, guid: 94b25f84ad255eb45ac650f2140605f6, type: 3}
   width: 100
@@ -1137,7 +1135,7 @@ MonoBehaviour:
   mapStartXPos: -101
   mapStartZPos: -101
   FloorPos: -1
-  nextStageSceneName: 
+  finalStage: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

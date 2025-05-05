@@ -10,7 +10,6 @@ public class NewBehaviourScript : MonoBehaviour
     public int mapStartXPos = -101;
     public int mapStartZPos = -101;
     public int FloorPos = -1;
-    private string nextStageSceneName;
     [SerializeField] public bool finalStage;
     
 
