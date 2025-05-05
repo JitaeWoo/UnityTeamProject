@@ -515,7 +515,7 @@ GameObject:
   - component: {fileID: 659373352}
   - component: {fileID: 659373351}
   m_Layer: 0
-  m_Name: PauseButton Handler
+  m_Name: Pause Button Handler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
