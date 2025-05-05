@@ -12,6 +12,7 @@ public class Stage : MonoBehaviour
     [SerializeField] private int _monsterCount = 0;
     [SerializeField] private bool _isAllMonsterSpawned;
     [SerializeField] private string nextStageSceneName;
+    [SerializeField] private GameObject Upgrader;
 
 
     //생성한 맵위에 몬스터 생성
@@ -193,8 +194,7 @@ public class Stage : MonoBehaviour
                 //모든 몬스터가 파괴되었다면
                 if (_monsterCount == 0 && _isAllMonsterSpawned)
                 {
-                    //다음 씬으로 넘어감
-                    Manager.Game.SceneChange("NextScene");
+                    Instantiate(Upgrader, FindObjectOfType<Canvas>().transform);
                 }
             });
         }
