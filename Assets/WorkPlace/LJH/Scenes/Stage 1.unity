@@ -198,7 +198,6 @@ GameObject:
   m_Component:
   - component: {fileID: 332862327}
   - component: {fileID: 332862330}
-  - component: {fileID: 332862329}
   - component: {fileID: 332862328}
   m_Layer: 0
   m_Name: WallWest
@@ -216,7 +215,7 @@ Transform:
   m_GameObject: {fileID: 332862326}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -100, y: 2, z: 0}
+  m_LocalPosition: {x: -101, y: 2, z: 0}
   m_LocalScale: {x: 200, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -243,48 +242,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &332862329
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 332862326}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &332862330
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -527,6 +484,7 @@ GameObject:
   m_Component:
   - component: {fileID: 718792421}
   - component: {fileID: 718792420}
+  - component: {fileID: 718792422}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -549,16 +507,24 @@ MonoBehaviour:
   waves:
   - spawnInterval: 0.3
     timeLimit: 5
-    WaveMonsters: []
+    WaveMonsters:
+    - MonsterPrefab: {fileID: 3881693458670559845, guid: 882f0ce4daccbe54d8ccd1f22737c813, type: 3}
+      Count: 5
   - spawnInterval: 0.3
     timeLimit: 5
-    WaveMonsters: []
+    WaveMonsters:
+    - MonsterPrefab: {fileID: 5744300422889491886, guid: 0d5579ce5b84d16408f9d9511238647e, type: 3}
+      Count: 5
   - spawnInterval: 0.3
     timeLimit: 5
-    WaveMonsters: []
+    WaveMonsters:
+    - MonsterPrefab: {fileID: 531141777922013794, guid: 64bdfff2539d47141a6def4ef4f84270, type: 3}
+      Count: 5
   currentWaveIndex: 0
   _monsterCount: 0
   _isAllMonsterSpawned: 0
+  nextStageSceneName: Stage 2
+  Upgrader: {fileID: 0}
   mapBounds: {fileID: 1490399991}
   player: {fileID: 1708263255}
 --- !u!4 &718792421
@@ -576,6 +542,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &718792422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718792419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 797350fbed4235f48a683fc4bb898179, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundPrefabs:
+  - {fileID: 1141756196039588, guid: d7698c69246c64044ab2a94628bf0291, type: 3}
+  - {fileID: 1141756196039588, guid: d7698c69246c64044ab2a94628bf0291, type: 3}
+  - {fileID: 1141756196039588, guid: d7698c69246c64044ab2a94628bf0291, type: 3}
+  - {fileID: 1141756196039588, guid: d7698c69246c64044ab2a94628bf0291, type: 3}
+  - {fileID: 1141756196039588, guid: d7698c69246c64044ab2a94628bf0291, type: 3}
+  - {fileID: 1141756196039588, guid: d7698c69246c64044ab2a94628bf0291, type: 3}
+  - {fileID: 1935509221234588, guid: 15a21c697117b7149916dfd5e6d1309d, type: 3}
+  - {fileID: 1681195754145498, guid: a44f9b5b803069b4ba7b244f59aac09c, type: 3}
+  - {fileID: 1041415450565796, guid: 53f41dafca340c44ca7c4a54968c4976, type: 3}
+  - {fileID: 1582460329675880, guid: dfd2143b013b5ba4ea0c5c5dc8865aa4, type: 3}
+  wallPrefab: {fileID: 1133981147424236, guid: e5fac62723232674aa487c9073f1ca07, type: 3}
+  lavaPrefab: {fileID: 1745447707790088, guid: 94b25f84ad255eb45ac650f2140605f6, type: 3}
+  width: 100
+  height: 100
+  mapStartXPos: -101
+  mapStartZPos: -101
+  FloorPos: -1
+  nextStageSceneName: 
 --- !u!1 &777544505
 GameObject:
   m_ObjectHideFlags: 0
@@ -586,7 +583,6 @@ GameObject:
   m_Component:
   - component: {fileID: 777544506}
   - component: {fileID: 777544509}
-  - component: {fileID: 777544508}
   - component: {fileID: 777544507}
   m_Layer: 0
   m_Name: WallEast
@@ -604,7 +600,7 @@ Transform:
   m_GameObject: {fileID: 777544505}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 100, y: 2, z: 0}
+  m_LocalPosition: {x: 101, y: 2, z: 0}
   m_LocalScale: {x: 200, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -631,48 +627,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &777544508
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 777544505}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &777544509
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -691,7 +645,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1185594569}
   - component: {fileID: 1185594572}
-  - component: {fileID: 1185594571}
   - component: {fileID: 1185594570}
   m_Layer: 0
   m_Name: WallSouth
@@ -709,7 +662,7 @@ Transform:
   m_GameObject: {fileID: 1185594568}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: -100}
+  m_LocalPosition: {x: 0, y: 2, z: -101}
   m_LocalScale: {x: 200, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -736,48 +689,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &1185594571
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1185594568}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1185594572
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -796,7 +707,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1267338161}
   - component: {fileID: 1267338164}
-  - component: {fileID: 1267338163}
   - component: {fileID: 1267338162}
   m_Layer: 0
   m_Name: WallNorth
@@ -814,7 +724,7 @@ Transform:
   m_GameObject: {fileID: 1267338160}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 100}
+  m_LocalPosition: {x: 0, y: 2, z: 101}
   m_LocalScale: {x: 200, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -841,48 +751,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &1267338163
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1267338160}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1267338164
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -967,7 +835,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1490399990}
   - component: {fileID: 1490399993}
-  - component: {fileID: 1490399992}
   - component: {fileID: 1490399991}
   m_Layer: 0
   m_Name: Floor
@@ -1013,48 +880,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &1490399992
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1490399989}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1490399993
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1295,6 +1120,8 @@ MonoBehaviour:
   currentWaveIndex: 0
   _monsterCount: 0
   _isAllMonsterSpawned: 0
+  nextStageSceneName: 
+  Upgrader: {fileID: 0}
   mapBounds: {fileID: 0}
   player: {fileID: 0}
 --- !u!4 &2103646874
