@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class Stage : MonoBehaviour
 {
@@ -13,6 +13,7 @@ public class Stage : MonoBehaviour
     [SerializeField] private bool _isAllMonsterSpawned;
     [SerializeField] private string nextStageSceneName;
     [SerializeField] private GameObject Upgrader;
+    [SerializeField] private Slider _bossHp;
 
 
     //생성한 맵위에 몬스터 생성
@@ -187,8 +188,28 @@ public class Stage : MonoBehaviour
 
         if (monsterController != null)
         {
+            Slider bossHp = null;
+            if (monsterController.IsMiniBoss)
+            {
+                bossHp = Instantiate(_bossHp, FindObjectOfType<Canvas>().transform);
+                bossHp.maxValue = monsterController.MaxHp;
+                bossHp.value = monsterController.CurHp;
+                monsterController.OnChangeCurHp.AddListener(() =>
+                {
+                    if(bossHp != null)
+                    {
+                        bossHp.value = monsterController.CurHp;
+                    }
+                });
+            }
+
             monsterController.OnDied.AddListener(() =>
             {
+                if (bossHp != null)
+                {
+                    Destroy(bossHp.gameObject);
+                }
+
                 //몬스터 수를 하나 감소
                 _monsterCount--;
                 //모든 몬스터가 파괴되었다면
@@ -203,6 +224,19 @@ public class Stage : MonoBehaviour
 
         if (bossController != null)
         {
+            Slider bossHp = Instantiate(_bossHp, FindObjectOfType<Canvas>().transform);
+            bossHp.maxValue = bossController.MaxHp;
+            bossHp.value = bossController.CurHp;
+            Debug.Log(bossController.CurHp);
+            bossController.OnCurHpChanged += () =>
+            {
+                Debug.Log("ddd");
+                if (bossHp != null)
+                {
+                    bossHp.value = bossController.CurHp;
+                }
+            };
+
             bossController.OnDied += () =>
             {
                 //몬스터 수를 하나 감소
@@ -213,6 +247,8 @@ public class Stage : MonoBehaviour
                     //다음 씬으로 넘어감
                     Manager.Game.SceneChange("NextScene");
                 }
+
+                Destroy(bossHp.gameObject);
             };
         }
     }
