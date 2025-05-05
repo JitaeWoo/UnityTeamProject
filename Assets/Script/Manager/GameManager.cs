@@ -28,7 +28,7 @@ public class GameManager : Singleton<GameManager>
 
     public void SceneChange(string sceneName)
     {
-        if (sceneName != "Title")
+        if (sceneName != "TitleScene")
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
@@ -40,5 +40,6 @@ public class GameManager : Singleton<GameManager>
         Manager.Player.CreatePlayer(Vector3.zero);
         Camera.main.transform.AddComponent<CameraMove>();
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.LoadScene("UI_Scene", LoadSceneMode.Additive);
     }
 }
