@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4961930179715569810}
   - component: {fileID: 1783975517062196573}
+  - component: {fileID: 871570677126685518}
   - component: {fileID: 4652180336532334037}
   - component: {fileID: 9053980790623356345}
   m_Layer: 9
@@ -54,6 +55,18 @@ MonoBehaviour:
   _bossRigid: {fileID: 4652180336532334037}
   _hp: 1000
   _damage: 20
+--- !u!114 &871570677126685518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4682428087979016667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10674feccde52804c86d0a332c60a818, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &4652180336532334037
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -100,7 +113,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.5
+  m_Radius: 3
   m_Height: 10
   m_Direction: 1
   m_Center: {x: 0, y: 5, z: 0}

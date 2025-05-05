@@ -10,14 +10,8 @@ public class PlayerAnimation : MonoBehaviour
 
     private void Start()
     {
-        Init();
-    }
-
-    void Init()
-    {
         _animator = GetComponentInChildren<Animator>();
     }
-
     public void AttackAnimation()
     {
         _isAttacking = true;

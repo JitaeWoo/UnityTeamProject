@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class BossAnimation : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Animator _animator;
+    private bool _isDied;
+
+    private void Start()
     {
-        
+        _animator = GetComponentInChildren<Animator>();
+    }
+    public void AttackAnimation()
+    {
+        _animator.SetTrigger("Attack");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SkillAnimation()
     {
-        
+        _animator.SetTrigger("Dash");
+    }
+    public void DyingAnimation()
+    {
+        _isDied = true;
+        _animator.SetBool("IsDied", _isDied);
     }
 }

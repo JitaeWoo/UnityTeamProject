@@ -22,8 +22,11 @@ public class BossController : MonoBehaviour, IDamagable
     private Coroutine _bossRoutine;
     private Action _bossPattern;
     private WaitForSeconds _Sleep;
+    private BossAnimation _bossAnimation;
     private int _patternNum = 1;
     private int _halfHp;
+
+    public event Action OnDied;
 
     private void Awake()
     {
@@ -47,12 +50,15 @@ public class BossController : MonoBehaviour, IDamagable
 
     void BulletShot()
     {
-        Coroutine shot = StartCoroutine(BossShot());
+        if (_hp > 0)
+        {
+            Coroutine shot = StartCoroutine(BossShot());
 
-        shot = null;
+            shot = null;
 
 
-        _patternNum = 2;
+            _patternNum = 2;
+        }
     }
 
     void DashAttack()
@@ -67,6 +73,7 @@ public class BossController : MonoBehaviour, IDamagable
     {
         _bulletPool = new Stack<GameObject>(300);
         _halfHp = _hp / 2;
+        _bossAnimation = GetComponentInChildren<BossAnimation>();
 
         for (int i = 0; i < 300; i++)
         {
@@ -101,15 +108,25 @@ public class BossController : MonoBehaviour, IDamagable
 
     IEnumerator BossShot()
     {
-        WaitForSeconds sleep = new WaitForSeconds(0.25f);
+        WaitForSeconds sleep = new WaitForSeconds(0.65f);
+
         // 보스가 플레이어를 바라봄
+        Vector3 lookPos = new Vector3(Manager.Player.Player.transform.position.x, 0, Manager.Player.Player.transform.position.z);
+        _boss.transform.LookAt(lookPos);
+        _bossAnimation.AttackAnimation();
+        yield return sleep;
+
+
+        sleep = new WaitForSeconds(0.25f);
         for (int i = 0; i < 10; i++)
         {
-            Vector3 lookPos = new Vector3(Manager.Player.Player.transform.position.x, 0, Manager.Player.Player.transform.position.z);
+            // 탄 발사시에도 계속 바라봄
+            lookPos = new Vector3(Manager.Player.Player.transform.position.x, 0, Manager.Player.Player.transform.position.z);
             _boss.transform.LookAt(lookPos);
 
             for (int j = 0; j < 7; j++)
             {
+                // 플레이어 방향으로 부채꼴 탄막 발사
                 float startAngle;
                 float angleGrid;
 
@@ -172,11 +189,13 @@ public class BossController : MonoBehaviour, IDamagable
         // }
 
         // 플레이어가 보스를 미는걸 막기위해 보스의 중량을 매우 크게 늘림. 그래서 미는 힘도 같은 비율로 증가
+        _bossAnimation.SkillAnimation();
         _bossRigid.AddForce(_boss.transform.forward * 1000000f, ForceMode.Impulse);
 
         yield return new WaitForSeconds(1.1f);
 
-        _Sleep = new WaitForSeconds(0.5f);
+        _Sleep = new WaitForSeconds(0.65f);
+
 
         for (int i = 0; i < 3; i++)
         {
@@ -212,6 +231,11 @@ public class BossController : MonoBehaviour, IDamagable
         _hp -= attackPoint;
 
         if (_hp < 0)
-            Destroy(gameObject);
+        {
+            _hp = 0;
+            _bossAnimation.DyingAnimation();
+            Destroy(gameObject, 3f);
+            OnDied.Invoke();
+        }
     }
 }
