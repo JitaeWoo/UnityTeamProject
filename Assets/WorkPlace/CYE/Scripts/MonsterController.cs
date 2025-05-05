@@ -23,8 +23,8 @@ public class MonsterController : MonoBehaviour, IDamagable
     #endregion
 
     #region >> Public variables
-    [NonSerialized] public UnityEvent OnDied;
-    [NonSerialized] public UnityEvent OnChangeCurHp;
+    [HideInInspector] public UnityEvent OnDied;
+    [HideInInspector] public UnityEvent OnChangeCurHp;
     #endregion
 
     #region >> Serialized variables
