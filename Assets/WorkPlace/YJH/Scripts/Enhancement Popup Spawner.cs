@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class EnhancementPopupSpawner : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject EnhancementPopup;
+    private string targetCanvasName = "UI_Canvas";
 
-    // Update is called once per frame
-    void Update()
+    public void SpawnEnhancementPopup()
     {
-        
+        GameObject canvasObj = GameObject.Find(targetCanvasName);
+        Instantiate(EnhancementPopup, canvasObj.transform);
     }
 }
