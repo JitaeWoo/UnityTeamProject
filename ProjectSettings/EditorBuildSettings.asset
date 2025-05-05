@@ -27,9 +27,18 @@ EditorBuildSettings:
     path: Assets/WorkPlace/CYE/Scenes/MonsterSample.unity
     guid: b2921df40648ccc4f9bc5ea04cb9db96
   - enabled: 1
-    path: Assets/WorkPlace/YJH/Scenes/UI_Scene.unity
+    path: Assets/Scenes/UI_Scene.unity
     guid: 8a200dee03b57964995ceda181d9adea
   - enabled: 1
-    path: Assets/WorkPlace/YJH/Scenes/Set Player Profile_Scene.unity
+    path: Assets/Scenes/Set Player Profile_Scene.unity
     guid: d80aafc5112aac942bc402dda40509a7
+  - enabled: 1
+    path: Assets/Scenes/TitleScene.unity
+    guid: bb64e49e35ea87447a9b1de37ab74e89
+  - enabled: 1
+    path: Assets/Scenes/Stage1.unity
+    guid: bf3a7910a655b434fa5129ba87cafe19
+  - enabled: 1
+    path: Assets/Scenes/Stage2.unity
+    guid: 8ce26242cac0c764ca8d63fc0f640103
   m_configObjects: {}

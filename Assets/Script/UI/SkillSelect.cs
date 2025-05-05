@@ -72,6 +72,5 @@ public class SkillSelect : MonoBehaviour
     public void SelectSkill()
     {
         Manager.Player.Skill = (PlayerSkill.Skills)_selectedIndex;
-        Manager.Game.SceneChange("Stage1");
     }
 }

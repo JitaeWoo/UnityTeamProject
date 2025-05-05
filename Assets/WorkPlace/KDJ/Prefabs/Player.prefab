@@ -63,7 +63,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 84
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &5906880041350128441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,11 +80,11 @@ MonoBehaviour:
   _poolSize: 100
   _bulletPrefab: {fileID: 326611286736933000, guid: 2a58dbe19dfe44b4da28076dcc26c730, type: 3}
   _muzzlePosition: {fileID: 2351876656549106809}
-  _bulletProjectileNum: 2
-  _invincibleTime: 0.02
+  _bulletProjectileNum: 1
+  _invincibleTime: 0.1
   _pierceNum: 0
   _shotSpeed: 20
-  _fireRate: 0.1
+  _fireRate: 0.2
 --- !u!114 &7924556332567060847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,6 +201,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 95805638432926132, guid: dbf7a0c9d76b77a40af3104feac0641d, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 7c46b5afddc40ee468ac995f9f31883a, type: 2}
     - target: {fileID: 136275810615880682, guid: dbf7a0c9d76b77a40af3104feac0641d, type: 3}
       propertyPath: m_Height
       value: 1.9

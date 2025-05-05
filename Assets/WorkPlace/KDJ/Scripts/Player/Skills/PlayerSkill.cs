@@ -13,6 +13,7 @@ public class PlayerSkill : MonoBehaviour
     private Skill _utilitySkill;
     private PlayerAnimation _playerAnimation;
     private Coroutine _skillDelay;
+    private int _skillNum;
 
     private void Awake()
     {
@@ -51,25 +52,33 @@ public class PlayerSkill : MonoBehaviour
         {
             case Skills.GrenadeThrow:
                 _skill = gameObject.AddComponent<GrenadeThrow>();
+                _skillNum = 1;
                 break;
             case Skills.BeamShot:
                 _skill = gameObject.AddComponent<BeamShot>();
+                _skillNum = 2;
                 break;
             case Skills.Heal:
                 _skill = gameObject.AddComponent<Heal>();
+                _skillNum = 3;
                 break;
             case Skills.ClearBullet:
                 _skill = gameObject.AddComponent<ClearBullet>();
+                _skillNum = 4;
                 break;
             case Skills.Slash:
                 _skill = gameObject.AddComponent<Slash>();
+                _skillNum = 5;
                 break;
         }
     }
 
     IEnumerator SkillAniDelay()
     {
-        yield return new WaitForSeconds(0.60f);
+        if (_skillNum == 4)
+            yield return new WaitForSeconds(0.01f);
+        else
+            yield return new WaitForSeconds(0.65f);
         _skill.Use();
         _skillDelay = null;
     }
