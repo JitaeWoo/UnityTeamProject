@@ -15,7 +15,6 @@ public class BossController : MonoBehaviour, IDamagable
     [SerializeField] private GameObject _attackPattern;
     [SerializeField] private GameObject _attackPatternTranslucent;
     [SerializeField] private Rigidbody _bossRigid;
-    [SerializeField] private int _hp;
     [SerializeField] private int _damage;
 
     private Stack<GameObject> _bulletPool;
@@ -24,6 +23,10 @@ public class BossController : MonoBehaviour, IDamagable
     private WaitForSeconds _Sleep;
     private BossAnimation _bossAnimation;
     private int _patternNum = 1;
+    private int _maxHp;
+    public int MaxHp { get { return _maxHp; } set { _maxHp = value; } }
+    private int _curHp;
+    public int CurHp { get { return _curHp; } set { _curHp = value; } }
     private int _halfHp;
 
     public event Action OnDied;
@@ -37,7 +40,7 @@ public class BossController : MonoBehaviour, IDamagable
     {
         if (_bossRoutine == null && Manager.Player.Player != null)
         {
-            if (_hp > _halfHp)
+            if (_curHp > _halfHp)
                 PatternSelect((AttackPattern)_patternNum);
             else
             {
@@ -48,31 +51,40 @@ public class BossController : MonoBehaviour, IDamagable
         }
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        if(collision.gameObject.layer == 3)
+        {
+            collision.gameObject.GetComponent<IDamagable>()?.TakeHit(_damage);
+        }
+    }
+
     void BulletShot()
     {
-        if (_hp > 0)
+        if (_curHp > 0)
         {
             Coroutine shot = StartCoroutine(BossShot());
-
             shot = null;
-
-
             _patternNum = 2;
         }
     }
 
     void DashAttack()
     {
-        Coroutine dash = StartCoroutine(BossDash());
-
-        dash = null;
-        _patternNum = 1;
+        if (_curHp > 0)
+        {
+            Coroutine dash = StartCoroutine(BossDash());
+            dash = null;
+            _patternNum = 1;
+        }
     }
 
     void Init()
     {
         _bulletPool = new Stack<GameObject>(300);
-        _halfHp = _hp / 2;
+        _maxHp = 5000;
+        _curHp = _maxHp;
+        _halfHp = _maxHp / 2;
         _bossAnimation = GetComponentInChildren<BossAnimation>();
 
         for (int i = 0; i < 300; i++)
@@ -228,11 +240,11 @@ public class BossController : MonoBehaviour, IDamagable
 
     public void TakeHit(int attackPoint)
     {
-        _hp -= attackPoint;
+        _curHp -= attackPoint;
 
-        if (_hp < 0)
+        if (_curHp < 0)
         {
-            _hp = 0;
+            _curHp = 0;
             _bossAnimation.DyingAnimation();
             Destroy(gameObject, 3f);
             OnDied.Invoke();
