@@ -256,18 +256,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28880e6851649b64aa4ad19fe6f54354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 100
-  Type: 2
-  Damage: 20
-  OnDied:
-    m_PersistentCalls:
-      m_Calls: []
+  _type: 2
+  _maxHp: 100
+  _damage: 10
+  _isMiniBoss: 1
   _moveSpeed: 0.5
   _detectRange: 4.5
   _attackRange: 2.5
+  _attackTypes: 0000000002000000
   _meleeAttackInfo:
     Term: 1
-    Speed: 5
+    Speed: 10
   _rangeAttackInfo:
     Term: 0
     Projectile: {fileID: 0}

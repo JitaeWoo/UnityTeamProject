@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     [SerializeField] private int _bulletProjectileNum;
     [SerializeField] private float _invincibleTime;
     [SerializeField] private int _pierceNum;
+    [SerializeField] private float _shotSpeed;
+    [SerializeField] private float _fireRate;
 
     // 플레이어 관련
     private Camera _mainCamera;
@@ -154,8 +156,8 @@ public class PlayerController : MonoBehaviour, IDamagable
         _isDied = false;
 
         // 아래는 임시 테스트용
-        Manager.Player.Stats.FireRate = 0.2f;
-        Manager.Player.Stats.ShotSpeed = 10f;
+        Manager.Player.Stats.FireRate = _fireRate;
+        Manager.Player.Stats.ShotSpeed = _shotSpeed;
         Manager.Player.Stats.InvincibleTime = _invincibleTime;
         Manager.Player.Stats.ProjectileNum = _bulletProjectileNum;
         Manager.Player.Stats.PierceNum = _pierceNum;
@@ -166,7 +168,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         for (int i = 0; i < _poolSize; i++)
         {
-            GameObject bullet = Instantiate(_bulletPrefab, this.transform.position, this.transform.rotation);
+            GameObject bullet = Instantiate(_bulletPrefab);
+            bullet.transform.parent = this.transform;
             bullet.GetComponent<Bullet>().returnPool = _bulletPool;
             bullet.SetActive(false);
             _bulletPool.Push(bullet);
@@ -178,6 +181,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         {
             // 단일 발사
             GameObject instance = _bulletPool.Pop();
+            instance.transform.SetParent(null);
             instance.SetActive(true);
             instance.GetComponent<Bullet>().PierceNum = Manager.Player.Stats.PierceNum;
             instance.transform.position = _muzzlePosition.position;
@@ -203,6 +207,7 @@ public class PlayerController : MonoBehaviour, IDamagable
                 }
 
                 GameObject instance = _bulletPool.Pop();
+                instance.transform.SetParent(null);
                 instance.SetActive(true);
                 instance.GetComponent<Bullet>().PierceNum = Manager.Player.Stats.PierceNum;
                 instance.transform.position = _muzzlePosition.position;

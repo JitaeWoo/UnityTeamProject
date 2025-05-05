@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -24,11 +23,11 @@ public class Bullet : MonoBehaviour
         }
 
         // 몬스터에 충돌 시 관통 기능
-        if(other.gameObject.layer == 9)
+        if (other.gameObject.layer == 9)
         {
             other.GetComponentInParent<IDamagable>()?.TakeHit(Manager.Player.Stats.Damage);
 
-            if(PierceNum > 0)
+            if (PierceNum > 0)
             {
                 PierceNum--;
             }
@@ -39,15 +38,12 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    void HomingBullet()
-    {
-        // 유도 미구현
-    }
-
     IEnumerator ReturnBullet(float delay = 0)
     {
         yield return new WaitForSeconds(delay);
         _bulletRigid.velocity = Vector3.zero;
+        if (Manager.Player.Stats.CurHp > 0)
+            transform.SetParent(Manager.Player.Player.gameObject.transform);
         gameObject.SetActive(false);
         returnPool.Push(gameObject);
     }

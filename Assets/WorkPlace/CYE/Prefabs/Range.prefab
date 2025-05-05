@@ -149,15 +149,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28880e6851649b64aa4ad19fe6f54354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 50
-  Type: 1
-  Damage: 10
-  OnDied:
-    m_PersistentCalls:
-      m_Calls: []
+  _type: 1
+  _maxHp: 50
+  _damage: 5
+  _isMiniBoss: 0
   _moveSpeed: 0.5
   _detectRange: 4.5
   _attackRange: 2.5
+  _attackTypes: 02000000
   _meleeAttackInfo:
     Term: 0
     Speed: 0

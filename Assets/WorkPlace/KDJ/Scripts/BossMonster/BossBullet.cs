@@ -7,11 +7,24 @@ public class BossBullet : MonoBehaviour
 {
     [SerializeField] private Rigidbody _bulletRigid;
 
+    private GameObject _boss;
     public Stack<GameObject> returnPool;
 
+    private void Awake()
+    {
+        _boss = GameObject.FindGameObjectWithTag("Enemy");
+    }
     void OnEnable()
     {
         StartCoroutine(ReturnBullet(3f));
+    }
+
+    private void Update()
+    {
+        if (_boss.GetComponent<BossController>().CurHp <= 0)
+        {
+            StartCoroutine(ReturnBullet());
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -29,11 +42,18 @@ public class BossBullet : MonoBehaviour
         }
     }
 
+    public void RemoveBullet()
+    {
+        StartCoroutine(ReturnBullet());
+    }
+
     IEnumerator ReturnBullet(float delay = 0)
     {
         yield return new WaitForSeconds(delay);
-        _bulletRigid.velocity = Vector3.zero;
         gameObject.SetActive(false);
+        _bulletRigid.velocity = Vector3.zero;
+        if(_boss.gameObject.name == "Boss" && _boss.GetComponent<BossController>().CurHp > 0)
+            transform.SetParent(_boss.transform);
         returnPool.Push(gameObject);
     }
 }

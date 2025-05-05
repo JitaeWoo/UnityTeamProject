@@ -27,6 +27,7 @@ public class PlayerAnimation : MonoBehaviour
     {
         _isDied = true;
         _animator.SetBool("IsDied", _isDied);
+        _isDied = false;
     }
     
     public void StopAttack()
