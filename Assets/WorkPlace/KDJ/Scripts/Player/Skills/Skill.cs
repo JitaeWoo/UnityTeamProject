@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Skill : MonoBehaviour
 {
-    protected float CoolDown;
+    public float CoolDown;
     protected Coroutine CooldownCoroutine;
     protected WaitForSeconds CooldownDelay;
     public bool _isReady => CooldownCoroutine == null;
