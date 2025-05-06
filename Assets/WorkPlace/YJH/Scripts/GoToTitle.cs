@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class DefeatedButton : MonoBehaviour
+public class GoToTitleScene : MonoBehaviour
 {
     public void GoToTitle()
     {
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene("TitleScene");
     }
 }

@@ -1326,8 +1326,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4f2148e7cfedf4f8484a505546c56b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverPopup: {fileID: 6829228504933817095, guid: 3a69ed2a3e9559f4b86a35d774b59289, type: 3}
+  gameOverPopup: {fileID: 6200861491509310899, guid: 3a69ed2a3e9559f4b86a35d774b59289, type: 3}
   popuptransform: {fileID: 1528642566}
+  blocker: {fileID: 3681158268843732399, guid: 6bf24a50af15da6448eff9dff945e68c, type: 3}
 --- !u!4 &912934566
 Transform:
   m_ObjectHideFlags: 0
