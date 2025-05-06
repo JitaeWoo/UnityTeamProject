@@ -85,6 +85,7 @@ MonoBehaviour:
   _pierceNum: 0
   _shotSpeed: 20
   _fireRate: 0.2
+  _moveSpeed: 7
 --- !u!114 &7924556332567060847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skill: 1
+  _skillNum: 0
 --- !u!114 &3041663263133171738
 MonoBehaviour:
   m_ObjectHideFlags: 0

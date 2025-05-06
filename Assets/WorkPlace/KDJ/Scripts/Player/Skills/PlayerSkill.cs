@@ -13,7 +13,7 @@ public class PlayerSkill : MonoBehaviour
     private Skill _utilitySkill;
     private PlayerAnimation _playerAnimation;
     private Coroutine _skillDelay;
-    private int _skillNum;
+    public int _skillNum;
 
     private void Awake()
     {
