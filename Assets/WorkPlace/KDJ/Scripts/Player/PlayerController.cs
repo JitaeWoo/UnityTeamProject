@@ -16,14 +16,17 @@ public class PlayerController : MonoBehaviour, IDamagable
     [SerializeField] private int _pierceNum;
     [SerializeField] private float _shotSpeed;
     [SerializeField] private float _fireRate;
+    [SerializeField] private float _moveSpeed;
 
     // 플레이어 관련
     private Camera _mainCamera;
     private Vector3 _moveDirection;
     private bool IsDamagable = true;
     private Coroutine _invincibleRoutine;
+    private Coroutine _dashedRoutine;
     private PlayerAnimation _playerAnimation;
     private bool _isDied;
+    private bool _canMove = true;
 
     // 탄환 풀
     private Stack<GameObject> _bulletPool;
@@ -45,11 +48,12 @@ public class PlayerController : MonoBehaviour, IDamagable
     void Update()
     {
         PlayerAttack();
+        DashAndMove();
     }
 
     private void PlayerMovement()
     {
-        if (!_isDied)
+        if (!_isDied && _canMove)
         {
             // 플레이어 이동 입력, WASD 이동 / 조이스틱 미대응. 추후 Horizontal, Vertical로 변경 할 수도 있음
             Vector3 axis = new Vector3(0, 0, 0);
@@ -75,7 +79,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
             _moveDirection = axis;
 
-            _player.GetComponent<Rigidbody>().MovePosition(_player.transform.position + _moveDirection * Manager.Player.Stats.Speed * Time.fixedDeltaTime);
+            // _player.GetComponent<Rigidbody>().MovePosition(_player.transform.position + _moveDirection * Manager.Player.Stats.Speed * Time.fixedDeltaTime);
+            _player.GetComponent<Rigidbody>().velocity = _moveDirection * Manager.Player.Stats.Speed;
         }
     }
 
@@ -111,6 +116,14 @@ public class PlayerController : MonoBehaviour, IDamagable
         }
     }
 
+    void DashAndMove()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _dashedRoutine = StartCoroutine(DashCheck());
+        }
+    }
+
     void Died()
     {
         // 사망시 파괴
@@ -123,7 +136,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     public void TakeHit(int damage)
     {
         // 플레이어 데미지, 무적시간동안은 피해를 받지 않음
-        if (Manager.Player.Stats.CurHp > 0)
+        if (Manager.Player.Stats.CurHp > 0 && _canMove)
         {
             if (IsDamagable)
             Manager.Player.Stats.CurHp -= damage;
@@ -157,6 +170,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         // 아래는 임시 테스트용
         Manager.Player.Stats.FireRate = _fireRate;
+        Manager.Player.Stats.Speed = _moveSpeed;
         Manager.Player.Stats.ShotSpeed = _shotSpeed;
         Manager.Player.Stats.InvincibleTime = _invincibleTime;
         Manager.Player.Stats.ProjectileNum = _bulletProjectileNum;
@@ -219,6 +233,15 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         yield return _waitTime;
         _fireCoroutine = null;
+    }
+
+    IEnumerator DashCheck()
+    {
+        _canMove = false;
+        yield return new WaitForSeconds(0.2f);
+        _player.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        _canMove = true;
+        _dashedRoutine = null;
     }
 
     IEnumerator Invincibility()
