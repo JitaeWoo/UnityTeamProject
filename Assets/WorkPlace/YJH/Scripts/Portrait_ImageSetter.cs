@@ -20,9 +20,6 @@ public class Portrait_SetImage : MonoBehaviour
             {
                 Debug.LogWarning("스프라이트를 찾을 수 없습니다: " + SceneData.spriteToSet);
             }
-
-            // 적용 후 초기화
-            SceneData.spriteToSet = null;
         }
     }
 }
