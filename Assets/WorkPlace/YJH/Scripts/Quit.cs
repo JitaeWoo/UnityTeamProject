@@ -7,6 +7,7 @@ public class Quit : MonoBehaviour
 {
     public void BacktoTitle()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("TitleScene");
     }
 }

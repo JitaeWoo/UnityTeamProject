@@ -14,23 +14,23 @@ public class StatUpgrader
         switch (stat)
         {
             case Stats.MaxHp:
-                return "ÃÖ´ë Ã¼·Â 10 Áõ°¡";
+                return "ìµœëŒ€ ì²´ë ¥ 10 ì¦ê°€";
             case Stats.CurHp:
-                return "ÃÖ´ë Ã¼·ÂÀ¸·Î È¸º¹";
+                return "ìµœëŒ€ ì²´ë ¥ìœ¼ë¡œ íšŒë³µ";
             case Stats.Speed:
-                return "½ºÇÇµå 10% Áõ°¡";
+                return "ìŠ¤í”¼ë“œ 20% ì¦ê°€";
             case Stats.Damage:
-                return "µ¥¹ÌÁö 10% Áõ°¡";
+                return "ë°ë¯¸ì§€ 20% ì¦ê°€";
             case Stats.InvincibleTime:
-                return "¹«Àû ½Ã°£ 20% Áõ°¡";
+                return "ë¬´ì  ì‹œê°„ 20% ì¦ê°€";
             case Stats.ShotSpeed:
-                return "ÅºÈ¯ ¼Óµµ 10% Áõ°¡";
+                return "íƒ„í™˜ ì†ë„ 20% ì¦ê°€";
             case Stats.FireRate:
-                return "°ø°İ ¼Óµµ 10% Áõ°¡";
+                return "ê³µê²© ì†ë„ 20% ì¦ê°€";
             case Stats.ProjectileNum:
-                return "Åõ»çÃ¼ ¼ö 1 Áõ°¡";
+                return "íˆ¬ì‚¬ì²´ ìˆ˜ 1 ì¦ê°€";
             case Stats.PierceNum:
-                return "°üÅë ¼ö 1 Áõ°¡";
+                return "ê´€í†µ ìˆ˜ 1 ì¦ê°€";
             default:
                 return "";
         }
@@ -43,30 +43,39 @@ public class StatUpgrader
         {
             case Stats.MaxHp:
                 Manager.Player.Stats.MaxHp = (int)(Manager.Player.Stats.MaxHp * 1.1f);
+                EnhancedStatsInfo.EnhancedStatsDic["HP"] += 10;
                 break;
             case Stats.CurHp:
+                EnhancedStatsInfo.EnhancedStatsDic["Healed"] = Manager.Player.Stats.MaxHp - Manager.Player.Stats.CurHp;
                 Manager.Player.Stats.CurHp = Manager.Player.Stats.MaxHp;
                 break;
             case Stats.Speed:
                 Manager.Player.Stats.Speed *= 1.2f;
+                EnhancedStatsInfo.EnhancedStatsDic["Speed"] += 20;
                 break;
             case Stats.Damage:
                 Manager.Player.Stats.Damage *= (int)(Manager.Player.Stats.Damage * 1.2f);
+                EnhancedStatsInfo.EnhancedStatsDic["Damage"] += 20;
                 break;
             case Stats.InvincibleTime:
                 Manager.Player.Stats.InvincibleTime *= 1.2f;
+                EnhancedStatsInfo.EnhancedStatsDic["InvincibleTime"] += 20;
                 break;
             case Stats.ShotSpeed:
                 Manager.Player.Stats.ShotSpeed *= 1.2f;
+                EnhancedStatsInfo.EnhancedStatsDic["ShotSpeed"] += 20;
                 break;
             case Stats.FireRate:
                 Manager.Player.Stats.FireRate *= 0.8f;
+                EnhancedStatsInfo.EnhancedStatsDic["FireRate"] += 20;
                 break;
             case Stats.ProjectileNum:
                 Manager.Player.Stats.ProjectileNum += 1;
+                EnhancedStatsInfo.EnhancedStatsDic["ProjectileNum"] += 1;
                 break;
             case Stats.PierceNum:
                 Manager.Player.Stats.PierceNum += 1;
+                EnhancedStatsInfo.EnhancedStatsDic["PierceNum"] += 1;
                 break;
         }
     }
