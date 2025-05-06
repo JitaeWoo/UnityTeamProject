@@ -30,9 +30,6 @@ public class MoveWaveNaviPoint : MonoBehaviour
             case 4:
                 pos.x = 75;
                 break;
-            default:
-                Debug.LogWarning("유효하지 않은 웨이브 값입니다: " + currentWave);
-                return;
         }
 
         rect.anchoredPosition = pos;
