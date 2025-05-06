@@ -239,6 +239,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         _canMove = false;
         yield return new WaitForSeconds(0.2f);
+        _player.GetComponent<Rigidbody>().velocity = Vector3.zero;
         _canMove = true;
         _dashedRoutine = null;
     }
