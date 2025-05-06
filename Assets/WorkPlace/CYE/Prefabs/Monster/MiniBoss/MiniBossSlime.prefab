@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5116532152848950958}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: UpperEyeCover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,9 +41,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1631132110947442694}
   - component: {fileID: 4415922241716472225}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,7 +58,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.39340413, y: 0.5875655, z: -0.39340413, w: 0.5875655}
   m_LocalPosition: {x: 1.5037661e-32, y: 0.0631712, z: -0.008183928}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7548134608275999767}
@@ -94,7 +94,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7142342370469306425}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EyeCTRL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1859173409558102428}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Side_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2451852902270587847}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EyeBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,7 +190,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7548134608275999767}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Spine01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,7 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6383933328865679467}
   - component: {fileID: 4953179473963276493}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Slime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +242,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1230123028029567083}
@@ -267,7 +267,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 94d5d665d0a8c574597f451ca909d580, type: 2}
+  - {fileID: 2100000, guid: 8ae306b866e95814988001c70d96ddf6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -319,7 +319,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4332240038879199310}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BottomEyeCover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -350,7 +350,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8693372858838893753}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -383,7 +383,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6578104793345536041}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Crown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -415,10 +415,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1230123028029567083}
   - component: {fileID: 2351708900644083043}
+  - component: {fileID: 3569615961643697652}
   - component: {fileID: 369772931702334434}
-  m_Layer: 0
-  m_Name: Slime
-  m_TagString: Untagged
+  m_Layer: 9
+  m_Name: MiniBossSlime
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -433,8 +434,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.7590704, y: -0.0000009536743, z: 1.245441}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1631132110947442694}
   - {fileID: 6383933328865679467}
@@ -461,6 +462,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!54 &3569615961643697652
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8788587206570112026}
+  serializedVersion: 4
+  m_Mass: 2
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!114 &369772931702334434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -468,7 +496,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8788587206570112026}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28880e6851649b64aa4ad19fe6f54354, type: 3}
   m_Name: 
@@ -480,16 +508,16 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _type: 0
-  _maxHp: 50
-  _damage: 5
-  _isMiniBoss: 0
-  _moveSpeed: 0.5
-  _detectRange: 4.5
-  _attackRange: 2.5
+  _maxHp: 100
+  _damage: 10
+  _isMiniBoss: 1
+  _moveSpeed: 0.75
+  _detectRange: 10
+  _attackRange: 7.5
   _attackTypes: 01000000
   _meleeAttackInfo:
-    Term: 1
-    Speed: 7
+    Term: 0.75
+    Speed: 10
   _rangeAttackInfo:
     Term: 0
     Projectile: {fileID: 0}
@@ -505,7 +533,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6828368381020949112}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Side_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
