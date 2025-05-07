@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Heal : Skill
 {
-    [SerializeField] private float _healCooldown = 1f;
+    [SerializeField] private float _healCooldown = 10f;
+    [SerializeField] private float _delay = 0.65f;
 
     private void Awake()
     {
         CoolDown = _healCooldown;
+        SkillMotionDelay = _delay;
+        _playerAnimation = GetComponent<PlayerAnimation>();
     }
 
     protected override void ActivateSkill()
