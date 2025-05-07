@@ -23,9 +23,11 @@ public class PlayerController : MonoBehaviour, IDamagable
     private bool IsDamagable = true;
     private Coroutine _invincibleRoutine;
     private Coroutine _dashedRoutine;
+    private Coroutine _dashCooldownRoutine;
     private PlayerAnimation _playerAnimation;
     private bool _isDied;
     private bool _canMove = true;
+    private bool _canDash = true;
 
     // 탄환 풀
     private Stack<GameObject> _bulletPool;
@@ -47,13 +49,13 @@ public class PlayerController : MonoBehaviour, IDamagable
     void Update()
     {
         PlayerAttack();
-        PlayerMovement();
         DashAndMove();
+        PlayerMovement();
     }
 
     private void PlayerMovement()
     {
-        if (!_isDied && _canMove)
+        if (!_isDied && _isReadyMove)
         {
             // 플레이어 이동 입력, WASD 이동 / 조이스틱 미대응. 추후 Horizontal, Vertical로 변경 할 수도 있음
             Vector3 axis = new Vector3(0, 0, 0);
@@ -118,10 +120,10 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     void DashAndMove()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && _canDash)
         {
-            if (_isReadyMove)
-                _dashedRoutine = StartCoroutine(DashCheck());
+            _dashCooldownRoutine = StartCoroutine(DashCoolDown());
+            _dashedRoutine = StartCoroutine(DashCheck());
         }
     }
 
@@ -236,12 +238,18 @@ public class PlayerController : MonoBehaviour, IDamagable
         _fireCoroutine = null;
     }
 
+    IEnumerator DashCoolDown()
+    {
+        _canDash = false;
+        yield return new WaitForSeconds(2f);
+        _canDash = true;
+        _dashCooldownRoutine = null;
+    }
+
     IEnumerator DashCheck()
     {
-        _canMove = false;
         yield return new WaitForSeconds(0.2f);
         _player.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        _canMove = true;
         _dashedRoutine = null;
     }
 
