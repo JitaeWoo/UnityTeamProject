@@ -83,7 +83,7 @@ public class BossController : MonoBehaviour, IDamagable
     void Init()
     {
         _bulletPool = new Stack<GameObject>(300);
-        _maxHp = 500;
+        _maxHp = 1500;
         _curHp = _maxHp;
         _halfHp = _maxHp / 2;
         _bossAnimation = GetComponentInChildren<BossAnimation>();
