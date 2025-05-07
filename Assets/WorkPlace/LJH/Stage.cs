@@ -239,7 +239,6 @@ public class Stage : MonoBehaviour
             Debug.Log(bossController.CurHp);
             bossController.OnCurHpChanged += () =>
             {
-                Debug.Log("ddd");
                 if (bossHp != null)
                 {
                     bossHp.value = bossController.CurHp;
