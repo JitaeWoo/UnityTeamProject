@@ -11,7 +11,7 @@ public class EnhancedStatsView : MonoBehaviour
     public TMP_Text plusedSpeedText;
     public TMP_Text plusedDamageText;
     public TMP_Text plusedInvincibeTimeText;
-    public TMP_Text plusedShotSizeText;
+    public TMP_Text plusedHealedText;
     public TMP_Text plusedShotSpeedText;
     public TMP_Text plusedFireRateText;
     public TMP_Text plusedProjectileNumText;
@@ -21,9 +21,6 @@ public class EnhancedStatsView : MonoBehaviour
 
     void Start()
     {
-        // manager에서 player의 stats 가져오기
-        stats = Manager.Player.Stats;
-        // 초기 표시
         UpdateStatsUI();
     }
 
@@ -35,14 +32,14 @@ public class EnhancedStatsView : MonoBehaviour
 
     private void UpdateStatsUI()
     {
-        plusedHPText.text = $"{stats.MaxHp - 100}";
-        plusedSpeedText.text = $"{stats.Speed - 5f}";
-        plusedDamageText.text = $"{stats.Damage -10}";
-        plusedInvincibeTimeText.text = $"{stats.InvincibleTime - 0.1f}";
-        plusedShotSizeText.text = $"{stats.ShotSize - 1}";
-        plusedShotSpeedText.text = $"{stats.ShotSpeed - 10}";
-        plusedFireRateText.text = $"{stats.FireRate - 1}";
-        plusedProjectileNumText.text = $"{stats.ProjectileNum - 1}";
-        plusedPierceNumText.text = $"{stats.PierceNum - 0}";
+        plusedHPText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["HP"]} Lv";
+        plusedSpeedText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["Speed"]} Lv";
+        plusedDamageText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["Damage"]} Lv";
+        plusedInvincibeTimeText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["InvincibleTime"]} Lv";
+        plusedShotSpeedText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["ShotSpeed"]} Lv";
+        plusedFireRateText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["FireRate"]} Lv";
+        plusedProjectileNumText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["ProjectileNum"]} Lv";
+        plusedPierceNumText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["PierceNum"]} Lv";
+        plusedHealedText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["Healed"]}";
     }
 }

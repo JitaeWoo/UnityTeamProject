@@ -20,7 +20,12 @@ public class Stage : MonoBehaviour
     public Collider mapBounds;
     //플레이어 위치를 위한 선언
     public Transform player;
-    
+    //승리 UI Prefab 사용을 위한 선언
+    public GameObject victoryPopupPrefab;
+    private void Awake()
+    {
+        Manager.Stage.Stage = this;
+    }
     private void Start()
     {
         //넥스트 스테이지씬이름을 인스펙터에서 받아서 메니저변수에 넣음
@@ -111,7 +116,7 @@ public class Stage : MonoBehaviour
             else
             {
                 //좌표값 반환
-                return new Vector3(x, 1, z);
+                return new Vector3(x, 0, z);
             }
         }
 
@@ -173,7 +178,11 @@ public class Stage : MonoBehaviour
             Debug.Log($"{currentWaveIndex} 웨이브를 시작합니다.");
             StartCoroutine(SpawnWave());
         }
-        
+        else
+        {
+            currentWaveIndex--;
+        }
+
     }
 
     private void CreateMonster(Vector3 position, GameObject prefab)
@@ -230,7 +239,6 @@ public class Stage : MonoBehaviour
             Debug.Log(bossController.CurHp);
             bossController.OnCurHpChanged += () =>
             {
-                Debug.Log("ddd");
                 if (bossHp != null)
                 {
                     bossHp.value = bossController.CurHp;
@@ -241,11 +249,14 @@ public class Stage : MonoBehaviour
             {
                 //몬스터 수를 하나 감소
                 _monsterCount--;
+
                 //모든 몬스터가 파괴되었다면
                 if (_monsterCount == 0 && _isAllMonsterSpawned)
                 {
-                    //다음 씬으로 넘어감
-                    Manager.Game.SceneChange("NextScene");
+                    //victoryPopupPrefab을 victoryPopup으로 생성
+                    GameObject victoryPopup = Instantiate(victoryPopupPrefab, FindAnyObjectByType<Canvas>().transform);
+                    //위치는 중앙정렬
+                    victoryPopup.transform.localPosition = Vector3.zero;
                 }
 
                 Destroy(bossHp.gameObject);

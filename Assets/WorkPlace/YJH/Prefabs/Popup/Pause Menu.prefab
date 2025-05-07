@@ -416,6 +416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a17c448e7b5bbc44999874fb392b720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetToDestroy: {fileID: 5936035525729205017}
 --- !u!1001 &4648531375802206309
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -425,12 +426,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 6728654017450286312}
     m_Modifications:
     - target: {fileID: 8468668361821958240, guid: fe8e92e90044b4fdeaa90752461cc145, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 268.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 8468668361821958240, guid: fe8e92e90044b4fdeaa90752461cc145, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.86249
       objectReference: {fileID: 0}
     - target: {fileID: 8468668361821958240, guid: fe8e92e90044b4fdeaa90752461cc145, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -22.3
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8468668361821958240, guid: fe8e92e90044b4fdeaa90752461cc145, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8468668361821958241, guid: fe8e92e90044b4fdeaa90752461cc145, type: 3}
       propertyPath: m_Name
@@ -438,11 +447,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8468668361821958271, guid: fe8e92e90044b4fdeaa90752461cc145, type: 3}
       propertyPath: m_text
-      value: Player's Stat
+      value: Player's Stats
       objectReference: {fileID: 0}
     - target: {fileID: 8468668361821958271, guid: fe8e92e90044b4fdeaa90752461cc145, type: 3}
       propertyPath: m_margin.z
-      value: -57.939445
+      value: 1.0219498
       objectReference: {fileID: 0}
     - target: {fileID: 8468668361821958271, guid: fe8e92e90044b4fdeaa90752461cc145, type: 3}
       propertyPath: m_textAlignment
@@ -844,6 +853,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enhancement Button
       objectReference: {fileID: 0}
+    - target: {fileID: 8468668363234911869, guid: fe8e92e90044b4fdeaa90752461cc145, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8468668363234911869, guid: fe8e92e90044b4fdeaa90752461cc145, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8468668363234911869, guid: fe8e92e90044b4fdeaa90752461cc145, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1319130845307444510}
+    - target: {fileID: 8468668363234911869, guid: fe8e92e90044b4fdeaa90752461cc145, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8468668363234911869, guid: fe8e92e90044b4fdeaa90752461cc145, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SpawnEnhancementPopup
+      objectReference: {fileID: 0}
+    - target: {fileID: 8468668363234911869, guid: fe8e92e90044b4fdeaa90752461cc145, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EnhancementPopupSpawner, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8468668363234911869, guid: fe8e92e90044b4fdeaa90752461cc145, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8468668363234911871, guid: fe8e92e90044b4fdeaa90752461cc145, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -962,3 +999,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c3679ee9d720c041b26f5e1f6db4c16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnhancementPopup: {fileID: 4432871897693317478, guid: 532c94c5424602c48a1b679e9ea9e826, type: 3}

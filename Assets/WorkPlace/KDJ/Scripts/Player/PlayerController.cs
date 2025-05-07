@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamagable
@@ -16,20 +15,26 @@ public class PlayerController : MonoBehaviour, IDamagable
     [SerializeField] private int _pierceNum;
     [SerializeField] private float _shotSpeed;
     [SerializeField] private float _fireRate;
+    [SerializeField] private float _moveSpeed;
 
     // 플레이어 관련
     private Camera _mainCamera;
     private Vector3 _moveDirection;
     private bool IsDamagable = true;
     private Coroutine _invincibleRoutine;
+    private Coroutine _dashedRoutine;
+    private Coroutine _dashCooldownRoutine;
     private PlayerAnimation _playerAnimation;
     private bool _isDied;
+    private bool _canMove = true;
+    private bool _canDash = true;
 
     // 탄환 풀
     private Stack<GameObject> _bulletPool;
     private WaitForSeconds _waitTime;
     private Coroutine _fireCoroutine;
-    private bool IsReadyFire => _fireCoroutine == null;
+    private bool _isReadyFire => _fireCoroutine == null;
+    private bool _isReadyMove => _dashedRoutine == null;
 
     private void Awake()
     {
@@ -39,17 +44,18 @@ public class PlayerController : MonoBehaviour, IDamagable
     void FixedUpdate()
     {
         PlayerAim();
-        PlayerMovement();
     }
 
     void Update()
     {
         PlayerAttack();
+        DashAndMove();
+        PlayerMovement();
     }
 
     private void PlayerMovement()
     {
-        if (!_isDied)
+        if (!_isDied && _isReadyMove)
         {
             // 플레이어 이동 입력, WASD 이동 / 조이스틱 미대응. 추후 Horizontal, Vertical로 변경 할 수도 있음
             Vector3 axis = new Vector3(0, 0, 0);
@@ -75,7 +81,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
             _moveDirection = axis;
 
-            _player.GetComponent<Rigidbody>().MovePosition(_player.transform.position + _moveDirection * Manager.Player.Stats.Speed * Time.fixedDeltaTime);
+            // _player.GetComponent<Rigidbody>().MovePosition(_player.transform.position + _moveDirection * Manager.Player.Stats.Speed * Time.fixedDeltaTime);
+            _player.GetComponent<Rigidbody>().velocity = _moveDirection * Manager.Player.Stats.Speed;
         }
     }
 
@@ -84,9 +91,9 @@ public class PlayerController : MonoBehaviour, IDamagable
         if (!_isDied)
         {
             // 플레이어 마우스 조준
-        Vector3 lookPos = Input.mousePosition;
-        lookPos.z = _mainCamera.transform.position.y - _player.transform.position.y;
-        lookPos = _mainCamera.ScreenToWorldPoint(lookPos);
+            Vector3 lookPos = Input.mousePosition;
+            lookPos.z = _mainCamera.transform.position.y - _player.transform.position.y;
+            lookPos = _mainCamera.ScreenToWorldPoint(lookPos);
             _player.transform.forward = lookPos - transform.position;
         }
     }
@@ -98,7 +105,7 @@ public class PlayerController : MonoBehaviour, IDamagable
             // 플레이어 탄환 발사
             if (Input.GetMouseButton(0))
             {
-                if (IsReadyFire)
+                if (_isReadyFire)
                 {
                     _playerAnimation.AttackAnimation();
                     _fireCoroutine = StartCoroutine(Fire());
@@ -108,6 +115,15 @@ public class PlayerController : MonoBehaviour, IDamagable
             {
                 _playerAnimation.StopAttack();
             }
+        }
+    }
+
+    void DashAndMove()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && _canDash)
+        {
+            _dashCooldownRoutine = StartCoroutine(DashCoolDown());
+            _dashedRoutine = StartCoroutine(DashCheck());
         }
     }
 
@@ -123,10 +139,10 @@ public class PlayerController : MonoBehaviour, IDamagable
     public void TakeHit(int damage)
     {
         // 플레이어 데미지, 무적시간동안은 피해를 받지 않음
-        if (Manager.Player.Stats.CurHp > 0)
+        if (Manager.Player.Stats.CurHp > 0 && _canMove)
         {
             if (IsDamagable)
-            Manager.Player.Stats.CurHp -= damage;
+                Manager.Player.Stats.CurHp -= damage;
             if (_invincibleRoutine == null)
                 _invincibleRoutine = StartCoroutine(Invincibility());
         }
@@ -156,11 +172,12 @@ public class PlayerController : MonoBehaviour, IDamagable
         _isDied = false;
 
         // 아래는 임시 테스트용
-        Manager.Player.Stats.FireRate = _fireRate;
-        Manager.Player.Stats.ShotSpeed = _shotSpeed;
-        Manager.Player.Stats.InvincibleTime = _invincibleTime;
-        Manager.Player.Stats.ProjectileNum = _bulletProjectileNum;
-        Manager.Player.Stats.PierceNum = _pierceNum;
+        // Manager.Player.Stats.FireRate = _fireRate;
+        // Manager.Player.Stats.Speed = _moveSpeed;
+        // Manager.Player.Stats.ShotSpeed = _shotSpeed;
+        // Manager.Player.Stats.InvincibleTime = _invincibleTime;
+        // Manager.Player.Stats.ProjectileNum = _bulletProjectileNum;
+        // Manager.Player.Stats.PierceNum = _pierceNum;
 
         // 탄환 풀 생성
         _waitTime = new WaitForSeconds(Manager.Player.Stats.FireRate);
@@ -185,6 +202,7 @@ public class PlayerController : MonoBehaviour, IDamagable
             instance.SetActive(true);
             instance.GetComponent<Bullet>().PierceNum = Manager.Player.Stats.PierceNum;
             instance.transform.position = _muzzlePosition.position;
+            instance.transform.rotation = _muzzlePosition.rotation;
             instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * Manager.Player.Stats.ShotSpeed, ForceMode.Impulse);
         }
         else if (Manager.Player.Stats.ProjectileNum > 1)
@@ -211,14 +229,30 @@ public class PlayerController : MonoBehaviour, IDamagable
                 instance.SetActive(true);
                 instance.GetComponent<Bullet>().PierceNum = Manager.Player.Stats.PierceNum;
                 instance.transform.position = _muzzlePosition.position;
-                _muzzlePosition.transform.Rotate(0, startAngle + angleGrid * i, 0);
-                instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * Manager.Player.Stats.ShotSpeed, ForceMode.Impulse);
-                _muzzlePosition.transform.Rotate(0, -(startAngle + angleGrid * i), 0);
+                instance.transform.rotation = _muzzlePosition.rotation;
+                instance.transform.Rotate(0, startAngle + angleGrid * i, 0);
+                instance.GetComponent<Rigidbody>().AddForce(instance.transform.forward * Manager.Player.Stats.ShotSpeed, ForceMode.Impulse);
+                // instance.transform.Rotate(0, -(startAngle + angleGrid * i), 0);
             }
         }
 
         yield return _waitTime;
         _fireCoroutine = null;
+    }
+
+    IEnumerator DashCoolDown()
+    {
+        _canDash = false;
+        yield return new WaitForSeconds(2f);
+        _canDash = true;
+        _dashCooldownRoutine = null;
+    }
+
+    IEnumerator DashCheck()
+    {
+        yield return new WaitForSeconds(0.2f);
+        _player.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        _dashedRoutine = null;
     }
 
     IEnumerator Invincibility()

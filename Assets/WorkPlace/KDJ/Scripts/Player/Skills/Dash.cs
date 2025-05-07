@@ -6,13 +6,16 @@ using UnityEngine.EventSystems;
 
 public class Dash : Skill
 {
-    [SerializeField] private float _dashCooldown = 1f;
+    [SerializeField] private float _dashCooldown = 2f;
+    [SerializeField] private float _delay = 0f;
 
     private PlayerController _playerController;
 
     private void Awake()
     {
         CoolDown = _dashCooldown;
+        SkillMotionDelay = _delay;
+        _playerAnimation = GetComponent<PlayerAnimation>();
         _playerController = GetComponent<PlayerController>();
     }
 
@@ -22,6 +25,6 @@ public class Dash : Skill
         // GetComponent<Rigidbody>().AddForce(transform.forward * 10f, ForceMode.Impulse);
 
         // AddForce Dash at moveDirection
-        GetComponent<Rigidbody>().AddForce(_playerController.GetMoveDirection() * 10f, ForceMode.Impulse);
+        GetComponent<Rigidbody>().AddForce(_playerController.GetMoveDirection() * 30f, ForceMode.Impulse);
     }
 }

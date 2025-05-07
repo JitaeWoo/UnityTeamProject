@@ -10,6 +10,12 @@ public class GameManager : Singleton<GameManager>
 {
     public event Action OnStartGame;
     public event Action OnGameOver;
+    public event Action<bool> OnPaused;
+
+    public void PauseGame(bool isPause)
+    {
+        OnPaused?.Invoke(isPause);
+    }
 
     public void StartGame()
     {

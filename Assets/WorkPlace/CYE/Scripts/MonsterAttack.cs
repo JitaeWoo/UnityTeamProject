@@ -65,6 +65,7 @@ public class MonsterAttack // : MonoBehaviour
     {
         while (true)
         {
+            yield return new WaitForSeconds(_rangeAttackInfo.Term);
             if (projectiles.TryPop(out GameObject projectile)) 
             {
                 projectile.transform.position = _rangeAttackInfo.MuzzlePoint.position;
@@ -72,7 +73,6 @@ public class MonsterAttack // : MonoBehaviour
                 projectile.GetComponent<MonsterProjectileScript>().Activate();
                 projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * _rangeAttackInfo.ProjectileSpeed, ForceMode.Impulse);
             }
-            yield return new WaitForSeconds(_rangeAttackInfo.Term);
         }
     }
     #endregion

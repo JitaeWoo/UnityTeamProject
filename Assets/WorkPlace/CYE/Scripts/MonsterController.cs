@@ -51,6 +51,7 @@ public class MonsterController : MonoBehaviour, IDamagable
     private LayerMask _detectLayer;
     // 현 object의 rigidbody
     private Rigidbody _rigidbody;
+    private Animator _animator;
     // 사망 애니메이션 길이
     private float _dyingAnimationTime;
     // 충돌 여부
@@ -71,6 +72,8 @@ public class MonsterController : MonoBehaviour, IDamagable
     private bool _isAttackable;
     // 사망 여부
     private bool _isDied;
+    private bool _isDamaged;
+    private Coroutine _animatorControllRoutine;
     #endregion
 
     #endregion
@@ -121,9 +124,9 @@ public class MonsterController : MonoBehaviour, IDamagable
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player") && Type != MonsterType.Range)
+        if (collision.gameObject.CompareTag("Player") && Type != MonsterType.Range && !_isDied)
         {
-            collision.gameObject.GetComponent<IDamagable>()?.TakeHit(Damage);
+            collision.gameObject.GetComponentInParent<IDamagable>()?.TakeHit(Damage);
         }
     }
 
@@ -150,11 +153,14 @@ public class MonsterController : MonoBehaviour, IDamagable
     {
         _curHp = _maxHp;
         _rigidbody = gameObject.GetComponent<Rigidbody>();
+        _animator = gameObject.GetComponent<Animator>();
+        _animatorControllRoutine = null;
         _isDied = false;
-        _dyingAnimationTime = 0f;
+        _dyingAnimationTime = 3.0f;
         _isCollide = false;
         _blockMovementLayer = LayerMask.GetMask("Player", "Wall");
         _isAttackable = false;
+        _isDamaged = false;
         if (Type == MonsterType.Range) 
         {
             _projectilePool = new Stack<GameObject>(_rangeAttackInfo.ProjectileTotalCount);
@@ -173,24 +179,66 @@ public class MonsterController : MonoBehaviour, IDamagable
 
     public void TakeHit(int attackPoint) 
     {
-        OnChangeCurHp?.Invoke();
-        if (attackPoint >= CurHp && !_isDied)
+        if (!_isDied)
         {
-            CurHp = 0;
-            _isDied = true;
-            // -> activate dying animation
-            Die();
+            if (attackPoint >= CurHp)
+            {
+                CurHp = 0;
+                Die();
+            }
+            else
+            {
+                CurHp -= attackPoint;
+                if (!_isDamaged)
+                {
+                    _isDamaged = true;
+                    _animator.SetBool("GetDamaged", _isDamaged);
+                    if (_animatorControllRoutine == null)
+                    {
+                        _animatorControllRoutine = StartCoroutine(ReleaseDamaged());
+                    }
+                }
+            }
+            OnChangeCurHp?.Invoke();
         }
-        else 
+    }
+    private IEnumerator ReleaseDamaged() {
+        yield return new WaitForSeconds(0.8f);
+        _isDamaged = false;
+        _animator.SetBool("GetDamaged", _isDamaged);
+        if (_animatorControllRoutine != null)
         {
-            CurHp -= attackPoint;
-            // -> take damage animation variable change
+            StopCoroutine(_animatorControllRoutine);
+            _animatorControllRoutine = null;
         }
     }
 
     private void Die()
     {
+        _isDetected = false;
+        _isCollide = false;
+        _isAttackable = false;
+        _isDamaged = false;
+        _isDied = true;
+
+        if (_attackRoutine is not null)
+        {
+            StopCoroutine(_attackRoutine);
+            _attackRoutine = null;
+        }
+        if (_animatorControllRoutine != null)
+        {
+            StopCoroutine(_animatorControllRoutine);
+            _animatorControllRoutine = null;
+        }
+
+        _animator.SetBool("IsDetected", _isDetected);
+        _animator.SetBool("IsAttacking", _isAttackable);
+        _animator.SetBool("GetDamaged", _isDamaged);
+        _animator.SetBool("IsDying", _isDied);
+
         OnDied?.Invoke();
+
         Destroy(gameObject, _dyingAnimationTime);
     }
 
@@ -203,6 +251,7 @@ public class MonsterController : MonoBehaviour, IDamagable
         {
             _isDetected = false;
         }
+        _animator.SetBool("IsDetected", _isDetected);
     }
 
     private void LookTarget()
@@ -245,23 +294,27 @@ public class MonsterController : MonoBehaviour, IDamagable
                 _attackRoutine = null;
             }
         }
+        _animator.SetBool("IsAttacking", _isAttackable);
     }
 
     private void Attack()
     {
         if (_attackRoutine is null)
         {
-            switch (Type)
+            foreach (AttackType attackType in _attackTypes)
             {
-                case MonsterType.Melee:
-                    _attackRoutine = StartCoroutine(_monsterAttack.Dash());
-                    break;
-                case MonsterType.Range:
-                    _attackRoutine = StartCoroutine(_monsterAttack.Shooting(_projectilePool));
-                    break;
-                case MonsterType.Elite:
-                    _attackRoutine = StartCoroutine(_monsterAttack.Jump());
-                    break;
+                switch (attackType)
+                {
+                    case AttackType.Dash:
+                        _attackRoutine = StartCoroutine(_monsterAttack.Dash());
+                        break;
+                    case AttackType.Shoot:
+                        _attackRoutine = StartCoroutine(_monsterAttack.Shooting(_projectilePool));
+                        break;
+                    case AttackType.Jump:
+                        _attackRoutine = StartCoroutine(_monsterAttack.Jump());
+                        break;
+                }
             }
         }
     }

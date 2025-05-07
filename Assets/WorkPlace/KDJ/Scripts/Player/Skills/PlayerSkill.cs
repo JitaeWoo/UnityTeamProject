@@ -8,31 +8,23 @@ public class PlayerSkill : MonoBehaviour
         GrenadeThrow, BeamShot, Heal, ClearBullet, Slash, size
     }
 
-    [SerializeField] Skills skill;
+    // [SerializeField] Skills skill;
     private Skill _skill;
     private Skill _utilitySkill;
-    private PlayerAnimation _playerAnimation;
-    private Coroutine _skillDelay;
-    private int _skillNum;
+    public int _skillNum;
 
     private void Awake()
     {
-        // EquipSkill(Manager.Player.Skill);
-        EquipSkill(skill); // 테스트용. 끝나면 위로 교체
+        EquipSkill(Manager.Player.Skill);
+        // EquipSkill(skill); // 테스트용. 끝나면 위로 교체
         _utilitySkill = gameObject.AddComponent<Dash>();
-        _playerAnimation = GetComponent<PlayerAnimation>();
     }
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(1))
         {
-            if (_skill._isReady)
-                _playerAnimation.SkillAnimation();
-
-            if (_skillDelay == null)
-                _skillDelay = StartCoroutine(SkillAniDelay());
-
+            _skill.Use();
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -73,13 +65,13 @@ public class PlayerSkill : MonoBehaviour
         }
     }
 
-    IEnumerator SkillAniDelay()
-    {
-        if (_skillNum == 4)
-            yield return new WaitForSeconds(0.01f);
-        else
-            yield return new WaitForSeconds(0.65f);
-        _skill.Use();
-        _skillDelay = null;
-    }
+    // IEnumerator SkillAniDelay()
+    // {
+    //     if (_skillNum == 4)
+    //         yield return new WaitForSeconds(0.01f);
+    //     else
+    //         yield return new WaitForSeconds(0.65f);
+    //     _skill.Use();
+    //     _skillDelay = null;
+    // }
 }
