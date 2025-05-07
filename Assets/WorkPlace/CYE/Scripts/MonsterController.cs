@@ -124,7 +124,7 @@ public class MonsterController : MonoBehaviour, IDamagable
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player") && Type != MonsterType.Range)
+        if (collision.gameObject.CompareTag("Player") && Type != MonsterType.Range && !_isDied)
         {
             collision.gameObject.GetComponentInParent<IDamagable>()?.TakeHit(Damage);
         }
@@ -179,15 +179,11 @@ public class MonsterController : MonoBehaviour, IDamagable
 
     public void TakeHit(int attackPoint) 
     {
-        OnChangeCurHp?.Invoke();
         if (!_isDied)
         {
             if (attackPoint >= CurHp)
             {
                 CurHp = 0;
-                _isDied = true;
-                _animator.SetBool("GetDamaged", false);
-                _animator.SetBool("IsDying", true);
                 Die();
             }
             else
@@ -195,7 +191,6 @@ public class MonsterController : MonoBehaviour, IDamagable
                 CurHp -= attackPoint;
                 if (!_isDamaged)
                 {
-                    Debug.Log("start animation");
                     _isDamaged = true;
                     _animator.SetBool("GetDamaged", _isDamaged);
                     if (_animatorControllRoutine == null)
@@ -204,12 +199,11 @@ public class MonsterController : MonoBehaviour, IDamagable
                     }
                 }
             }
-
+            OnChangeCurHp?.Invoke();
         }
     }
     private IEnumerator ReleaseDamaged() {
         yield return new WaitForSeconds(0.8f);
-        Debug.Log("stop animation");
         _isDamaged = false;
         _animator.SetBool("GetDamaged", _isDamaged);
         if (_animatorControllRoutine != null)
@@ -221,7 +215,30 @@ public class MonsterController : MonoBehaviour, IDamagable
 
     private void Die()
     {
+        _isDetected = false;
+        _isCollide = false;
+        _isAttackable = false;
+        _isDamaged = false;
+        _isDied = true;
+
+        if (_attackRoutine is not null)
+        {
+            StopCoroutine(_attackRoutine);
+            _attackRoutine = null;
+        }
+        if (_animatorControllRoutine != null)
+        {
+            StopCoroutine(_animatorControllRoutine);
+            _animatorControllRoutine = null;
+        }
+
+        _animator.SetBool("IsDetected", _isDetected);
+        _animator.SetBool("IsAttacking", _isAttackable);
+        _animator.SetBool("GetDamaged", _isDamaged);
+        _animator.SetBool("IsDying", _isDied);
+
         OnDied?.Invoke();
+
         Destroy(gameObject, _dyingAnimationTime);
     }
 
