@@ -387,6 +387,7 @@ MonoBehaviour:
   _isAllMonsterSpawned: 0
   nextStageSceneName: Stage 4
   Upgrader: {fileID: 0}
+  _bossHp: {fileID: 0}
   mapBounds: {fileID: 2145998983}
   player: {fileID: 1986386511}
 --- !u!4 &1040837610
@@ -419,14 +420,14 @@ MonoBehaviour:
   groundPrefabs:
   - {fileID: 1537701171874230, guid: 22a52873015ef1645a73a4d0e9df39e4, type: 3}
   - {fileID: 1537701171874230, guid: 22a52873015ef1645a73a4d0e9df39e4, type: 3}
-  - {fileID: 1111494687657738, guid: ae09d9dd6effa2443bf54e95b908d708, type: 3}
-  - {fileID: 1111494687657738, guid: ae09d9dd6effa2443bf54e95b908d708, type: 3}
-  - {fileID: 1410631324709842, guid: 5e776800af408a34d8d89c702905f2d4, type: 3}
-  - {fileID: 1410631324709842, guid: 5e776800af408a34d8d89c702905f2d4, type: 3}
+  - {fileID: 1537701171874230, guid: 22a52873015ef1645a73a4d0e9df39e4, type: 3}
+  - {fileID: 1537701171874230, guid: 22a52873015ef1645a73a4d0e9df39e4, type: 3}
+  - {fileID: 1537701171874230, guid: 22a52873015ef1645a73a4d0e9df39e4, type: 3}
+  - {fileID: 1526646866334644, guid: a68d651cb81757343abbe1d39205eb96, type: 3}
+  - {fileID: 1526646866334644, guid: a68d651cb81757343abbe1d39205eb96, type: 3}
+  - {fileID: 1526646866334644, guid: a68d651cb81757343abbe1d39205eb96, type: 3}
   - {fileID: 1972576606893996, guid: ff3d32d8007f2e24595b8801e30989a4, type: 3}
   - {fileID: 1972576606893996, guid: ff3d32d8007f2e24595b8801e30989a4, type: 3}
-  - {fileID: 1681195754145498, guid: a44f9b5b803069b4ba7b244f59aac09c, type: 3}
-  - {fileID: 1681195754145498, guid: a44f9b5b803069b4ba7b244f59aac09c, type: 3}
   wallPrefab: {fileID: 1410631324709842, guid: 5e776800af408a34d8d89c702905f2d4, type: 3}
   lavaPrefab: {fileID: 1745447707790088, guid: 94b25f84ad255eb45ac650f2140605f6, type: 3}
   width: 100
@@ -434,7 +435,7 @@ MonoBehaviour:
   mapStartXPos: -101
   mapStartZPos: -101
   FloorPos: -1
-  nextStageSceneName: 
+  finalStage: 0
 --- !u!1 &1079208774
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,6 +599,7 @@ MonoBehaviour:
   _isAllMonsterSpawned: 0
   nextStageSceneName: 
   Upgrader: {fileID: 0}
+  _bossHp: {fileID: 0}
   mapBounds: {fileID: 0}
   player: {fileID: 0}
 --- !u!4 &1151643224
