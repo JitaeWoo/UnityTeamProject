@@ -1244,6 +1244,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7398002370311799262}
     m_Modifications:
+    - target: {fileID: 1237477208365745870, guid: 7129244dc9598774ba08f5c02b398369, type: 3}
+      propertyPath: m_SpriteState.m_DisabledSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 40bfe6d90e9ed4cf3bc9ddc5bfc66a5c, type: 3}
     - target: {fileID: 6228158123936358411, guid: 7129244dc9598774ba08f5c02b398369, type: 3}
       propertyPath: m_Name
       value: GameScene_Button
