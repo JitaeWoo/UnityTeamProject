@@ -7,7 +7,7 @@ public class BossAnimation : MonoBehaviour
     private Animator _animator;
     private bool _isDied;
 
-    private void Start()
+    private void Awake()
     {
         _animator = GetComponentInChildren<Animator>();
     }
