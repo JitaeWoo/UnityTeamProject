@@ -9,7 +9,7 @@ public class Grenade : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Ãæµ¹½Ã ÆÄ±«ÈÄ Æø¹ß ÀÌÆåÆ® »ý¼º
-        if (other.gameObject.layer != 7 && other.gameObject.layer != 8)
+        if (other.gameObject.layer != 7 && other.gameObject.layer != 8 && other.GetComponentInParent<MonsterController>()?.CurHp > 0)
         {
             _explosion.transform.position = _grenade.transform.position;
             Destroy(_grenade);
