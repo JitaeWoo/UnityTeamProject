@@ -1014,8 +1014,8 @@ MonoBehaviour:
   _damage: 5
   _isMiniBoss: 0
   _moveSpeed: 0.5
-  _detectRange: 5
-  _attackRange: 3.5
+  _detectRange: 50
+  _attackRange: 25
   _attackTypes: 02000000
   _meleeAttackInfo:
     Term: 0
