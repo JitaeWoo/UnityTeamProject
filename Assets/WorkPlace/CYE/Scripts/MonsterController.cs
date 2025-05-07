@@ -124,7 +124,7 @@ public class MonsterController : MonoBehaviour, IDamagable
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player") && Type != MonsterType.Range)
+        if (collision.gameObject.CompareTag("Player") && Type != MonsterType.Range && !_isDied)
         {
             collision.gameObject.GetComponentInParent<IDamagable>()?.TakeHit(Damage);
         }
