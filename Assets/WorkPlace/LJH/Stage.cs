@@ -114,7 +114,7 @@ public class Stage : MonoBehaviour
             else
             {
                 //좌표값 반환
-                return new Vector3(x, 1, z);
+                return new Vector3(x, 0, z);
             }
         }
 
@@ -176,7 +176,11 @@ public class Stage : MonoBehaviour
             Debug.Log($"{currentWaveIndex} 웨이브를 시작합니다.");
             StartCoroutine(SpawnWave());
         }
-        
+        else
+        {
+            currentWaveIndex--;
+        }
+
     }
 
     private void CreateMonster(Vector3 position, GameObject prefab)

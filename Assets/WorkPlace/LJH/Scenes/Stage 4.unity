@@ -223,6 +223,7 @@ MonoBehaviour:
   _isAllMonsterSpawned: 0
   nextStageSceneName: 
   Upgrader: {fileID: 0}
+  _bossHp: {fileID: 0}
   mapBounds: {fileID: 0}
   player: {fileID: 0}
 --- !u!4 &81509357
@@ -766,6 +767,7 @@ MonoBehaviour:
   _isAllMonsterSpawned: 0
   nextStageSceneName: Stage 5
   Upgrader: {fileID: 0}
+  _bossHp: {fileID: 0}
   mapBounds: {fileID: 2023347218}
   player: {fileID: 1833919569}
 --- !u!4 &1700131485
@@ -796,11 +798,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundPrefabs:
-  - {fileID: 1410631324709842, guid: 5e776800af408a34d8d89c702905f2d4, type: 3}
-  - {fileID: 1410631324709842, guid: 5e776800af408a34d8d89c702905f2d4, type: 3}
-  - {fileID: 1410631324709842, guid: 5e776800af408a34d8d89c702905f2d4, type: 3}
-  - {fileID: 1410631324709842, guid: 5e776800af408a34d8d89c702905f2d4, type: 3}
+  - {fileID: 1537701171874230, guid: 22a52873015ef1645a73a4d0e9df39e4, type: 3}
+  - {fileID: 1537701171874230, guid: 22a52873015ef1645a73a4d0e9df39e4, type: 3}
   - {fileID: 1896491389295096, guid: 8e967992a76f5ff47ae189eff15e36c0, type: 3}
+  - {fileID: 1896491389295096, guid: 8e967992a76f5ff47ae189eff15e36c0, type: 3}
+  - {fileID: 1550454138371544, guid: 2794e957db1ec5a4a9b603ed0ea35ce4, type: 3}
+  - {fileID: 1550454138371544, guid: 2794e957db1ec5a4a9b603ed0ea35ce4, type: 3}
+  - {fileID: 1550454138371544, guid: 2794e957db1ec5a4a9b603ed0ea35ce4, type: 3}
+  - {fileID: 1550454138371544, guid: 2794e957db1ec5a4a9b603ed0ea35ce4, type: 3}
   wallPrefab: {fileID: 1295462230422698, guid: 13048acbe385bd14293b922ebc9ad23f, type: 3}
   lavaPrefab: {fileID: 1745447707790088, guid: 94b25f84ad255eb45ac650f2140605f6, type: 3}
   width: 100
@@ -808,7 +813,7 @@ MonoBehaviour:
   mapStartXPos: -101
   mapStartZPos: -101
   FloorPos: -1
-  nextStageSceneName: 
+  finalStage: 0
 --- !u!1 &1833919568
 GameObject:
   m_ObjectHideFlags: 0
