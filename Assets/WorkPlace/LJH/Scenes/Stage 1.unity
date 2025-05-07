@@ -525,6 +525,7 @@ MonoBehaviour:
   _isAllMonsterSpawned: 0
   nextStageSceneName: Stage 2
   Upgrader: {fileID: 0}
+  _bossHp: {fileID: 0}
   mapBounds: {fileID: 1490399991}
   player: {fileID: 1708263255}
 --- !u!4 &718792421
@@ -572,7 +573,7 @@ MonoBehaviour:
   mapStartXPos: -101
   mapStartZPos: -101
   FloorPos: -1
-  nextStageSceneName: 
+  finalStage: 0
 --- !u!1 &777544505
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,6 +1123,7 @@ MonoBehaviour:
   _isAllMonsterSpawned: 0
   nextStageSceneName: 
   Upgrader: {fileID: 0}
+  _bossHp: {fileID: 0}
   mapBounds: {fileID: 0}
   player: {fileID: 0}
 --- !u!4 &2103646874
