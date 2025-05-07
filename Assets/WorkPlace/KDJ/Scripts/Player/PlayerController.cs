@@ -202,6 +202,7 @@ public class PlayerController : MonoBehaviour, IDamagable
             instance.SetActive(true);
             instance.GetComponent<Bullet>().PierceNum = Manager.Player.Stats.PierceNum;
             instance.transform.position = _muzzlePosition.position;
+            instance.transform.rotation = _muzzlePosition.rotation;
             instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * Manager.Player.Stats.ShotSpeed, ForceMode.Impulse);
         }
         else if (Manager.Player.Stats.ProjectileNum > 1)
@@ -228,9 +229,10 @@ public class PlayerController : MonoBehaviour, IDamagable
                 instance.SetActive(true);
                 instance.GetComponent<Bullet>().PierceNum = Manager.Player.Stats.PierceNum;
                 instance.transform.position = _muzzlePosition.position;
-                _muzzlePosition.transform.Rotate(0, startAngle + angleGrid * i, 0);
-                instance.GetComponent<Rigidbody>().AddForce(_muzzlePosition.forward * Manager.Player.Stats.ShotSpeed, ForceMode.Impulse);
-                _muzzlePosition.transform.Rotate(0, -(startAngle + angleGrid * i), 0);
+                instance.transform.rotation = _muzzlePosition.rotation;
+                instance.transform.Rotate(0, startAngle + angleGrid * i, 0);
+                instance.GetComponent<Rigidbody>().AddForce(instance.transform.forward * Manager.Player.Stats.ShotSpeed, ForceMode.Impulse);
+                // instance.transform.Rotate(0, -(startAngle + angleGrid * i), 0);
             }
         }
 
