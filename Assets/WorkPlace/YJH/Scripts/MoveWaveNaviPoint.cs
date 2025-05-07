@@ -15,7 +15,7 @@ public class MoveWaveNaviPoint : MonoBehaviour
 
     public void MovePoint()
     {
-        currentWave = Manager.Stage.Stage.currentWaveIndex;
+        currentWave = Manager.Stage.Stage.currentWaveIndex + 1;
         RectTransform rect = waveNaviPoint.GetComponent<RectTransform>();
         Vector2 pos = rect.anchoredPosition;
 
