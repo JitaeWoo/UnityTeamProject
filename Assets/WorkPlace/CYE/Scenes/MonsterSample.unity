@@ -1421,7 +1421,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 362480909709898463, guid: 50aaa22a09e6832409f86de60cdabf2c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 362480909709898463, guid: 50aaa22a09e6832409f86de60cdabf2c, type: 3}
       propertyPath: m_TagString
@@ -1780,6 +1780,10 @@ PrefabInstance:
       propertyPath: _maxHp
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 591257205334041907, guid: 05af03b52fc02fc47ba6cb4ea97f3db8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 641754846886796155, guid: 05af03b52fc02fc47ba6cb4ea97f3db8, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -2012,6 +2016,10 @@ PrefabInstance:
     - target: {fileID: 369772931702334434, guid: d2fc827faf927bc4a800c6cef67f64e6, type: 3}
       propertyPath: _maxHp
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 369772931702334434, guid: d2fc827faf927bc4a800c6cef67f64e6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 481810000853847775, guid: d2fc827faf927bc4a800c6cef67f64e6, type: 3}
       propertyPath: m_Layer
@@ -2316,7 +2324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6477139562497458386, guid: 41703d002c6c33f4a9178f05ff0034e1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6477139562497458386, guid: 41703d002c6c33f4a9178f05ff0034e1, type: 3}
       propertyPath: m_TagString
@@ -2373,6 +2381,10 @@ PrefabInstance:
     - target: {fileID: 7662900253585496582, guid: 41703d002c6c33f4a9178f05ff0034e1, type: 3}
       propertyPath: _maxHp
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7662900253585496582, guid: 41703d002c6c33f4a9178f05ff0034e1, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7662900253585496582, guid: 41703d002c6c33f4a9178f05ff0034e1, type: 3}
       propertyPath: _meleeAttackInfo.Term
