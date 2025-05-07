@@ -169,12 +169,12 @@ public class PlayerController : MonoBehaviour, IDamagable
         _isDied = false;
 
         // 아래는 임시 테스트용
-        Manager.Player.Stats.FireRate = _fireRate;
-        Manager.Player.Stats.Speed = _moveSpeed;
-        Manager.Player.Stats.ShotSpeed = _shotSpeed;
-        Manager.Player.Stats.InvincibleTime = _invincibleTime;
-        Manager.Player.Stats.ProjectileNum = _bulletProjectileNum;
-        Manager.Player.Stats.PierceNum = _pierceNum;
+        // Manager.Player.Stats.FireRate = _fireRate;
+        // Manager.Player.Stats.Speed = _moveSpeed;
+        // Manager.Player.Stats.ShotSpeed = _shotSpeed;
+        // Manager.Player.Stats.InvincibleTime = _invincibleTime;
+        // Manager.Player.Stats.ProjectileNum = _bulletProjectileNum;
+        // Manager.Player.Stats.PierceNum = _pierceNum;
 
         // 탄환 풀 생성
         _waitTime = new WaitForSeconds(Manager.Player.Stats.FireRate);
