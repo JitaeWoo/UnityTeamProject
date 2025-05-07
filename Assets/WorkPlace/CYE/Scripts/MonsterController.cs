@@ -179,7 +179,6 @@ public class MonsterController : MonoBehaviour, IDamagable
 
     public void TakeHit(int attackPoint) 
     {
-        OnChangeCurHp?.Invoke();
         if (!_isDied)
         {
             if (attackPoint >= CurHp)
@@ -200,7 +199,7 @@ public class MonsterController : MonoBehaviour, IDamagable
                     }
                 }
             }
-
+            OnChangeCurHp?.Invoke();
         }
     }
     private IEnumerator ReleaseDamaged() {
