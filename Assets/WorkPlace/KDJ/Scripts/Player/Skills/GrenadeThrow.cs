@@ -5,6 +5,7 @@ using UnityEngine;
 public class GrenadeThrow : Skill
 {
     [SerializeField] private float _grenadeCooldown = 5f;
+    [SerializeField] private float _delay = 0.65f;
     [SerializeField] private GameObject _grenadePrefab;
     
     private PlayerController _player;
@@ -12,6 +13,8 @@ public class GrenadeThrow : Skill
     private void Awake()
     {
         CoolDown = _grenadeCooldown;
+        SkillMotionDelay = _delay;
+        _playerAnimation = GetComponent<PlayerAnimation>();
         _grenadePrefab = Resources.Load<GameObject>("Grenade");
         _player = GetComponent<PlayerController>();
     }
