@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Skill : MonoBehaviour
@@ -18,7 +17,8 @@ public abstract class Skill : MonoBehaviour
     {
         if (_isReady && DelayCoroutine == null)
         {
-            _playerAnimation.SkillAnimation();
+            if (SkillMotionDelay > 0)
+                _playerAnimation.SkillAnimation();
             DelayCoroutine = StartCoroutine(SkillDelay());
         }
     }
@@ -27,7 +27,7 @@ public abstract class Skill : MonoBehaviour
 
     protected IEnumerator StartCoolDown()
     {
-        if(CooldownDelay == null)
+        if (CooldownDelay == null)
         {
             CooldownDelay = new WaitForSeconds(CoolDown);
         }

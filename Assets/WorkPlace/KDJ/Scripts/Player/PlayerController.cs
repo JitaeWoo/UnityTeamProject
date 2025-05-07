@@ -238,11 +238,9 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     IEnumerator DashCheck()
     {
-        yield return new WaitForSeconds(0.01f);
         _canMove = false;
         yield return new WaitForSeconds(0.2f);
         _player.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        yield return new WaitForSeconds(0.01f);
         _canMove = true;
         _dashedRoutine = null;
     }
