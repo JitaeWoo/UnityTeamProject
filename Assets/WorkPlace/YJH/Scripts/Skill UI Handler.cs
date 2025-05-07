@@ -18,11 +18,11 @@ public class SkillUIHandler : MonoBehaviour
 
     private Dictionary<PlayerSkill.Skills, float> skillCooldowns = new Dictionary<PlayerSkill.Skills, float>
     {
-        { PlayerSkill.Skills.GrenadeThrow, 5f },
-        { PlayerSkill.Skills.BeamShot, 10f },
-        { PlayerSkill.Skills.Heal, 10f },
-        { PlayerSkill.Skills.ClearBullet, 5f },
-        { PlayerSkill.Skills.Slash, 6f },
+        { PlayerSkill.Skills.GrenadeThrow, 5.65f },
+        { PlayerSkill.Skills.BeamShot, 10.65f },
+        { PlayerSkill.Skills.Heal, 10.65f },
+        { PlayerSkill.Skills.ClearBullet, 5.01f },
+        { PlayerSkill.Skills.Slash, 6.65f },
     };
 
     private float skillCooldownTime;
