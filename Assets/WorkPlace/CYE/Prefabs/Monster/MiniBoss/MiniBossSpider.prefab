@@ -1013,7 +1013,7 @@ MonoBehaviour:
   _maxHp: 100
   _damage: 10
   _isMiniBoss: 1
-  _moveSpeed: 0.75
+  _moveSpeed: 3
   _detectRange: 50
   _attackRange: 25
   _attackTypes: 02000000

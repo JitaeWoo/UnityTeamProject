@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1546644400230415812}
   - component: {fileID: 6361044821117358524}
   m_Layer: 8
-  m_Name: Bullet 3
+  m_Name: EliteWeb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
