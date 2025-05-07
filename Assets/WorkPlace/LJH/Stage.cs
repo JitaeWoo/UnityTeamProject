@@ -20,7 +20,10 @@ public class Stage : MonoBehaviour
     public Collider mapBounds;
     //플레이어 위치를 위한 선언
     public Transform player;
-    
+    private void Awake()
+    {
+        Manager.Stage.Stage = this;
+    }
     private void Start()
     {
         //넥스트 스테이지씬이름을 인스펙터에서 받아서 메니저변수에 넣음
