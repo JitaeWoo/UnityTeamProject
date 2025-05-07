@@ -5,6 +5,7 @@ using UnityEngine;
 public class BeamShot : Skill
 {
     [SerializeField] private float _beamCooldown = 10f;
+    [SerializeField] private float _delay = 0.65f;
     [SerializeField] private GameObject _beamPrefab;
 
     private PlayerController _player;
@@ -12,6 +13,8 @@ public class BeamShot : Skill
     private void Awake()
     {
         CoolDown = _beamCooldown;
+        SkillMotionDelay = _delay;
+        _playerAnimation = GetComponent<PlayerAnimation>();
         _beamPrefab = Resources.Load<GameObject>("Beam");
         _player = GetComponent<PlayerController>();
     }
