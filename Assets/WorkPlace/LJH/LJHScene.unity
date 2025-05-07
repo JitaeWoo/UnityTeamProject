@@ -243,8 +243,10 @@ MonoBehaviour:
   _isAllMonsterSpawned: 0
   nextStageSceneName: 
   Upgrader: {fileID: 0}
+  _bossHp: {fileID: 0}
   mapBounds: {fileID: 0}
   player: {fileID: 0}
+  victoryPopupPrefab: {fileID: 0}
 --- !u!1 &503943847
 GameObject:
   m_ObjectHideFlags: 0
@@ -1217,8 +1219,10 @@ MonoBehaviour:
   _isAllMonsterSpawned: 0
   nextStageSceneName: 
   Upgrader: {fileID: 0}
+  _bossHp: {fileID: 3286332581207839321, guid: bb0e5c73205b84a48a3fc4fa43af1bcf, type: 3}
   mapBounds: {fileID: 1597874484}
   player: {fileID: 832135165}
+  victoryPopupPrefab: {fileID: 2321045236074806067, guid: bf8975d799130ef43b49b39b053ebf27, type: 3}
 --- !u!4 &1537421502
 Transform:
   m_ObjectHideFlags: 0
@@ -1261,6 +1265,7 @@ MonoBehaviour:
   mapStartXPos: -101
   mapStartZPos: -101
   FloorPos: -1
+  finalStage: 0
 --- !u!1 &1597874483
 GameObject:
   m_ObjectHideFlags: 0
