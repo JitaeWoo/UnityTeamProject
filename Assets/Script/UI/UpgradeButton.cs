@@ -18,7 +18,7 @@ public class UpgradeButton : MonoBehaviour
         {
             TextMeshProUGUI textUI = Instantiate(_statInfoPrefab, transform);
             textUI.transform.localPosition = new Vector3(0, _textY, 0);
-            textUI.text = _statUpgrader.GetStatUpgradeInfo((StatUpgrader.Stats)num);
+            textUI.text = $"< {_statUpgrader.GetStatUpgradeInfo((StatUpgrader.Stats)num)} >";
             _textY -= 100;
         }
     }
