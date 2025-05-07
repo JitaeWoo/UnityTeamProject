@@ -38,7 +38,7 @@ public class Slash : Skill
 
             if (angle <= _halfAngle)
             {
-                _enemies[i].GetComponent<IDamagable>()?.TakeHit(30);
+                _enemies[i].GetComponentInParent<IDamagable>()?.TakeHit(30);
             }
         }
     }

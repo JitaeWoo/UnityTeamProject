@@ -21,7 +21,7 @@ public class GrenadeThrow : Skill
         GameObject instance = Instantiate(_grenadePrefab);
         instance.transform.position = _player.GetMuzzleTransform().position;
         instance.transform.rotation = _player.GetMuzzleTransform().rotation;
-        instance.transform.Rotate(Vector3.right, -15f);
-        instance.GetComponent<Rigidbody>().AddForce(instance.transform.forward * 15f, ForceMode.Impulse);
+        instance.transform.Rotate(Vector3.right, -7f);
+        instance.GetComponent<Rigidbody>().AddForce(instance.transform.forward * 25f, ForceMode.Impulse);
     }
 }
