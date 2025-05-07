@@ -32,14 +32,14 @@ public class EnhancedStatsView : MonoBehaviour
 
     private void UpdateStatsUI()
     {
-        plusedHPText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["HP"]}";
-        plusedSpeedText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["Speed"]}%";
-        plusedDamageText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["Damage"]}%";
-        plusedInvincibeTimeText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["InvincibleTime"]}%";
-        plusedShotSpeedText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["ShotSpeed"]}%";
-        plusedFireRateText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["FireRate"]}%";
-        plusedProjectileNumText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["ProjectileNum"]}";
-        plusedPierceNumText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["PierceNum"]}";
+        plusedHPText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["HP"]} Lv";
+        plusedSpeedText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["Speed"]} Lv";
+        plusedDamageText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["Damage"]} Lv";
+        plusedInvincibeTimeText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["InvincibleTime"]} Lv";
+        plusedShotSpeedText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["ShotSpeed"]} Lv";
+        plusedFireRateText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["FireRate"]} Lv";
+        plusedProjectileNumText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["ProjectileNum"]} Lv";
+        plusedPierceNumText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["PierceNum"]} Lv";
         plusedHealedText.text = $"{EnhancedStatsInfo.EnhancedStatsDic["Healed"]}";
     }
 }
