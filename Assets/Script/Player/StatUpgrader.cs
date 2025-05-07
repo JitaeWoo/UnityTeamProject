@@ -42,8 +42,10 @@ public class StatUpgrader
         switch (stat)
         {
             case Stats.MaxHp:
+                int beforeHp = Manager.Player.Stats.MaxHp;
                 Manager.Player.Stats.MaxHp = (int)(Manager.Player.Stats.MaxHp * 1.1f);
-                EnhancedStatsInfo.EnhancedStatsDic["HP"] += 10;
+                Manager.Player.Stats.CurHp += Manager.Player.Stats.MaxHp - beforeHp;
+                EnhancedStatsInfo.EnhancedStatsDic["HP"] += 1;
                 break;
             case Stats.CurHp:
                 EnhancedStatsInfo.EnhancedStatsDic["Healed"] = Manager.Player.Stats.MaxHp - Manager.Player.Stats.CurHp;
@@ -51,23 +53,23 @@ public class StatUpgrader
                 break;
             case Stats.Speed:
                 Manager.Player.Stats.Speed *= 1.2f;
-                EnhancedStatsInfo.EnhancedStatsDic["Speed"] += 20;
+                EnhancedStatsInfo.EnhancedStatsDic["Speed"] += 1;
                 break;
             case Stats.Damage:
                 Manager.Player.Stats.Damage = (int)(Manager.Player.Stats.Damage * 1.2f);
-                EnhancedStatsInfo.EnhancedStatsDic["Damage"] += 20;
+                EnhancedStatsInfo.EnhancedStatsDic["Damage"] += 1;
                 break;
             case Stats.InvincibleTime:
                 Manager.Player.Stats.InvincibleTime *= 1.2f;
-                EnhancedStatsInfo.EnhancedStatsDic["InvincibleTime"] += 20;
+                EnhancedStatsInfo.EnhancedStatsDic["InvincibleTime"] += 1;
                 break;
             case Stats.ShotSpeed:
                 Manager.Player.Stats.ShotSpeed *= 1.2f;
-                EnhancedStatsInfo.EnhancedStatsDic["ShotSpeed"] += 20;
+                EnhancedStatsInfo.EnhancedStatsDic["ShotSpeed"] += 1;
                 break;
             case Stats.FireRate:
                 Manager.Player.Stats.FireRate *= 0.8f;
-                EnhancedStatsInfo.EnhancedStatsDic["FireRate"] += 20;
+                EnhancedStatsInfo.EnhancedStatsDic["FireRate"] += 1;
                 break;
             case Stats.ProjectileNum:
                 Manager.Player.Stats.ProjectileNum += 1;
