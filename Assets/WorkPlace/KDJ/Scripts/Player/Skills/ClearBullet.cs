@@ -5,6 +5,7 @@ using UnityEngine;
 public class ClearBullet : Skill
 {
     [SerializeField] private float _skillCooldown = 5f;
+    [SerializeField] private float _delay = 0.01f;
     private Collider[] bullets = new Collider[200];
 
     // 플레이어의 정면을 기준으로 각도를 계산하기 때문에, 원하는 스킬 범위의 절반 각도가 필요합니다.
@@ -14,6 +15,8 @@ public class ClearBullet : Skill
     private void Awake()
     {
         CoolDown = _skillCooldown;
+        SkillMotionDelay = _delay;
+        _playerAnimation = GetComponent<PlayerAnimation>();
         _layerMask = 1 << LayerMask.NameToLayer("EnemyBullet");
     }
 

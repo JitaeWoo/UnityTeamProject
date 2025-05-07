@@ -6,6 +6,7 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 public class Slash : Skill
 {
     [SerializeField] private float _SlashCooldown = 6f;
+    [SerializeField] private float _delay = 0.65f;
     private Collider[] _enemies = new Collider[40];
 
     private float _halfAngle = 90f;
@@ -15,6 +16,8 @@ public class Slash : Skill
     private void Awake()
     {
         CoolDown = _SlashCooldown;
+        SkillMotionDelay = _delay;
+        _playerAnimation = GetComponent<PlayerAnimation>();
         _layerMask = 1 << LayerMask.NameToLayer("Enemy");
         _slashEffect = Resources.Load<GameObject>("SlashEffect");
     }
@@ -38,7 +41,7 @@ public class Slash : Skill
 
             if (angle <= _halfAngle)
             {
-                _enemies[i].GetComponent<IDamagable>()?.TakeHit(30);
+                _enemies[i].GetComponentInParent<IDamagable>()?.TakeHit(30);
             }
         }
     }

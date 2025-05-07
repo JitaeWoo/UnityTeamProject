@@ -234,9 +234,9 @@ MonoBehaviour:
   _maxHp: 50
   _damage: 5
   _isMiniBoss: 0
-  _moveSpeed: 0.5
-  _detectRange: 5
-  _attackRange: 3.5
+  _moveSpeed: 3
+  _detectRange: 50
+  _attackRange: 25
   _attackTypes: 02000000
   _meleeAttackInfo:
     Term: 0
@@ -244,7 +244,7 @@ MonoBehaviour:
   _rangeAttackInfo:
     Term: 0.7
     Projectile: {fileID: 7492524681301629692, guid: a8462d73d3baac84d95a11f427acd850, type: 3}
-    ProjectileTotalCount: 5
+    ProjectileTotalCount: 10
     ProjectileSpeed: 5
     MuzzlePoint: {fileID: 4441380161122824045}
 --- !u!1 &390121892461085472

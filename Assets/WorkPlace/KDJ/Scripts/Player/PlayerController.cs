@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamagable
@@ -32,7 +31,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     private Stack<GameObject> _bulletPool;
     private WaitForSeconds _waitTime;
     private Coroutine _fireCoroutine;
-    private bool IsReadyFire => _fireCoroutine == null;
+    private bool _isReadyFire => _fireCoroutine == null;
+    private bool _isReadyMove => _dashedRoutine == null;
 
     private void Awake()
     {
@@ -42,12 +42,12 @@ public class PlayerController : MonoBehaviour, IDamagable
     void FixedUpdate()
     {
         PlayerAim();
-        PlayerMovement();
     }
 
     void Update()
     {
         PlayerAttack();
+        PlayerMovement();
         DashAndMove();
     }
 
@@ -89,9 +89,9 @@ public class PlayerController : MonoBehaviour, IDamagable
         if (!_isDied)
         {
             // 플레이어 마우스 조준
-        Vector3 lookPos = Input.mousePosition;
-        lookPos.z = _mainCamera.transform.position.y - _player.transform.position.y;
-        lookPos = _mainCamera.ScreenToWorldPoint(lookPos);
+            Vector3 lookPos = Input.mousePosition;
+            lookPos.z = _mainCamera.transform.position.y - _player.transform.position.y;
+            lookPos = _mainCamera.ScreenToWorldPoint(lookPos);
             _player.transform.forward = lookPos - transform.position;
         }
     }
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour, IDamagable
             // 플레이어 탄환 발사
             if (Input.GetMouseButton(0))
             {
-                if (IsReadyFire)
+                if (_isReadyFire)
                 {
                     _playerAnimation.AttackAnimation();
                     _fireCoroutine = StartCoroutine(Fire());
@@ -120,7 +120,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _dashedRoutine = StartCoroutine(DashCheck());
+            if (_isReadyMove)
+                _dashedRoutine = StartCoroutine(DashCheck());
         }
     }
 
@@ -139,7 +140,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         if (Manager.Player.Stats.CurHp > 0 && _canMove)
         {
             if (IsDamagable)
-            Manager.Player.Stats.CurHp -= damage;
+                Manager.Player.Stats.CurHp -= damage;
             if (_invincibleRoutine == null)
                 _invincibleRoutine = StartCoroutine(Invincibility());
         }

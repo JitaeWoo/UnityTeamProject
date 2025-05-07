@@ -54,7 +54,7 @@ public class StatUpgrader
                 EnhancedStatsInfo.EnhancedStatsDic["Speed"] += 20;
                 break;
             case Stats.Damage:
-                Manager.Player.Stats.Damage *= (int)(Manager.Player.Stats.Damage * 1.2f);
+                Manager.Player.Stats.Damage = (int)(Manager.Player.Stats.Damage * 1.2f);
                 EnhancedStatsInfo.EnhancedStatsDic["Damage"] += 20;
                 break;
             case Stats.InvincibleTime:

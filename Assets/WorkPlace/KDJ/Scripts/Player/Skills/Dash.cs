@@ -7,12 +7,15 @@ using UnityEngine.EventSystems;
 public class Dash : Skill
 {
     [SerializeField] private float _dashCooldown = 2f;
+    [SerializeField] private float _delay = 0f;
 
     private PlayerController _playerController;
 
     private void Awake()
     {
         CoolDown = _dashCooldown;
+        SkillMotionDelay = _delay;
+        _playerAnimation = GetComponent<PlayerAnimation>();
         _playerController = GetComponent<PlayerController>();
     }
 
