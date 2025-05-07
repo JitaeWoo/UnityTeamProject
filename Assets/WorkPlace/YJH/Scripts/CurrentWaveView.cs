@@ -19,6 +19,6 @@ public class CurrentWaveView : MonoBehaviour
 
     public void WaveIndexImport()
     {
-        currentWaveText.text = $"{Manager.Stage.Stage.currentWaveIndex}";
+        currentWaveText.text = $"{Manager.Stage.Stage.currentWaveIndex + 1}";
     }
 }
