@@ -20,7 +20,7 @@ public class SkillUIHandler : MonoBehaviour
     {
         { PlayerSkill.Skills.GrenadeThrow, 5f },
         { PlayerSkill.Skills.BeamShot, 10f },
-        { PlayerSkill.Skills.Heal, 1f },
+        { PlayerSkill.Skills.Heal, 10f },
         { PlayerSkill.Skills.ClearBullet, 5f },
         { PlayerSkill.Skills.Slash, 6f },
     };
@@ -29,7 +29,7 @@ public class SkillUIHandler : MonoBehaviour
     private float skillCooldownTimer;
     private bool isSkillCoolingDown = false;
 
-    private float dashCooldownTime = 1f;
+    private float dashCooldownTime = 2f;
     private float dashCooldownTimer;
     private bool isDashCoolingDown = false;
 
