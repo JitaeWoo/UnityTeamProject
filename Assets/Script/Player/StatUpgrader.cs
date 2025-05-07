@@ -14,7 +14,7 @@ public class StatUpgrader
         switch (stat)
         {
             case Stats.MaxHp:
-                return "최대 체력 10 증가";
+                return "최대 체력 10% 증가";
             case Stats.CurHp:
                 return "최대 체력으로 회복";
             case Stats.Speed:
