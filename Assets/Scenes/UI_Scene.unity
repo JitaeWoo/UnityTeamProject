@@ -927,6 +927,10 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1309129659100253426, guid: 89b93bf8d150943a69b2fdbd9d7747a8, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1309129659100253436, guid: 89b93bf8d150943a69b2fdbd9d7747a8, type: 3}
       propertyPath: m_Name
       value: HP_Bar
