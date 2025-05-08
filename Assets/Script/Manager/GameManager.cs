@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-//using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,15 +19,16 @@ public class GameManager : Singleton<GameManager>
     public void StartGame()
     {
         OnStartGame?.Invoke();
-        // TODO : Stage°¡ °³¹ßµÇ¸é ÇØ´ç ÀÌ¸§À¸·Î ¹Ù²Ü °Í
+        // TODO : Stageï¿½ï¿½ ï¿½ï¿½ï¿½ßµÇ¸ï¿½ ï¿½Ø´ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ ï¿½ï¿½
         Manager.Player.InitStats();
+        EnhancedStatsInfo.Init();
         SceneChange("Stage1");
     }
 
     public void GameOver()
     {
-        // TODO : GameOver UI »ý¼º
-        // TODO : Game ÁøÇà »óÈ² ¸ðµÎ Á¤Áö?
+        // TODO : GameOver UI ï¿½ï¿½ï¿½ï¿½
+        // TODO : Game ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È² ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½?
         OnGameOver?.Invoke();
     }
 
