@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,6 +21,7 @@ public class GameManager : Singleton<GameManager>
         OnStartGame?.Invoke();
         // TODO : Stage가 개발되면 해당 이름으로 바꿀 것
         Manager.Player.InitStats();
+        EnhancedStatsInfo.Init();
         SceneChange("Stage1");
     }
 
